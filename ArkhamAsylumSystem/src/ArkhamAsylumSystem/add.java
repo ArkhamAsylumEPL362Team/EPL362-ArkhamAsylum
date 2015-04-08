@@ -1,14 +1,10 @@
 package ArkhamAsylumSystem;
 
-import java.io.IOException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import extras.DatabaseConnection;
@@ -44,13 +40,11 @@ public class add {
 }
 
 class Patient{
-
 	public String ssh;
 	public String firstname;
 	public String lastname;
 	public String phonenumber;
 	public String birthday;
 	public String gender;
-	
 }
 
