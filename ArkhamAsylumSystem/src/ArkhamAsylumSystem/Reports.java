@@ -13,7 +13,6 @@ import java.sql.SQLException;
 
 
 @Path("/report/")
-
 public class Reports {
 
 	@GET
@@ -34,10 +33,6 @@ public class Reports {
 		return  result;
 		
 	}
-	
-	
-	
-	
 	
 	
 }
