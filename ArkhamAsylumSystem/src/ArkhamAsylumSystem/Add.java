@@ -12,7 +12,7 @@ import extras.DatabaseConnection;
 
 
 @Path("/insert/")
-public class add {
+public class Add {
 	
 	@POST
 	@Path("/patient/")
@@ -38,6 +38,7 @@ public class add {
 		return data;
 	}
 }
+
 
 class Patient{
 	public String ssh;
