@@ -2,9 +2,8 @@ $.extend( $.fn.dataTable.defaults, {
     "searching": true,
     "ordering": true,
     "searching": false,
-    "bPaginate": false,
+    "bPaginate": true,
     "bInfo" : false,
-    "scrollY":"50vh",
     bFilter: false,
     "scrollX": false
 } );
@@ -204,7 +203,7 @@ function deletePatient(){
         },
         function(isConfirm) {
             if (isConfirm) {
-                table.row('.selected').remove().draw(false);
+                table1.row('.selected').remove().draw(false);
             }
         });
     }else{
@@ -213,13 +212,15 @@ function deletePatient(){
 }
 
 function addPatient(){
-    table.row.add([
-        "Demetris Paschalides",
-        "Software Engineer",
-        "New New York",
-        "43",
-        "2015/04/08",
-        "$0.5"
+    table1.row.add([
+        "10",
+        "Johny",
+        "Pastourmas",
+        "pastour@hotmail.com",
+        "Lordou Vyronos 8B Kaimakli, Nicosia",
+        "22311323",
+        "1990/05/12",
+        "M"
     ] ).draw();
 }
 

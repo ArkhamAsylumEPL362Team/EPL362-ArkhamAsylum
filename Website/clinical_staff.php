@@ -64,97 +64,106 @@
                 <div class="diagnose-form">
                     <form class="form-horizontal">
                         <fieldset>
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="diagnose_patient_id_input">Patient ID</label>  
+                            <div class="row">
                                 <div class="col-md-6">
-                                    <input id="diagnose_patient_id_input" name="diagnose_patient_id_input" placeholder="Patient's ID goes here..." class="form-control input-md" required="" type="text">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="diagnose_incedent_type">Incedent's type</label>
-                                <div class="col-md-4">
-                                    <div class="radio">
-                                        <label for="diagnose_incedent_type-0">
-                                            <input name="diagnose_incedent_type" id="diagnose_incedent_type-0" value="1" checked="checked" type="radio">
-                                            Threat
-                                        </label>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="diagnose_patient_id_input">Patient ID</label>  
+                                        <div class="col-md-6">
+                                            <input id="diagnose_patient_id_input" name="diagnose_patient_id_input" placeholder="Patient's ID goes here..." class="form-control input-md" required="" type="text">
+                                        </div>
                                     </div>
-                                    <div class="radio">
-                                        <label for="diagnose_incedent_type-1">
-                                            <input name="diagnose_incedent_type" id="diagnose_incedent_type-1" value="2" type="radio">
-                                            Other
-                                        </label>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="diagnose_incedent_type">Incedent's type</label>
+                                        <div class="col-md-4">
+                                            <div class="radio">
+                                                <label for="diagnose_incedent_type-0">
+                                                    <input name="diagnose_incedent_type" id="diagnose_incedent_type-0" value="1" checked="checked" type="radio">
+                                                    Threat
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label for="diagnose_incedent_type-1">
+                                                    <input name="diagnose_incedent_type" id="diagnose_incedent_type-1" value="2" type="radio">
+                                                    Other
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="diagnose_incedent_status">Incedent's status</label>
+                                        <div class="col-md-4">
+                                            <div class="radio">
+                                                <label for="diagnose_incedent_status-0">
+                                                    <input name="diagnose_incedent_status" id="diagnose_incedent_status-0" value="1" checked="checked" type="radio">
+                                                    Accidental
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label for="diagnose_incedent_status-1">
+                                                    <input name="diagnose_incedent_status" id="diagnose_incedent_status-1" value="2" type="radio">
+                                                    Deliberated
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="diagnose_incedent_input">Incedent Details</label>
+                                        <div class="col-md-6">                     
+                                            <textarea placeholder="Incident's details go here..." class="form-control" id="diagnose_incedent_input" name="diagnose_incedent_input"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="diagnose_patient_status_inputs">Patient's Status</label>
+                                        <div class="col-md-8">
+                                            <div class="radio">
+                                                <label for="diagnose_patient_status_inputs-0">
+                                                    <input name="diagnose_patient_status_inputs" id="diagnose_patient_status_inputs-0" value="1" checked="checked" type="radio">
+                                                    Dangerous
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label for="diagnose_patient_status_inputs-1">
+                                                    <input name="diagnose_patient_status_inputs" id="diagnose_patient_status_inputs-1" value="2" type="radio">
+                                                    Not dangerous
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="diagnose_patient_comment_input">Comments</label>
+                                        <div class="col-md-6">                     
+                                            <textarea placeholder="Comments go here..." class="form-control" id="diagnose_patient_comment_input" name="diagnose_patient_comment_input"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-11">
+                                            <?php include 'components/datatables/datatables-treatments.php'; ?>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <table class="diary-menu">
+                                                <tr><td><div><a id="add-tr-btn" href="#"><i class="fa fa-plus fa-4x"></i></a></div></td></tr>
+                                                <tr><td><div><a id="view-tr-btn" href="#"><i class="fa fa-eye fa-4x"></i></a></div></td></tr>
+                                                <tr><td><div><a id="select-tr-btn" href="#"><i class="fa fa-check fa-4x"></i></a></div></td></tr>
+                                            </table> 
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="diagnose_slct_treatment">Selected treatment</label>  
+                                        <div class="col-md-6">
+                                            <input id="diagnose_slct_treatment" name="diagnose_slct_treatment" placeholder="" class="form-control input-md" required="" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="reset_btn"></label>
+                                        <div class="col-md-8">
+                                            <button id="reset_btn" name="reset_btn" class="btn btn-default">Reset</button>
+                                            <button id="submit_btn" name="submit_btn" class="btn btn-primary">Complete</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="diagnose_incedent_status">Incedent's status</label>
-                                <div class="col-md-4">
-                                    <div class="radio">
-                                        <label for="diagnose_incedent_status-0">
-                                            <input name="diagnose_incedent_status" id="diagnose_incedent_status-0" value="1" checked="checked" type="radio">
-                                            Accidental
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label for="diagnose_incedent_status-1">
-                                            <input name="diagnose_incedent_status" id="diagnose_incedent_status-1" value="2" type="radio">
-                                            Deliberated
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="diagnose_incedent_input">Incedent Details</label>
-                                <div class="col-md-6">                     
-                                    <textarea placeholder="Incident's details go here..." class="form-control" id="diagnose_incedent_input" name="diagnose_incedent_input"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="diagnose_patient_status_inputs">Patient's Status</label>
-                                <div class="col-md-8">
-                                    <div class="radio">
-                                        <label for="diagnose_patient_status_inputs-0">
-                                            <input name="diagnose_patient_status_inputs" id="diagnose_patient_status_inputs-0" value="1" checked="checked" type="radio">
-                                            Dangerous
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label for="diagnose_patient_status_inputs-1">
-                                            <input name="diagnose_patient_status_inputs" id="diagnose_patient_status_inputs-1" value="2" type="radio">
-                                            Not dangerous
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="diagnose_patient_comment_input">Comments</label>
-                                <div class="col-md-6">                     
-                                    <textarea placeholder="Comments go here..." class="form-control" id="diagnose_patient_comment_input" name="diagnose_patient_comment_input"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="diagnose_patient_treatment_input">Treatment</label>
-                                <div class="col-md-6">                     
-                                    <textarea placeholder="Treatment's prescribtion goes here..." class="form-control" id="diagnose_patient_treatment_input" name="diagnose_patient_treatment_input"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label" for="reset_btn"></label>
-                                <div class="col-md-8">
-                                    <button id="reset_btn" name="reset_btn" class="btn btn-default">Reset</button>
-                                    <button id="submit_btn" name="submit_btn" class="btn btn-primary">Complete</button>
-                                </div>
-                            </div>
-
                         </fieldset>
                     </form>
                 </div>

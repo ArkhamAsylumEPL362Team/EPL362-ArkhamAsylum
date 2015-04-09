@@ -1,9 +1,8 @@
 $.extend( $.fn.dataTable.defaults, {
     "ordering": true,
     "searching": false,
-    "bPaginate": false,
+    "bPaginate": true,
     "bInfo" : false,
-    "scrollY":"50vh",
     bFilter: false,
     "scrollX": false
 } );
@@ -71,3 +70,49 @@ function loadForm(operation){
     $('.form-holder').load("components/"+operation+"_form.php");
     $('#my-modal').modal('toggle');  
 }
+
+var table4 = $('#example4').DataTable({
+    "searching": true
+});
+
+$('#example4 tbody').on('click','tr',function(){
+    if ($(this).hasClass('selected')) {
+        $(this).removeClass('selected');
+    }
+    else {
+            table4.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+});
+
+$('#view-tr-btn').on('click',function(e){
+    if($('#example4 tbody tr').hasClass('selected')){                    
+        $('#modal-title').text('View treatment');
+        //$('.form-holder').load("components/view_treatment.php",function(){});
+        $('#my-modal').modal('toggle');  
+    }else{
+        swal("You have to select a treatment to view.");
+    }
+    e.preventDefault();
+});
+
+$('#add-tr-btn').on('click',function(e){              
+    $('#modal-title').text('Add treatment');
+    //$('.form-holder').load("components/add_treatment.php",function(){});
+    $('#my-modal').modal('toggle');  
+    e.preventDefault();
+});
+
+$('#select-tr-btn').on('click',function(e){              
+    if($('#example4 tbody tr').hasClass('selected')){                    
+        $('#diagnose_slct_treatment').val(
+            $('tr.selected td').eq(0).text()+","
+            +$('tr.selected td').eq(1).text()+","
+            +$('tr.selected td').eq(2).text()+","
+            +$('tr.selected td').eq(3).text()
+        );
+    }else{
+        swal("You have to select a treatment to use.");
+    }
+    e.preventDefault();
+});

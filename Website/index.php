@@ -24,5 +24,6 @@
     <body>  
         <a href="receptionist.php">Receptionist</a>
         <a href="clinical_staff.php">Clinical staff</a>
+        <a href="medical_record_staff.php">Medical Record staff</a>
     </body>
 </html>
