@@ -1,0 +1,63 @@
+<table id="example3" class="patients table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Patient ID</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Status</th>
+            <th>Last Updated</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>0</td>
+            <td>Philip</td>
+            <td>Aziz</td>
+            <td>DANGEROUS</td>
+            <td>1999/04/25</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Demetris</td>
+            <td>Paschalides</td>
+            <td>NOT_DANGEROUS</td>
+            <td>2005/04/25</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Theodoros</td>
+            <td>Charalampous</td>
+            <td>DANGEROUS</td>
+            <td>2012/07/27</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Irene</td>
+            <td>Papakosta</td>
+            <td>NOT_DANGEROUS</td>
+            <td>2005/04/25</td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Andreas</td>
+            <td>Fragkou</td>
+            <td>DANGEROUS</td>
+            <td>2011/07/27</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Andria</td>
+            <td>Kkoushi</td>
+            <td>NOT_DANGEROUS</td>
+            <td>2015/07/27</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>Panayiotis</td>
+            <td>Pavlides</td>
+            <td>DANGEROUS</td>
+            <td>2009/07/27</td>
+        </tr>
+    </tbody>
+</table>
