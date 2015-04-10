@@ -62,6 +62,16 @@ body{
     height: 110vh !important;
 }
 
+.container.death{
+    padding-top: 40px;
+    height: 110vh !important;
+}
+
+.container.requests{
+    padding-top: 40px;
+    height: 110vh !important;
+}
+
 .medical-staff-review div.col-lg-3{
     margin: auto;
 }

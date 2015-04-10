@@ -32,25 +32,25 @@
             <div id="home-page" class="medical-staff-menu container">
                 <div class="medical-staff-review row">
                     <div class="col-lg-3">
-                        <img class="img-circle" src="_/img/clinical_staff_menu_background.png" alt="Generic placeholder image" width="140" height="140">
+                        <img class="img-circle" src="_/img/diagnose.png" alt="Generic placeholder image" width="140" height="140">
                         <h2>Diagnose</h2>
                         <p>Via diagnose you can start a consultation on a patient, record your diagnosis and prescribe a treatment if needed.</p>
                         <p><a class="btn btn-default" href="#diagnose" role="button">Start diagnosis &raquo;</a></p>
                     </div>
                     <div class="col-lg-3">
-                        <img class="img-circle" src="_/img/clinical_staff_menu_background.png" alt="Generic placeholder image" width="140" height="140">
+                        <img class="img-circle" src="_/img/update.png" alt="Generic placeholder image" width="140" height="140">
                         <h2>Update records</h2>
                         <p>With this option you can update a patient's record if necessary. This can be used during a consultation or afterwards.</p>
                         <p><a class="btn btn-default" href="#view_update" role="button">Update a record &raquo;</a></p>
                     </div>
                     <div class="col-lg-3">
-                        <img class="img-circle" src="_/img/clinical_staff_menu_background.png" alt="Generic placeholder image" width="140" height="140">
+                        <img class="img-circle" src="_/img/view.png" alt="Generic placeholder image" width="140" height="140">
                         <h2>View records</h2>
                         <p>You can press here if you want to view the patient's medical record for information. Let it be noted, you cannot alter the medical record from here.</p>
                         <p><a class="btn btn-default" href="#view_update" role="button">View record &raquo;</a></p>
                     </div>
                     <div class="col-lg-3">
-                        <img class="img-circle" src="_/img/clinical_staff_menu_background.png" alt="Generic placeholder image" width="140" height="140">
+                        <img class="img-circle" src="_/img/meds.png" alt="Generic placeholder image" width="140" height="140">
                         <h2>Check medicines</h2>
                         <p>You can view information regarding a medicine and also some of its side-effects.</p>
                         <p><a class="btn btn-default" href="#medicine" role="button">Check medicine &raquo;</a></p>

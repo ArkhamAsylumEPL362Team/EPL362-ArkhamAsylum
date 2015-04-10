@@ -1,0 +1,35 @@
+<table id="example8" class="requests table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Number</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>ID</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>0</td>
+            <td>Theodoros</td>
+            <td>Charalambous</td>
+            <td>1</td>
+            <td>2015/04/10</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Demetris</td>
+            <td>Paschalides</td>
+            <td>2</td>
+            <td>2015/03/10</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Irene</td>
+            <td>Papakosta</td>
+            <td>3</td>
+            <td>2015/04/11</td>
+        </tr>
+    </tbody>
+</table>

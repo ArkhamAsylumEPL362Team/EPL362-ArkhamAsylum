@@ -32,13 +32,13 @@
                 <div class="receptionist-review row">
                     <div class="col-lg-3"></div>
                     <div class="col-lg-3">
-                        <img class="img-circle" src="_/img/clinical_staff_menu_background.png" alt="Generic placeholder image" width="140" height="140">
+                        <img class="img-circle" src="_/img/diary.png" alt="Generic placeholder image" width="140" height="140">
                         <h2>Appointment Diary</h2>
                         <p>With this option you can add,delete or update a current appointment. You can also generate a prescription that has not changed.</p>
                         <p><a class="btn btn-default" href="#diary" role="button">Go to diary &raquo;</a></p>
                     </div>
                     <div class="col-lg-3">
-                        <img class="img-circle" src="_/img/clinical_staff_menu_background.png" alt="Generic placeholder image" width="140" height="140">
+                        <img class="img-circle" src="_/img/patient.png" alt="Generic placeholder image" width="140" height="140">
                         <h2>Patient Records</h2>
                         <p>You can press here if you want to view the patient's record for information. Let it be noted, you cannot view or alter the medical record from here, but only view.</p>
                         <p><a class="btn btn-default" href="#patient" role="button">Go to patients &raquo;</a></p>

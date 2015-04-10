@@ -34,7 +34,7 @@ $('#edit-rcrd-btn').on('click',function(e){
 
 $('#view-rcrd-btn').on('click',function(e){
     if($('#example3 tbody tr').hasClass('selected')){                    
-        $('#modal-title').text('Edit record');
+        $('#modal-title').text('View record');
         $('.form-holder').load("components/view_record_form.php",function(){});
         $('#my-modal').modal('toggle');  
     }else{
