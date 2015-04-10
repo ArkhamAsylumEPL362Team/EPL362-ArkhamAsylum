@@ -62,6 +62,11 @@ body{
     height: 110vh !important;
 }
 
+.container.change_request{
+    padding-top: 40px;
+    height: 110vh !important;
+}
+
 .container.death{
     padding-top: 40px;
     height: 110vh !important;
@@ -106,4 +111,8 @@ body{
 
 .submit-treatment{
     padding-top: 10px;
+}
+
+.form_section{
+    padding-top: 120px;
 }
