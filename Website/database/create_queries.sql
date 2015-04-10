@@ -96,8 +96,7 @@ CREATE TABLE `TREATMENT` (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
 	`condition` TEXT NOT NULL,
     medicine VARCHAR(15) NOT NULL,
-    quantity INT NOT NULL,
-    details TEXT NOT NULL
+    quantity INT NOT NULL
 );
 
 ALTER TABLE `TREATMENT`

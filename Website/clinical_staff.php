@@ -65,7 +65,7 @@
                     <form class="form-horizontal">
                         <fieldset>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="leftside col-md-6">
                                     <div class="form-group">
                                         <label class="col-md-4 control-label" for="diagnose_patient_id_input">Patient ID</label>  
                                         <div class="col-md-6">
@@ -137,27 +137,42 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
+                                    <h3>Possible Treatments</h3> 
                                     <div class="row">
-                                        <div class="col-md-11">
+                                        <div class="col-md-11"> 
                                             <?php include 'components/datatables/datatables-treatments.php'; ?>
                                         </div>
                                         <div class="col-md-1">
                                             <table class="diary-menu">
                                                 <tr><td><div><a id="add-tr-btn" href="#"><i class="fa fa-plus fa-4x"></i></a></div></td></tr>
-                                                <tr><td><div><a id="view-tr-btn" href="#"><i class="fa fa-eye fa-4x"></i></a></div></td></tr>
                                                 <tr><td><div><a id="select-tr-btn" href="#"><i class="fa fa-check fa-4x"></i></a></div></td></tr>
                                             </table> 
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label" for="diagnose_slct_treatment">Selected treatment</label>  
-                                        <div class="col-md-6">
-                                            <input id="diagnose_slct_treatment" name="diagnose_slct_treatment" placeholder="" class="form-control input-md" required="" type="text">
+                                    <h3>Current Treatment</h3>
+                                    <div class="row">
+                                        <div class="col-md-11">
+                                            <table id="example5" class="current_treatment table table-striped table-bordered" cellspacing="0" width="100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Number</th>
+                                                        <th>Condition</th>
+                                                        <th>Medicine</th>
+                                                        <th>Quantity</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>  
+                                        <div class="col-md-1">
+                                            <table class="diary-menu">
+                                                <tr><td><div><a id="delete-ctr-btn" href="#"><i class="fa fa-times fa-4x"></i></a></div></td></tr>
+                                            </table> 
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label" for="reset_btn"></label>
-                                        <div class="col-md-8">
+                                    <div class="submit-treatment form-group">
+                                        <label class="col-md-8 control-label" for="reset_btn"></label>
+                                        <div class="col-md-4">
                                             <button id="reset_btn" name="reset_btn" class="btn btn-default">Reset</button>
                                             <button id="submit_btn" name="submit_btn" class="btn btn-primary">Complete</button>
                                         </div>

@@ -12,7 +12,7 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a id="show_timeline" href="#">Timeline</a></li>
+                <li><a href="#">Sample link</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">Log out</a></li>
