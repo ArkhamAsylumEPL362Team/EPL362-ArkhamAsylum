@@ -22,9 +22,11 @@
     </head>
 
     <body>
+        <?php include'components/modal.php' ?>
+        <a id="scroller-btn" href="#wrapper"><span><i class="fa fa-arrow-circle-up fa-4x"></i></span></a>
+           
         <div id="wrapper">
-            <a id="scroller-btn" href="#wrapper"><span><i class="fa fa-arrow-circle-up fa-4x"></i></span></a>
-            <div id="index-page" class="receptionist-menu container">
+             <div id="index-page" class="receptionist-menu container">
                 <div class="receptionist-review row">
                     <div class="col-lg-3">
                         <img class="img-circle" src="_/img/receptionist.png" alt="Generic placeholder image" width="140" height="140">
@@ -81,6 +83,12 @@
             </div>
         </div>
         <script type="text/javascript">
+            $(document).ready(function(){
+                $('.form-holder').load("components/login_form.php");
+                $('#modal-title').text('Log in');
+                $('#my-modal').modal('toggle'); 
+            });
+            
             $('#2requestSection').click(function(event) {
                 event.preventDefault();
                 var link = this;
