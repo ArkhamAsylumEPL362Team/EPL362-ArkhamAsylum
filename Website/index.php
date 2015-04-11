@@ -21,8 +21,9 @@
         <link href="_/css/reset.css" rel="stylesheet">
     </head>
 
-    <body>  
+    <body>
         <div id="wrapper">
+            <a id="scroller-btn" href="#wrapper"><span><i class="fa fa-arrow-circle-up fa-4x"></i></span></a>
             <div id="index-page" class="receptionist-menu container">
                 <div class="receptionist-review row">
                     <div class="col-lg-3">
@@ -47,14 +48,14 @@
                         <img class="img-circle" src="_/img/patient.png" alt="Generic placeholder image" width="140" height="140">
                         <h2>Patient</h2>
                         <p>Are you a patient? Is there something wrong with your information in the system? Request a change by entering here.</p>
-                        <p><a class="btn btn-default" href="#request_form_section" role="button">Proceed for a request &raquo;</a></p>
+                        <p><a id="2requestSection" class="btn btn-default" href="#request_form_section" role="button">Proceed for a request &raquo;</a></p>
                     </div>
                 </div>
             </div>
             <div id="request_form_section" class="change_request container">
                 <hr/>
                 <h1>Request for a change</h1>
-                <form class="form_section form-horizontal">
+                <form id="request4change" method="post" action="" class="form_section form-horizontal">
                     <fieldset>
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="request_patient_id_input">Patient ID</label>  
@@ -71,8 +72,8 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="request_reset_btn"></label>
                             <div class="col-md-8">
-                                <button id="request_reset_btn" name="request_reset_btn" class="btn btn-default">Reset</button>
-                                <button id="request_submit_btn" name="request_submit_btn" class="btn btn-primary">Submit</button>
+                                <button type="reset" id="request_reset_btn" name="request_reset_btn" class="btn btn-default">Reset</button>
+                                <button type="submit" id="request_submit_btn" name="request_submit_btn" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
                     </fieldset>
@@ -80,7 +81,7 @@
             </div>
         </div>
         <script type="text/javascript">
-            $('.receptionist-menu a').click(function(event) {
+            $('#2requestSection').click(function(event) {
                 event.preventDefault();
                 var link = this;
                 $.smoothScroll({
@@ -94,6 +95,14 @@
                 $.smoothScroll({
                     scrollTarget: link.hash
                 });
+            });
+            
+            /*
+                Here goes the code for REST call to request a change on the 
+                patient's information.
+            */
+            $('#request4change').submit(function(e){
+                alert('fd');
             });
         </script>
     </body>
