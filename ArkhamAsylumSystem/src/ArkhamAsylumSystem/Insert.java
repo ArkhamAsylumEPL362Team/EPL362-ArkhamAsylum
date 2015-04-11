@@ -13,7 +13,7 @@ import extras.DatabaseConnection;
 
 
 @Path("/insert/")
-public class Add {
+public class Insert {
 	
 	@POST
 	@Path("/patient/")

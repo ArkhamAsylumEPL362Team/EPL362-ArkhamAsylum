@@ -4,19 +4,12 @@ class Entities {
 
 }
 
-
-/**
- * Object that shows Medicine
- *
- */
 class Medicine{
 	public String description;
 	public String name;
 }
-/**
- * Object that shows Patient
- * 
- */
+
+
 class Patient{
 	public String id;  				//int//
 	public String firstname;		//text//
@@ -27,27 +20,20 @@ class Patient{
 	public String birthday; 	 //Date YYYY-MM-DD//
 	public String gender;  		   //M or F//
 }
-/**
- * Object that shows SideEffect
- *
- */
+
+
 class SideEffect {
 	public String medicine;  //text//
 	public String effect;    //text//
 }
-/**
- * 
- * Object that shows clinical staff
- * 
- */
+
+
 class ClinicalStaff {
 	public String id;      		//int//
 	public String profession;	//DOCTOR or NURSE or OTHER //
 }
 
-/**
- * Object that shows users
- */
+
 class User{
 	public String id;			//int//
 	public String firstname;	//text//
@@ -68,6 +54,7 @@ class Incident {
 	public String type;		//INCIDENT or THREAT//
 }
 
+
 class MedicalRecord {
 	public String patient;				//int//
 	public String alergies;			   //text//
@@ -81,6 +68,8 @@ class IncidentByPrescription {
 	public String patient; //id//
 	public String details; //text//
 }
+
+
 class Comment{
 	public String id;		 //int//
 	public String content;	 //text//
@@ -88,17 +77,21 @@ class Comment{
 	public String clinician; //int//
 	public String date; //DATE YYYY-MM-DD //
 }
+
+
 class Consultant {
 	public String clinician;  //int//
 	public String patient;   //int//
 }
+
+
 class WarningOverruled{
 	public String clinician; //int//
 	public String warning; //text//
 	public String date; // DATE: YYYY-MM-DD //
-	
-	
 }
+
+
 class Appointment{
 	public String id;  //int//
 	public String date;//date//
