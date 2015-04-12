@@ -172,9 +172,14 @@ $('#add-tr-btn').on('click',function(e){
     e.preventDefault();
 });
 
+var table5api;
+   
 var table5= $('#example5').DataTable({
-    "searching": false,
-    "bPaginate": false
+    "searching": true,
+    "bPaginate": false, 
+    "initComplete": function () {
+        table5api=this.api();
+    }
 });
 
 $('#example5 tbody').on('click','tr',function(){
@@ -208,4 +213,8 @@ $('#delete-ctr-btn').on('click',function(e){
         swal("You have to select a treatment to delete.");
     }
     e.preventDefault();
+});
+
+$('#diagnose_patient_id_input').on('change',function(e){
+    table5api.search(this.value).draw();
 });

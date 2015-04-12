@@ -173,7 +173,7 @@
                                     <div class="submit-treatment form-group">
                                         <label class="col-md-8 control-label" for="reset_btn"></label>
                                         <div class="col-md-4">
-                                            <button id="reset_btn" name="reset_btn" class="btn btn-default">Reset</button>
+                                            <button id="reset_btn" type="reset" name="reset_btn" class="btn btn-default">Reset</button>
                                             <button id="submit_btn" name="submit_btn" class="btn btn-primary">Complete</button>
                                         </div>
                                     </div>
