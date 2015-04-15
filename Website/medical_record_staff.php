@@ -30,20 +30,27 @@
             
             <div id="home-page" class="receptionist-menu container">
                 <div class="receptionist-review row">
-                    <div class="col-lg-3"></div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-3">
+                        <img class="img-circle" src="_/img/medical_record_staff.png" alt="Generic placeholder image" width="140" height="140">
+                        <h2>Manage Personel</h2>
+                        <p>Via this option you can add/edit and generaly manage personel record based on their field of work.</p>
+                        <p><a class="btn btn-default" href="#personel" role="button">Manage personel &raquo;</a></p>
+                    </div>
+                    <div class="col-lg-1"></div>
                     <div class="col-lg-3">
                         <img class="img-circle" src="_/img/request.png" alt="Generic placeholder image" width="140" height="140">
                         <h2>Handle change request</h2>
                         <p>Via this option you can check the pending patient's request for changes on their personal information. You can access their accound information and, based to their email, you can change that field.</p>
                         <p><a class="btn btn-default" href="#requests" role="button">Show requests &raquo;</a></p>
                     </div>
+                    <div class="col-lg-1"></div>
                     <div class="col-lg-3">
                         <img class="img-circle" src="_/img/death.png" alt="Generic placeholder image" width="140" height="140">
                         <h2>Report a deceased patient</h2>
                         <p>You can press here if there has been an unfortunate death of a patient. His/Her record will be read-only from now on.</p>
                         <p><a class="btn btn-default" href="#death" role="button">Proceed here &raquo;</a></p>
                     </div>
-                    <div class="col-lg-3"></div>
                 </div>
             </div>
             
@@ -86,6 +93,23 @@
                 </form>
             </div>
             
+            <div id="personel" class="personel container">
+                <hr/>
+                <h1>Manage Personel</h1>
+                <div class="row">
+                        <div class="col-md-11">
+                            <?php include 'components/datatables/datatable-personel.php' ?>
+                        </div>
+                        <div class="col-md-1">
+                            <table class="diary-menu">
+                                <tr><td><div><a id="add-per-btn" href="#"><i class="fa fa-plus fa-4x"></i></a></div></td></tr>
+                                <tr><td><div><a id="view-per-btn" href="#"><i class="fa fa-eye fa-4x"></i></a></div></td></tr>
+                                <tr><td><div><a id="edit-per-btn" href="#"><i class="fa fa-pencil fa-4x"></i></a></div></td></tr>
+                                <tr><td><div><a id="delete-per-btn" href="#"><i class="fa fa-times fa-4x"></i></a></div></td></tr>
+                            </table> 
+                        </div>
+                    </div>
+                </div>
         </div>
         
         <script type="text/javascript" src="_/js/arkham.medical_record_staff.js"></script>

@@ -57,6 +57,11 @@ body{
     height: 100vh !important;
 }
 
+.container.personel{
+    padding-top: 40px;
+    height: 100vh !important;
+}
+
 .container.diagnose{
     padding-top: 40px;
     height: 110vh !important;

@@ -54,6 +54,29 @@ function deleteRequest(){
     }
 }
 
+function deletePersonel(){
+    if($('#example9 tbody tr').hasClass('selected')){  
+        swal({
+            title: "Are you sure?",
+            text: "You are trying to delete a personel's file.",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-warning",
+            confirmButtonText: "Delete",
+            cancelButtonText: "Cancel",
+            closeOnConfirm: true,
+            closeOnCancel: true
+        },
+        function(isConfirm) {
+            if (isConfirm) {
+                table9.row('.selected').remove().draw(false);
+            }
+        });
+    }else{
+         swal("You have to select a personel's file to delete.");
+    }
+}
+
 $('#delete-rec-btn').on('click',function(e){
     deleteRequest();
     e.preventDefault();
@@ -67,6 +90,69 @@ $('#view-rec-btn').on('click',function(e){
     }else{
         swal("You have to select a request to view.");
     }
+    e.preventDefault();
+});
+
+$('#view-per-btn').on('click',function(e){
+    if($('#example9 tbody tr').hasClass('selected')){                    
+        $('#modal-title').text('View personel information');
+        $('.form-holder').load("components/view_personel_form.php",function(){
+            $('#view_personelID_input').val($('tr.selected td').eq(0).text());
+            $('#view_personel_firstname_input').val($('tr.selected td').eq(1).text());
+            $('#view_personel_lastname_input').val($('tr.selected td').eq(2).text());
+            $('#view_personel_email_input').val($('tr.selected td').eq(3).text());
+            $('#view_personel_phonenumber_input').val($('tr.selected td').eq(4).text());
+
+            var type=$('tr.selected td').eq(5).text();
+
+            if(type=="MEDICAL_RECORD_STAFF"){
+                $('#personel_type-0').attr('checked',true);
+            }else if(type=="RECEPTIONIST"){
+                $('#personel_type-1').attr('checked',true);
+            }else{
+                $('#personel_type-2').attr('checked',true);
+            }
+        });
+                
+        $('#my-modal').modal('toggle');  
+    }else{
+        swal("You have to select a personel's file to view.");
+    }
+    e.preventDefault();
+});
+
+$('#edit-per-btn').on('click',function(e){
+    if($('#example9 tbody tr').hasClass('selected')){                    
+        $('#modal-title').text('View personel information');
+        $('.form-holder').load("components/edit_personel_form.php",function(){
+            $('#edit_personelID_input').val($('tr.selected td').eq(0).text());
+            $('#edit_personel_firstname_input').val($('tr.selected td').eq(1).text());
+            $('#edit_personel_lastname_input').val($('tr.selected td').eq(2).text());
+            $('#edit_personel_email_input').val($('tr.selected td').eq(3).text());
+            $('#edit_personel_phonenumber_input').val($('tr.selected td').eq(4).text());
+
+            var type=$('tr.selected td').eq(5).text();
+
+            if(type=="MEDICAL_RECORD_STAFF"){
+                $('#personel_type-0').attr('checked',true);
+            }else if(type=="RECEPTIONIST"){
+                $('#personel_type-1').attr('checked',true);
+            }else{
+                $('#personel_type-2').attr('checked',true);
+            }
+        });
+                
+        $('#my-modal').modal('toggle');  
+    }else{
+        swal("You have to select a personel's file to edit.");
+    }
+    e.preventDefault();
+});
+
+$('#add-per-btn').on('click',function(e){                 
+    $('#modal-title').text('Add personel');
+    $('.form-holder').load("components/add_personel_form.php",function(){});
+    $('#my-modal').modal('toggle');  
     e.preventDefault();
 });
 
@@ -87,5 +173,22 @@ $('#report-death-form').submit(function(e){
             alert("RIP <patient's name.>");
         }
     });
+    e.preventDefault();
+});
+
+var table9 = $('#example9').DataTable();
+
+$('#example9 tbody').on('click','tr',function(){
+    if ($(this).hasClass('selected')) {
+        $(this).removeClass('selected');
+    }
+    else {
+            table9.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+});
+
+$('#delete-per-btn').on('click',function(e){
+    deletePersonel();
     e.preventDefault();
 });

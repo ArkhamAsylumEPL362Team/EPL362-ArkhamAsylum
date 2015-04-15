@@ -85,7 +85,7 @@
         </div>
         <div class="modal-footer">
             <div class="form-group">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Ok</button>
             </div>
         </div>
     </fieldset>
