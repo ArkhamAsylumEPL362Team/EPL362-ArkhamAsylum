@@ -21,7 +21,7 @@ public class View {
 		if (database.getStatement() == null){
 			return "No requests have been found";
 		}
-		ResultSet rs= database.getStatement().executeQuery("SELECT REQUEST.id AS `number`,REQUEST.date,REQUEST.content,PATIENT.firstname,PATIENT.lastname,PATIENT.id FROM REQUEST,PATIENT where REQUEST.patient=PATIENT.id;");
+		ResultSet rs= database.getStatement().executeQuery("SELECT REQUEST.id `number`,REQUEST.date,REQUEST.content,PATIENT.firstname,PATIENT.lastname,PATIENT.id FROM REQUEST,PATIENT where REQUEST.patient=PATIENT.id;");
 		String result = JSON.parseJSON(rs);
 		return  result;
 	}
