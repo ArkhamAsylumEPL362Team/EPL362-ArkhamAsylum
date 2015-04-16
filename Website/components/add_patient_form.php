@@ -1,4 +1,4 @@
-<form id="add-appointment-form" name='add-appointment-form' action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+<form id="add-patient-form" name='add-appointment-form' action="" method="post" enctype="multipart/form-data" class="form-horizontal"  onsubmit="insertNewPatient()">
     <fieldset>
         <div class="modal-body">
             <div class="form-group">
@@ -78,8 +78,40 @@
         <div class="modal-footer">
             <div class="form-group">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary" >Save</button>
+                <button type="submit"  class="btn btn-primary"  >Save</button>
             </div>
         </div>
     </fieldset>
 </form>
+
+<script>
+	
+	var ADD_PATIENT ="http://localhost:8080/ArkhamAsylumSystem/rest/receptionist/insert/patient/";	
+
+	function insertNewPatient(){
+		
+		
+		var gend ="M";
+		if ($("#patient_gender-0").is(':checked')){
+			gend = "M";
+		}else if ($("#patient_gender-0").is(':checked')){ 
+			gend = "F";	
+		}
+		var data = {  "id": $("#add_patientID_input").val() ,
+					  "firstname":$("#add_patient_firstname_input").val(),
+					  "relative_email":$("#add_email_input").val(),
+					  "lastname":$("#add_patient_lastname_input").val(),		
+					  "address":$("#add_patient_address_input").val(),	
+					  "phonenumber":$("#add_patient_phonenumber_input").val(),	
+					  "birthday":$("#add_patient_birthdate_input").val(),
+					  "gender": gend
+					};	
+		data = JSON.stringify(data); 
+		$.post(ADD_PATIENT,data,function(data){
+				data = JSON.parse(data);
+				console.log(data);
+		});	
+	}
+	
+</script>	
+

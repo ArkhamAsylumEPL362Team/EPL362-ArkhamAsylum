@@ -1,4 +1,4 @@
-package ArkhamAsylumSystem;
+package receptionist;
 
 import javax.ws.rs.Path;
 

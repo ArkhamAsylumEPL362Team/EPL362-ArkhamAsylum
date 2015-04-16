@@ -13,75 +13,37 @@
     </thead>
 
     <tbody>
-        <tr>
-            <td>0</td>
-            <td>Philip</td>
-            <td>Aziz</td>
-            <td>dpasch01@cs.ucy.ac.cy</td>
-            <td>Platonos, Strovolos 1832 Nicosia</td>
-            <td>99960929</td>
-            <td>1992/04/25</td>
-            <td>M</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Demetris</td>
-            <td>Paschalides</td>
-            <td>paziz001@cs.ucy.ac.cy</td>
-            <td>Lordou Vyronos, Kaimakli 1041 Nicosia</td>
-            <td>99954334</td>
-            <td>1992/05/13</td>
-            <td>M</td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Theodoros</td>
-            <td>Charalampous</td>
-            <td>dpasch01@cs.ucy.ac.cy</td>
-            <td>Platonos, Tsada 1832 Pafos</td>
-            <td>99123212</td>
-            <td>1992/08/27</td>
-            <td>F</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Irene</td>
-            <td>Papakosta</td>
-            <td>ppavli01@cs.ucy.ac.cy</td>
-            <td>Platonos, Strovolos 1832 Nicosia</td>
-            <td>99231233</td>
-            <td>1996/04/25</td>
-            <td>M</td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td>Andreas</td>
-            <td>Fragkou</td>
-            <td>epapak02@cs.ucy.ac.cy</td>
-            <td>Platonos, Strovolos 1832 Nicosia</td>
-            <td>96778798</td>
-            <td>1992/04/25</td>
-            <td>M</td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <td>Andria</td>
-            <td>Kkoushi</td>
-            <td>dpasch01@cs.ucy.ac.cy</td>
-            <td>Platonos, Strovolos 1832 Nicosia</td>
-            <td>97999889</td>
-            <td>1994/04/25</td>
-            <td>F</td>
-        </tr>
-        <tr>
-            <td>6</td>
-            <td>Panayiotis</td>
-            <td>Pavlides</td>
-            <td>dpasch01@cs.ucy.ac.cy</td>
-            <td>Platonos, Strovolos 1832 Nicosia</td>
-            <td>9923123</td>
-            <td>1992/04/25</td>
-            <td>M</td>
-        </tr>
+      
     </tbody>
 </table>
+
+<script>
+$(document).ready(function() {
+				
+			var ALL_PATIENTS ="http://localhost:8080/ArkhamAsylumSystem/rest/receptionist/report/all_patients/";	
+				
+			$.get(ALL_PATIENTS,function (data){	
+				
+				
+				data = JSON.parse(data);
+				console.log(data);
+				
+				$.each(data.results_array,function (i,patient){
+					var t = $('#example1').DataTable();
+					t.row.add( [
+            			    patient.id+"",
+							patient.firstname +"",
+							patient.lastname +"",
+							patient.relative_email +"",
+							patient.address +"",
+							patient.phonenumber +"",
+							patient.birthday +"",
+							patient.gender +""
+							] ).draw();
+				
+				});
+				
+							
+			});
+});
+</script>	

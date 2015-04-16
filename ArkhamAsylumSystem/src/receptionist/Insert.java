@@ -1,4 +1,4 @@
-package ArkhamAsylumSystem;
+package receptionist;
 
 import java.sql.SQLException;
 import javax.ws.rs.Consumes;
@@ -11,42 +11,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import extras.DatabaseConnection;
 
 
-
 @Path("/insert/")
 public class Insert {
 	
-	@POST
-	@Path("/patient/")
-	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON}) 
-	@Produces(MediaType.TEXT_PLAIN)
-	public String insertPatient (String data){
-		
-		DatabaseConnection database =null;
-		
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-			Patient patient = mapper.readValue(data, Patient.class);
-			
-			database = new DatabaseConnection();
-		
-			String query = "INSERT INTO PATIENT values ( '"+ patient.id + "','" + patient.firstname + "','"+ 
-						patient.relative_email + "','" +patient.lastname + "','"+patient.address + 
-						"','" + patient.phonenumber + "','"  + patient.birthday + "','" + patient.gender + "')";  
-		
-			database.getStatement().executeUpdate(query);
-			
-		}catch(SQLException r){
-			r.printStackTrace();
-			return " { \"status\": \"SQLException\" }";
-		}catch(Exception e){
-			e.printStackTrace();
-			return " { \"status\": \"JSONException\" }";	
-		}finally{
-			database.CloseConnection();
-		}
-		
-		return    data;
-	}
 	
 	
 	@POST
@@ -350,38 +317,6 @@ public class Insert {
 		return   data;
 	}
 	
-	@POST
-	@Path("/appointment/")
-	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON}) 
-	@Produces(MediaType.TEXT_PLAIN)
-	public String insertAppointment(String data){
-		
-		DatabaseConnection database =null;
-		
-		try {
-			database = new DatabaseConnection();
-			ObjectMapper mapper = new ObjectMapper();
-			Appointment app = mapper.readValue(data, Appointment.class);
-			
-			
-		
-			String query = "INSERT INTO APPOINTMENT values ( '"+app.id + "','" + app.date + "','"+ 
-						app.patient + "','" +app.clinician + "','"+app.clinic + 
-						"','" + app.time + "','"  + app.type + "','" + app.status + "')";  
-		
-			database.getStatement().executeUpdate(query);
-			
-		}catch(SQLException r){
-			r.printStackTrace();
-			return " { \"status\": \"SQLException\" }";
-		}catch(Exception e){
-			e.printStackTrace();
-			return " { \"status\": \"JSONException\" }";	
-		}finally{
-			database.CloseConnection();
-		}
-		
-		return    data;
-	}
+	
 }
 

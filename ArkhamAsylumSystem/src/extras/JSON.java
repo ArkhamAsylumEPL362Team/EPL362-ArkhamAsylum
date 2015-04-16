@@ -16,10 +16,10 @@ public class JSON {
 		while (rs.next()){
 			int numOfColumns = culnames.getColumnCount();
 			ArrayJSON = ArrayJSON + "{";
-			for(int i=1; i< numOfColumns ; i++){
+			for(int i=1; i<= numOfColumns ; i++){
 				culName = culnames.getColumnName(i);
 				content = rs.getString(i);
-				if (i !=numOfColumns -1){
+				if (i !=numOfColumns){
 					ArrayJSON= ArrayJSON  + " \""+ culName + "\""  + ": " + "\""+  content +"\"" + ", " ;
 				}else{
 					ArrayJSON = ArrayJSON  + "\""+culName+ "\"" + ": " +"\"" + content + "\""  + " ";

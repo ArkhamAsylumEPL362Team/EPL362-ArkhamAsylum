@@ -87,6 +87,7 @@
         
         <script type="text/javascript" src="_/js/arkham.receptionist.js"></script>
         <script type="text/javascript">
+			
             $('.receptionist-menu a').click(function(event) {
                 event.preventDefault();
                 var link = this;

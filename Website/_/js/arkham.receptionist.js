@@ -1,3 +1,6 @@
+var DELETE_PATIENT = "http://localhost:8080/ArkhamAsylumSystem/rest/receptionist/delete/patient/"
+
+
 $.extend( $.fn.dataTable.defaults, {
     "searching": true,
     "ordering": true,
@@ -203,7 +206,33 @@ function deletePatient(){
         },
         function(isConfirm) {
             if (isConfirm) {
+			 var id=$('tr.selected td').eq(0).text();
+		     var firstname=$('tr.selected td').eq(1).text();
+             var lastname=$('tr.selected td').eq(2).text();
+             var email=$('tr.selected td').eq(3).text();
+             var address=$('tr.selected td').eq(4).text();
+             var phonenumber=$('tr.selected td').eq(5).text();
+             var birthdate=$('tr.selected td').eq(6).text();
+             var gender=$('tr.selected td').eq(7).text();
+				
+			var data = {  "id": id,
+					  "firstname":firstname,
+					  "relative_email":email,
+					  "lastname":lastname ,		
+					  "address":address ,	
+					  "phonenumber":phonenumber,	
+					  "birthday":birthdate,
+					  "gender": gender
+					};	
+				data = JSON.stringify(data);
+				$.post(DELETE_PATIENT,data,function(data){
+					
+					console.log(data);
+				});
+				
                 table1.row('.selected').remove().draw(false);
+				
+				
             }
         });
     }else{
@@ -211,18 +240,6 @@ function deletePatient(){
     }
 }
 
-function addPatient(){
-    table1.row.add([
-        "10",
-        "Johny",
-        "Pastourmas",
-        "pastour@hotmail.com",
-        "Lordou Vyronos 8B Kaimakli, Nicosia",
-        "22311323",
-        "1990/05/12",
-        "M"
-    ] ).draw();
-}
 
 
 function loadForm(operation){
