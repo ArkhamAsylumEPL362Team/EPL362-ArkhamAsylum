@@ -217,6 +217,8 @@ public class Receptionist {
 		+ "ORDER BY A.date ASC";
 		
 		
+		
+		
 		ResultSet rs= database.getStatement().executeQuery(query);
 		String result = JSON.parseJSON(rs);
 		return  result;
