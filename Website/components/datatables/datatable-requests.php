@@ -24,7 +24,7 @@ $(document).ready(function() {
             var table8= $('#example8').dataTable({
                 "aaData": requests.results_array,
                 "aoColumns": [
-                    { "mDataProp": "id" },
+                    { "mDataProp": "number" },
                     { "mDataProp": "firstname" },
                     { "mDataProp": "lastname" },
                     { "mDataProp": "id" },

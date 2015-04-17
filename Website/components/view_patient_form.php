@@ -2,57 +2,57 @@
     <fieldset>
         <div class="modal-body">
             <div class="form-group">
-              <label class="col-md-4 control-label" for="edit_patientID_input">Patient ID</label>  
+              <label class="col-md-4 control-label" for="view_patientID_input">Patient ID</label>  
               <div class="col-md-6">
-              <input readonly id="edit_patientID_input" name="edit_patientID_input" placeholder="Patient ID goes here..." class="form-control input-md" required="" type="text">
+              <input readonly id="view_patientID_input" name="view_patientID_input" placeholder="Patient ID goes here..." class="form-control input-md" required="" type="text">
 
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-md-4 control-label" for="edit_patient_firstname_input">Firstname</label>  
+              <label class="col-md-4 control-label" for="view_patient_firstname_input">Firstname</label>  
               <div class="col-md-6">
-              <input readonly id="edit_patient_firstname_input" name="edit_patient_firstname_input" placeholder="Patient's firstname goes here..." class="form-control input-md" required="" type="text">
+              <input readonly id="view_patient_firstname_input" name="view_patient_firstname_input" placeholder="Patient's firstname goes here..." class="form-control input-md" required="" type="text">
 
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-md-4 control-label" for="edit_patient_lastname_input">Lastname</label>  
+              <label class="col-md-4 control-label" for="view_patient_lastname_input">Lastname</label>  
               <div class="col-md-6">
-              <input readonly id="edit_patient_lastname_input" name="edit_patient_lastname_input" placeholder="Patient's lastname goes here..." class="form-control input-md" required="" type="text">
+              <input readonly id="view_patient_lastname_input" name="view_patient_lastname_input" placeholder="Patient's lastname goes here..." class="form-control input-md" required="" type="text">
 
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-md-4 control-label" for="edit_email_input">Relative's email</label>  
+              <label class="col-md-4 control-label" for="view_email_input">Relative's email</label>  
               <div class="col-md-6">
-              <input readonly id="edit_email_input" name="edit_email_input" placeholder="Relative's email goes here..." class="form-control input-md" required="" type="text">
+              <input readonly id="view_email_input" name="view_email_input" placeholder="Relative's email goes here..." class="form-control input-md" required="" type="text">
 
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-md-4 control-label" for="edit_patient_address_input">Address</label>  
+              <label class="col-md-4 control-label" for="view_patient_address_input">Address</label>  
               <div class="col-md-6">
-              <input readonly id="edit_patient_address_input" name="edit_patient_address_input" placeholder="Patient's address goes here..." class="form-control input-md" required="" type="text">
+              <input readonly id="view_patient_address_input" name="view_patient_address_input" placeholder="Patient's address goes here..." class="form-control input-md" required="" type="text">
 
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-md-4 control-label" for="edit_patient_phonenumber_input">Phonenumber</label>  
+              <label class="col-md-4 control-label" for="view_patient_phonenumber_input">Phonenumber</label>  
               <div class="col-md-6">
-              <input readonly id="edit_patient_phonenumber_input" name="edit_patient_phonenumber_input" placeholder="Patient's phonenumber goes here..." class="form-control input-md" required="" type="text">
+              <input readonly id="view_patient_phonenumber_input" name="view_patient_phonenumber_input" placeholder="Patient's phonenumber goes here..." class="form-control input-md" required="" type="text">
 
               </div>
             </div>
 
             <div class="form-group">
-              <label class="col-md-4 control-label" for="edit_patient_birthdate_input">Birthdate</label>  
+              <label class="col-md-4 control-label" for="view_patient_birthdate_input">Birthdate</label>  
               <div class="col-md-6">
-              <input readonly id="edit_patient_birthdate_input" name="edit_patient_birthdate_input" placeholder="Patient's birthdate goes here..." class="form-control input-md" required="" type="text">
+              <input readonly id="view_patient_birthdate_input" name="view_patient_birthdate_input" placeholder="Patient's birthdate goes here..." class="form-control input-md" required="" type="text">
 
               </div>
             </div>
