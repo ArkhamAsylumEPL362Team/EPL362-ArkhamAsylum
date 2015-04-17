@@ -23,11 +23,9 @@ $(document).ready(function() {
 			var ALL_PATIENTS ="http://localhost:8080/ArkhamAsylumSystem/rest/receptionist/report/all_patients/";	
 				
 			$.get(ALL_PATIENTS,function (data){	
-				
-				
+					
 				data = JSON.parse(data);
-				console.log(data);
-				
+			
 				$.each(data.results_array,function (i,patient){
 					var t = $('#example1').DataTable();
 					t.row.add( [

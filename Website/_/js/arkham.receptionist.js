@@ -1,5 +1,5 @@
-var DELETE_PATIENT = "http://localhost:8080/ArkhamAsylumSystem/rest/receptionist/delete/patient/"
-
+var DELETE_PATIENT = "http://localhost:8080/ArkhamAsylumSystem/rest/receptionist/delete/patient/";
+var DELETE_APPOINTMENT = "http://localhost:8080/ArkhamAsylumSystem/rest/receptionist/delete/appointment/";
 
 $.extend( $.fn.dataTable.defaults, {
     "searching": true,
@@ -226,7 +226,6 @@ function deletePatient(){
 					};	
 				data = JSON.stringify(data);
 				$.post(DELETE_PATIENT,data,function(data){
-					
 					console.log(data);
 				});
 				

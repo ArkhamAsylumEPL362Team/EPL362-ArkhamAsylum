@@ -78,7 +78,7 @@
         <div class="modal-footer">
             <div class="form-group">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="submit"  class="btn btn-primary"  >Save</button>
+                <button type="button" onclick="insertNewPatient()" class="btn btn-primary" data-dismiss="modal"  >Save</button>
             </div>
         </div>
     </fieldset>
@@ -89,7 +89,6 @@
 	var ADD_PATIENT ="http://localhost:8080/ArkhamAsylumSystem/rest/receptionist/insert/patient/";	
 
 	function insertNewPatient(){
-		
 		
 		var gend ="M";
 		if ($("#patient_gender-0").is(':checked')){
@@ -110,6 +109,17 @@
 		$.post(ADD_PATIENT,data,function(data){
 				data = JSON.parse(data);
 				console.log(data);
+					var t = $('#example1').DataTable();
+					t.row.add( [
+            			    data.id+"",
+							data.firstname +"",
+							data.lastname +"",
+							data.relative_email +"",
+							data.address +"",
+							data.phonenumber +"",
+							data.birthday +"",
+							data.gender +""
+					] ).draw();
 		});	
 	}
 	

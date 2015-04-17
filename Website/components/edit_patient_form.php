@@ -1,4 +1,4 @@
-<form id="add-appointment-form" name='add-appointment-form' action="" method="post" enctype="multipart/form-data" class="form-horizontal"  onsubmit="editExistPatient()">
+<form id="add-appointment-form" name='add-appointment-form' action="" method="post" enctype="multipart/form-data" class="form-horizontal"  >
     <fieldset>
         <div class="modal-body">
             <div class="form-group">
@@ -78,7 +78,7 @@
         <div class="modal-footer">
             <div class="form-group">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary"  >Save</button>
+                <button type="button"  onclick ="editExistPatient()" class="btn btn-primary" data-dismiss="modal"  >Save</button>
             </div>
         </div>
     </fieldset>
@@ -110,6 +110,15 @@
 		$.post(EDIT_PATIENT,data,function(data){
 				data = JSON.parse(data);
 				console.log(data);
+		   	 $('tr.selected td').eq(0).text(data.id);
+		     $('tr.selected td').eq(1).text(data.firstname);
+             $('tr.selected td').eq(2).text(data.lastname);
+             $('tr.selected td').eq(3).text(data.relative_email);
+             $('tr.selected td').eq(4).text(data.address);
+             $('tr.selected td').eq(5).text(data.phonenumber);
+             $('tr.selected td').eq(6).text(data.birthday);
+             $('tr.selected td').eq(7).text(data.gender);
+			
 		});	
 	}
 </script>	

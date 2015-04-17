@@ -130,6 +130,34 @@ public class Receptionist {
 		return  result;
 	}
 	
+	@GET
+	@Path("/report/clinic/")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getClinic() throws Exception{
+		DatabaseConnection database = new DatabaseConnection();
+		if (database.getStatement() == null){
+			return "Gamiseta";
+		}
+		ResultSet rs= database.getStatement().executeQuery("SELECT * FROM CLINIC");
+		String result = JSON.parseJSON(rs);
+		return  result;
+	}
+	
+	@GET
+	@Path("/report/clinical_staff/")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getClinicalStaff() throws Exception{
+		DatabaseConnection database = new DatabaseConnection();
+		if (database.getStatement() == null){
+			return "Gamiseta";
+		}
+		ResultSet rs= database.getStatement().executeQuery("SELECT * FROM USER WHERE type = 'CLINICAL_STAFF'");
+		String result = JSON.parseJSON(rs);
+		return  result;
+	}
+	
+	
+
 	@POST
 	@Path("/delete/patient/")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON}) 
@@ -157,5 +185,35 @@ public class Receptionist {
 		}
 		return    data;
 	}
+	
+	@POST
+	@Path("/delete/appointment/")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON}) 
+	@Produces(MediaType.TEXT_PLAIN)
+	public String deleteAppointment (String data){
+		DatabaseConnection database =null;
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			Appointment appointment = mapper.readValue(data, Appointment.class);
+			
+			database = new DatabaseConnection();
+		
+			String query = "DELETE FROM APPOINTMENT WHERE id ='" +appointment.id + "'";
+		
+			database.getStatement().executeUpdate(query);
+			
+		}catch(SQLException r){
+			r.printStackTrace();
+			return " { \"status\": \"SQLException\" }";
+		}catch(Exception e){
+			e.printStackTrace();
+			return " { \"status\": \"JSONException\" }";	
+		}finally{
+			database.CloseConnection();
+		}
+		return    data;
+	}
+	
+	
 	
 }

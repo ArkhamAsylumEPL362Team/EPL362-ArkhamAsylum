@@ -4,8 +4,6 @@ public class Entities {
 
 }
 
-
-
 class Patient{
 	public String id;  				//int//
 	public String firstname;		//text//

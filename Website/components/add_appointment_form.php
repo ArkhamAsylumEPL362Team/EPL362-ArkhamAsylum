@@ -12,8 +12,8 @@
               <label class="col-md-4 control-label" for="add_clinicianID_input">Clinician</label>
               <div class="col-md-6">
                 <select id="add_clinicianID_input" name="add_clinicianID_input" class="form-control">
-                  <option value="1">George Gianakopoulos</option>
-                  <option value="2">Tasos Steliou</option>
+					
+
                 </select>
               </div>
             </div>
@@ -29,8 +29,8 @@
               <label class="col-md-4 control-label" for="add_clinic_input">Clinic</label>
               <div class="col-md-6">
                 <select id="add_clinic_input" name="add_clinic_input" class="form-control">
-                  <option value="1">Apollonio</option>
-                  <option value="2">Areteion</option>
+
+					
                 </select>
               </div>
             </div>            
@@ -81,8 +81,67 @@
         <div class="modal-footer">
             <div class="form-group">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary" >Save</button>
+                <button type="button" onclick="addNewAppointment()" class="btn btn-primary" data-dismiss="modal" >Save</button>
             </div>
         </div>
     </fieldset>
 </form>
+
+<script>
+	
+	var ALL_CLINICS = "http://localhost:8080/ArkhamAsylumSystem/rest/receptionist/report/clinic/";	
+	var ALL_CLINICAL_STAFF = "http://localhost:8080/ArkhamAsylumSystem/rest/receptionist/report/clinical_staff/";
+	var ADD_APPOINTMENT = "http://localhost:8080/ArkhamAsylumSystem/rest/receptionist/report/clinical_staff/";
+	$(document).ready(function(){
+		
+		$.get(ALL_CLINICS,function(data){
+			data = JSON.parse(data);
+			
+		
+			$.each(data.results_array, function(i,clinic){
+				$("#add_clinic_input").append( $('<option></option>').html(clinic.name));
+			});
+		});
+		
+		$.get(ALL_CLINICAL_STAFF,function(data){
+			
+			data = JSON.parse(data);
+			console.log(data);
+			$.each(data.results_array, function(i,staff){
+				$("#add_clinicianID_input").append( $('<option></option>').attr("id",staff.id)
+										   .html(staff.firstname+" "+staff.lastname));
+			});
+		})
+	});
+		
+	function addNewAppointment(){
+		
+		var status = "";
+		var type = "";
+		
+		if ($("#appointment_status-0").is(':checked')){
+				status = "NOT_SHOW_UP";	
+		}else{
+				status = "SHOW_UP";
+		}
+		
+		if ($("#appointment_type-0").is(':checked')){
+				type = "PRE_ARRANGED";	
+		}else{
+				type = "DROP_IN";
+		}
+		var data = {	"id": $("#add_patientID_input").val(),
+					 	"date":$("#add_date_input").val(),
+						"patient":$("#add_patientID_input").val(),
+						"clinician":$("#add_clinicianID_input :selected").attr("id"),		
+						"clinic":$('#add_clinic_input :selected').text(),	
+						"time":$("#add_time_input").val(),			
+						"type":type,	 
+						"status": status
+				  };
+		console.log(data);
+	}
+	
+	
+
+</script>

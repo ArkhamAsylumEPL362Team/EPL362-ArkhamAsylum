@@ -14,7 +14,7 @@ public class DatabaseConnection {
 	private static final String PASSWORD="";
 	private static final String DATABASE="EPL362";
 	
-	public DatabaseConnection(){
+	public DatabaseConnection(){	
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
