@@ -8,7 +8,28 @@ $.extend( $.fn.dataTable.defaults, {
     "scrollX": false
 } );
 
-var table8 = $('#example8').DataTable();
+var table8; 
+$.ajax({
+    type: "POST",
+    url: "http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/view_patient_requests/",
+    async:"false",
+    cache: "true",
+    success: function(result) {
+        requests = result;
+        console.log(requests);
+        table8= $('#example8').dataTable({
+            "aaData": JSON.parse(jsonappointment),
+            "aoColumns": [
+                { "mDataProp": "id" },
+                { "mDataProp": "firstname" },
+                { "mDataProp": "lastname" },
+                { "mDataProp": "id" },
+                { "mDataProp": "date" }
+            ],
+            "destroy":true
+        });
+    }
+});
 
 $('#example8 tbody').on('click','tr',function(){
     if ($(this).hasClass('selected')) {
