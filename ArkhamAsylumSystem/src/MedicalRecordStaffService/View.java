@@ -20,14 +20,14 @@ public class View {
 	public String getRequests() throws Exception{
 		DatabaseConnection database = new DatabaseConnection();
 		if (database.getStatement() == null){
-			return "No requests have been found";
+			return "{}";
 		}
 		ResultSet rs= database.getStatement().executeQuery("SELECT REQUEST.id `number`,REQUEST.date,REQUEST.content,PATIENT.firstname,PATIENT.lastname,PATIENT.id FROM REQUEST,PATIENT where REQUEST.patient=PATIENT.id;");
 		String result = JSON.parseJSON(rs);
 		return  result;
 	}
 	
-	@POST
+	@GET
 	@Path("/view_personel_info/")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getPersonel() throws Exception{

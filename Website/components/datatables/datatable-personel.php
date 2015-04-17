@@ -9,23 +9,32 @@
             <th>Type</th>
         </tr>
     </thead>
-
-    <tbody>
-        <tr>
-            <td>0</td>
-            <td>Tasos</td>
-            <td>Steliou</td>
-            <td>tasos_steliou@arkham.org</td>
-            <td>99234323</td>
-            <td>CLINICAL_STAFF</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>George</td>
-            <td>Giannakopoulos</td>
-            <td>ggianak@arkham.org</td>
-            <td>22323455</td>
-            <td>CLINICAL_STAFF</td>
-        </tr>
-    </tbody>
 </table>
+
+<script>
+$(document).ready(function() {
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/view_personel_info/",
+        async:"false",
+        cache: "true",
+        success: function(result) {
+            var personel = result;
+            personel = JSON.parse(personel);
+            console.log(personel);
+            var table8= $('#example9').dataTable({
+                "aaData": personel.results_array,
+                "aoColumns": [
+                    { "mDataProp": "id" },
+                    { "mDataProp": "firstname" },
+                    { "mDataProp": "lastname" },
+                    { "mDataProp": "email" },
+                    { "mDataProp": "phonenumber" },
+                    { "mDataProp": "type" }
+                ],
+                "destroy":true
+            });
+        }
+    });
+});
+</script>
