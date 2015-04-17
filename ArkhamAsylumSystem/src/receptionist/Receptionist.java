@@ -95,13 +95,23 @@ public class Receptionist {
 			ObjectMapper mapper = new ObjectMapper();
 			Appointment app = mapper.readValue(data, Appointment.class);
 			
-			
-		
 			String query = "INSERT INTO APPOINTMENT values ( '"+app.id + "','" + app.date + "','"+ 
 						app.patient + "','" +app.clinician + "','"+app.clinic + 
 						"','" + app.time + "','"  + app.type + "','" + app.status + "')";  
-		
+	
 			database.getStatement().executeUpdate(query);
+			
+			query = "SELECT A.id appID, A.date, A.time, A.type, A.status, P.id patientID, P.firstname, P.lastname, U.firstname clinicianN,"
+					+ " U.lastname clinicianL, C.name clinicName " 
+					+ " FROM APPOINTMENT A, PATIENT P, USER U , CLINIC C"
+					+ " WHERE A.patient = '" + app.patient + "' and  P.id = '" + app.patient  +"' and U.id = '" + app.clinician
+					+ "' and C.name = '" + app.clinic +"'"
+					+ "ORDER BY A.date ASC";
+			
+			
+			ResultSet rs = database.getStatement().executeQuery(query);
+			
+			data = JSON.parseJSON(rs);
 			
 		}catch(SQLException r){
 			r.printStackTrace();
@@ -156,7 +166,26 @@ public class Receptionist {
 		return  result;
 	}
 	
-	
+	@GET
+	@Path("/report/appointments/")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getAllAppointments() throws Exception{
+		DatabaseConnection database = new DatabaseConnection();
+		if (database.getStatement() == null){
+			return "Gamiseta";
+		}
+		String query =
+		"SELECT A.id appID, A.date, A.time, A.type, A.status, P.id patientID, P.firstname, P.lastname, U.firstname clinicianN,"
+		+ " U.lastname clinicianL, A.clinic clinicName " 
+		+ " FROM APPOINTMENT A, PATIENT P, USER U "
+		+ " WHERE A.patient = P.id  and  A.clinician = U.id "
+		+ "ORDER BY A.date ASC";
+		
+		
+		ResultSet rs= database.getStatement().executeQuery();
+		String result = JSON.parseJSON(rs);
+		return  result;
+	}
 
 	@POST
 	@Path("/delete/patient/")
@@ -185,6 +214,13 @@ public class Receptionist {
 		}
 		return    data;
 	}
+	
+	
+	
+	
+	
+	
+	
 	
 	@POST
 	@Path("/delete/appointment/")
