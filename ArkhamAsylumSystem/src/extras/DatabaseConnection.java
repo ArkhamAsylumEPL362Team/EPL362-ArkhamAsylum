@@ -17,7 +17,7 @@ public class DatabaseConnection {
 	private static final String CONF = "useOldAliasMetadataBehavior=true";
 
 	public DatabaseConnection(){	
-		jdbc:mysql://localhost:3306/mydb?useOldAliasMetadataBehavior=true
+	
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager

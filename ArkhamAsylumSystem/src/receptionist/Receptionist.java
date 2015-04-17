@@ -95,7 +95,10 @@ public class Receptionist {
 			ObjectMapper mapper = new ObjectMapper();
 			Appointment app = mapper.readValue(data, Appointment.class);
 			
-			String query = "INSERT INTO APPOINTMENT values ( '"+app.id + "','" + app.date + "','"+ 
+			ResultSet rs = database.getStatement().executeQuery("SELECT MAX(id) FROM APPOINTMENT");
+			System.out.println(rs.getInt(1));
+			
+			String query = "INSERT INTO APPOINTMENT values ( '"+ (rs.getInt(1) + 1)+"','"+app.date + "','"+ 
 						app.patient + "','" +app.clinician + "','"+app.clinic + 
 						"','" + app.time + "','"  + app.type + "','" + app.status + "')";  
 	
@@ -109,7 +112,7 @@ public class Receptionist {
 					+ "ORDER BY A.date ASC";
 			
 			
-			ResultSet rs = database.getStatement().executeQuery(query);
+			 rs = database.getStatement().executeQuery(query);
 			
 			data = JSON.parseJSON(rs);
 			
@@ -122,9 +125,41 @@ public class Receptionist {
 		}finally{
 			database.CloseConnection();
 		}
-		
 		return    data;
 	}
+	
+//	@POST
+//	@Path("/update/patient/")
+//	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON}) 
+//	@Produces(MediaType.TEXT_PLAIN)
+//	public String updateAppintment (String data){
+//		DatabaseConnection database =null;
+//		try {
+//			ObjectMapper mapper = new ObjectMapper();
+//			Appointment app = mapper.readValue(data, Appointment.class);
+//			
+//			database = new DatabaseConnection();
+//		
+//			String query = "UPDATE APPOINTMENT "
+//						 + "SET id = '" +.id + "', firstname = '" +patient.firstname + "', relative_email = '"
+//						 + patient.relative_email + "', lastname = '" +patient.lastname + "', address = '"+patient.address
+//						 + "', phonenumber ='" + patient.phonenumber + "', birthday ='"  + patient.birthday + "', gender = '"
+//						 + patient.gender +"' "
+//						 + "WHERE id = '" + patient.id + "'";  
+//		
+//			database.getStatement().executeUpdate(query);
+//			
+//		}catch(SQLException r){
+//			r.printStackTrace();
+//			return " { \"status\": \"SQLException\" }";
+//		}catch(Exception e){
+//			e.printStackTrace();
+//			return " { \"status\": \"JSONException\" }";	
+//		}finally{
+//			database.CloseConnection();
+//		}
+//		return    data;
+//	}
 	
 	
 	@GET
@@ -182,7 +217,7 @@ public class Receptionist {
 		+ "ORDER BY A.date ASC";
 		
 		
-		ResultSet rs= database.getStatement().executeQuery();
+		ResultSet rs= database.getStatement().executeQuery(query);
 		String result = JSON.parseJSON(rs);
 		return  result;
 	}
@@ -217,10 +252,7 @@ public class Receptionist {
 	
 	
 	
-	
-	
-	
-	
+
 	
 	@POST
 	@Path("/delete/appointment/")

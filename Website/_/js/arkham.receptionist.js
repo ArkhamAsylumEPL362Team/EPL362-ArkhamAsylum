@@ -39,7 +39,7 @@ $('#editbtn').on('click',function(e){
         $('#modal-title').text('Edit appointment');
         $('.form-holder').load("components/edit_appointment_form.php",function(){
             var id=$('tr.selected td').eq(0).text();
-            var patient=$('tr.selected td').eq(1).text();
+            var patient=$('tr.selected td').eq(1).text().split(" ");
             var clinic=$('tr.selected td').eq(2).text();
             var date=$('tr.selected td').eq(3).text();
             var time=$('tr.selected td').eq(4).text();
@@ -47,7 +47,7 @@ $('#editbtn').on('click',function(e){
             var clinician=$('tr.selected td').eq(6).text();
             var status=$('tr.selected td').eq(7).text();
 
-            $('#edit_patientID_input').val(patient+" id");
+            $('#edit_patientID_input').val(patient[0]);
             $('#edit_date_input').val(date);
             $('#edit_time_input').val(time);
 

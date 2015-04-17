@@ -130,8 +130,7 @@
 		}else{
 				type = "DROP_IN";
 		}
-		var data = {	"id": $("#add_patientID_input").val(),
-					 	"date":$("#add_date_input").val(),
+		var data = { 	"date":$("#add_date_input").val(),
 						"patient":$("#add_patientID_input").val(),
 						"clinician":$("#add_clinicianID_input :selected").attr("id"),		
 						"clinic":$('#add_clinic_input :selected').text(),	
@@ -151,7 +150,7 @@
 				var t = $('#example').DataTable();
 					t.row.add( [
             			    data2.appID+"",
-							data2.firstname +" " +data2.lastname +"",
+							data2.patientID+" "+ data2.firstname +" " +data2.lastname,
 							data2.clinicName +"",
 							data2.date +"",
 							data2.time +"",
