@@ -16,7 +16,7 @@ $(document).ready(function() {
     $.ajax({
         type: "GET",
         url: "http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/view_personel_info/",
-        async:"false",
+        async:"true",
         cache: "true",
         success: function(result) {
             var personel = result;
