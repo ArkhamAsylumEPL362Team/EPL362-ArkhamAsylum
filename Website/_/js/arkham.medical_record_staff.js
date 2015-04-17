@@ -10,7 +10,7 @@ $.extend( $.fn.dataTable.defaults, {
 
 var table8; 
 $.ajax({
-    type: "POST",
+    type: "GET",
     url: "http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/view_patient_requests/",
     async:"false",
     cache: "true",

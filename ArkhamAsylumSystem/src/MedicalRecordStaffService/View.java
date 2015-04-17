@@ -2,6 +2,7 @@ package MedicalRecordStaffService;
 
 import java.sql.ResultSet;
 
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -13,7 +14,7 @@ import extras.JSON;
 @Path("/medical_record_service/")
 public class View {
 
-	@POST
+	@GET
 	@Path("/view_patient_requests/")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getRequests() throws Exception{
