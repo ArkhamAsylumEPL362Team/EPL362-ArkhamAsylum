@@ -47,4 +47,33 @@ public class Insert {
 		}
 		return    data;
 	}
+	
+	@POST
+	@Path("/report_deceased/")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON}) 
+	@Produces(MediaType.TEXT_PLAIN)
+	public String reportDeceased(String data){
+		
+		DatabaseConnection database =null;
+		
+		try {
+			database = new DatabaseConnection();
+			ObjectMapper mapper = new ObjectMapper();
+			DeceasedReport deceaseReport = mapper.readValue(data, DeceasedReport.class);
+			
+			String query = "INSERT INTO DECEASED values ('"+deceaseReport.patientID + "');";  
+	
+			database.getStatement().executeUpdate(query);
+						
+		}catch(SQLException r){
+			r.printStackTrace();
+			return " { \"status\": \"SQLException\" }";
+		}catch(Exception e){
+			e.printStackTrace();
+			return " { \"status\": \"JSONException\" }";	
+		}finally{
+			database.CloseConnection();
+		}
+		return data;
+	}
 }
