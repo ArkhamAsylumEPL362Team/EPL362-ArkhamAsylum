@@ -128,38 +128,52 @@ public class Receptionist {
 		return    data;
 	}
 	
-//	@POST
-//	@Path("/update/patient/")
-//	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON}) 
-//	@Produces(MediaType.TEXT_PLAIN)
-//	public String updateAppintment (String data){
-//		DatabaseConnection database =null;
-//		try {
-//			ObjectMapper mapper = new ObjectMapper();
-//			Appointment app = mapper.readValue(data, Appointment.class);
-//			
-//			database = new DatabaseConnection();
-//		
-//			String query = "UPDATE APPOINTMENT "
-//						 + "SET id = '" +.id + "', firstname = '" +patient.firstname + "', relative_email = '"
-//						 + patient.relative_email + "', lastname = '" +patient.lastname + "', address = '"+patient.address
-//						 + "', phonenumber ='" + patient.phonenumber + "', birthday ='"  + patient.birthday + "', gender = '"
-//						 + patient.gender +"' "
-//						 + "WHERE id = '" + patient.id + "'";  
-//		
-//			database.getStatement().executeUpdate(query);
-//			
-//		}catch(SQLException r){
-//			r.printStackTrace();
-//			return " { \"status\": \"SQLException\" }";
-//		}catch(Exception e){
-//			e.printStackTrace();
-//			return " { \"status\": \"JSONException\" }";	
-//		}finally{
-//			database.CloseConnection();
-//		}
-//		return    data;
-//	}
+	@POST
+	@Path("/update/appointment/")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON}) 
+	@Produces(MediaType.TEXT_PLAIN)
+	public String updateAppintment (String data){
+		DatabaseConnection database =null;
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			Appointment app = mapper.readValue(data, Appointment.class);
+			
+			database = new DatabaseConnection();
+			
+			String query = "UPDATE APPOINTMENT SET "+
+							" id = '"+app.id+"' , date = '" +app.date + "' , patient = '" + app.patient + "', clinician = '" +
+							app.clinician + "', clinic =  '" + app.clinic + "' , time = '" +app.time + "', type= '" + app.type+
+							"', status ='" + app.status +"'"
+							+" WHERE id = '" + app.id +"'";
+			
+			
+			System.out.println("Hello");
+			database.getStatement().executeUpdate(query);
+			
+			query = "SELECT A.id appID, A.date, A.time, A.type, A.status, P.id patientID, P.firstname, P.lastname, U.firstname clinicianN,"
+					+ " U.lastname clinicianL, C.name clinicName " 
+					+ " FROM APPOINTMENT A, PATIENT P, USER U , CLINIC C"
+					+ " WHERE A.patient = '" + app.patient + "' and  P.id = '" + app.patient  +"' and U.id = '" + app.clinician
+					+ "' and C.name = '" + app.clinic +"'"
+					+ "ORDER BY A.date ASC";
+			
+			
+			ResultSet rs = database.getStatement().executeQuery(query);
+			
+			data = JSON.parseJSON(rs);
+			
+			
+		}catch(SQLException r){
+			r.printStackTrace();
+			return " { \"status\": \"SQLException\" }";
+		}catch(Exception e){
+			e.printStackTrace();
+			return " { \"status\": \"JSONException\" }";	
+		}finally{
+			database.CloseConnection();
+		}
+		return    data;
+	}
 	
 	
 	@GET
@@ -215,8 +229,6 @@ public class Receptionist {
 		+ " FROM APPOINTMENT A, PATIENT P, USER U "
 		+ " WHERE A.patient = P.id  and  A.clinician = U.id "
 		+ "ORDER BY A.date ASC";
-		
-		
 		
 		
 		ResultSet rs= database.getStatement().executeQuery(query);

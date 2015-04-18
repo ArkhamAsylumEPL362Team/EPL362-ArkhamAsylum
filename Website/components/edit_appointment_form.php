@@ -91,7 +91,7 @@
 	
 	var ALL_CLINICS = "http://localhost:8080/ArkhamAsylumSystem/rest/receptionist/report/clinic/";	
 	var ALL_CLINICAL_STAFF = "http://localhost:8080/ArkhamAsylumSystem/rest/receptionist/report/clinical_staff/";
-	var EDIT_APPOINTMENT = "";
+	var EDIT_APPOINTMENT = "http://localhost:8080/ArkhamAsylumSystem/rest/receptionist/update/appointment/";
 	
 	$(document).ready(function(){
 		
@@ -131,9 +131,12 @@
 		}else{
 				type = "DROP_IN";
 		}
+		
+		
+		
 		var data = {	"id": $("#edit_patientID_input").val(),
 					 	"date":$("#edit_date_input").val(),
-						"patient":$("#edit_patientID_input").val(),
+						"patient":$('tr.selected td').eq(1).text().split(" ")[0],
 						"clinician":$("#edit_clinicianID_input :selected").attr("id"),		
 						"clinic":$('#edit_clinic_input :selected').text(),	
 						"time":$("#edit_time_input").val(),			
@@ -145,25 +148,22 @@
 		
 		console.log(data);
 		
-//		$.post( ADD_APPOINTMENT,data,function(data){
-//	
-//			console.log(data);
-//			data= JSON.parse(data);
-//
-//			$.each(data.results_array,function(i,data2){
-//				var t = $('#example').DataTable();
-//					t.row.add( [
-//            			    data2.appID+"",
-//							data2.firstname +" " +data2.lastname +"",
-//							data2.clinicName +"",
-//							data2.date +"",
-//							data2.time +"",
-//							data2.type +"",
-//							data2.clinicianN +" " + data2.clinicianL,
-//							data2.status +""
-//					] ).draw();
-//			});
-//		});
+		$.post( EDIT_APPOINTMENT,data,function(data){
+	
+			console.log(data);
+			data= JSON.parse(data);
+			$.each(data.results_array,function(i,data2){
+				var t = $('#example').DataTable();
+			 $('#example tr.selected td').eq(0).text(data2.appID);
+		     $('#example tr.selected td').eq(1).text(data2.patientID+ " " +data2.firstname + " "+data2.lastname );
+             $('#example tr.selected td').eq(2).text(data2.clinicName);
+             $('#example tr.selected td').eq(3).text(data2.date);
+             $('#example tr.selected td').eq(4).text(data2.time);
+             $('#example tr.selected td').eq(5).text(data2.type);
+             $('#example tr.selected td').eq(6).text(data2.clinicianN + " " + data2.clinicianL);
+             $('#example tr.selected td').eq(7).text(data2.status);
+			});
+		});
 	}
 </script>
 	

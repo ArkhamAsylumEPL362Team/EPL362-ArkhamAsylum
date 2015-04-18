@@ -27,7 +27,7 @@ $(document).ready(function() {
 				var t = $('#example').DataTable();
 					t.row.add( [
             			    data2.appID+"",
-							data2.patientID+" "+ data2.firstname +" " +data2.lastname,
+							data2.patientID+" "+ data2.firstname +" "+data2.lastname,
 							data2.clinicName +"",
 							data2.date +"",
 							data2.time +"",
