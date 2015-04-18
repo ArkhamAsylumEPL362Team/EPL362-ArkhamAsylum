@@ -1,6 +1,5 @@
 var DELETE_PATIENT = "http://localhost:8080/ArkhamAsylumSystem/rest/receptionist/delete/patient/";
 var DELETE_APPOINTMENT = "http://localhost:8080/ArkhamAsylumSystem/rest/receptionist/delete/appointment/";
-
 $.extend( $.fn.dataTable.defaults, {
     "searching": true,
     "ordering": true,
@@ -117,6 +116,31 @@ function deleteAppointment(){
         },
         function(isConfirm) {
             if (isConfirm) {
+					
+			var id=$('#example tr.selected td').eq(0).text();
+            var patient=$('#example tr.selected td').eq(1).text().split(" ")[0];
+            var clinic=$('#example tr.selected td').eq(2).text();
+            var date=$('#example tr.selected td').eq(3).text();
+            var time=$('#example tr.selected td').eq(4).text();
+            var type=$('#example tr.selected td').eq(5).text();
+            var clinician=$('#example tr.selected td').eq(6).text();
+            var status=$('#example tr.selected td').eq(7).text();
+				
+				var data = { 
+							"id": id,
+							"date":date,
+							"patient":patient,
+							"clinician":clinician ,		
+							"clinic":clinic ,	
+							"time":time,	
+							"type":type,
+							"status": status
+					};	
+				data = JSON.stringify(data);
+				$.post(DELETE_APPOINTMENT,data,function(data){
+					console.log(data);
+				});
+				
                 table.row('.selected').remove().draw(false);
             }
         });

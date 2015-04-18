@@ -96,9 +96,12 @@ public class Receptionist {
 			Appointment app = mapper.readValue(data, Appointment.class);
 			
 			ResultSet rs = database.getStatement().executeQuery("SELECT MAX(id) FROM APPOINTMENT");
-			System.out.println(rs.getInt(1));
+			int id=0;
+			if (rs.next()){
+				id=rs.getInt(1);
+			}
 			
-			String query = "INSERT INTO APPOINTMENT values ( '"+ (rs.getInt(1) + 1)+"','"+app.date + "','"+ 
+			String query = "INSERT INTO APPOINTMENT values ( '"+ (id + 1)+"','"+app.date + "','"+ 
 						app.patient + "','" +app.clinician + "','"+app.clinic + 
 						"','" + app.time + "','"  + app.type + "','" + app.status + "')";  
 	
@@ -107,10 +110,10 @@ public class Receptionist {
 			query = "SELECT A.id appID, A.date, A.time, A.type, A.status, P.id patientID, P.firstname, P.lastname, U.firstname clinicianN,"
 					+ " U.lastname clinicianL, C.name clinicName " 
 					+ " FROM APPOINTMENT A, PATIENT P, USER U , CLINIC C"
-					+ " WHERE A.patient = '" + app.patient + "' and  P.id = '" + app.patient  +"' and U.id = '" + app.clinician
+					+ " WHERE A.id = '" + (id+1) + "' and  P.id = '" + app.patient  +"' and U.id = '" + app.clinician
 					+ "' and C.name = '" + app.clinic +"'"
-					+ "ORDER BY A.date ASC";
-			
+					+ "ORDER BY A.date DESC , A.time DESC";
+					
 			
 			 rs = database.getStatement().executeQuery(query);
 			
@@ -146,8 +149,6 @@ public class Receptionist {
 							"', status ='" + app.status +"'"
 							+" WHERE id = '" + app.id +"'";
 			
-			
-			System.out.println("Hello");
 			database.getStatement().executeUpdate(query);
 			
 			query = "SELECT A.id appID, A.date, A.time, A.type, A.status, P.id patientID, P.firstname, P.lastname, U.firstname clinicianN,"
