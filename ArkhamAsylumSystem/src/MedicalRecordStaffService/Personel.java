@@ -10,3 +10,4 @@ public class Personel {
 	public String password;
 	public String type;
 }
+
