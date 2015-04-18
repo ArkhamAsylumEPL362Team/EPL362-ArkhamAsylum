@@ -25,34 +25,6 @@ $('#edit-rec-btn').on('click',function(e){
         $('#modal-title').text('Edit Patient');
         $('.form-holder').load("components/edit_patient_form.php",function(){});
         editPatientRecord($('#example8 tbody tr.selected td').eq(3).text());
-        $('#edit_patient_btn').on('click',function(e){
-            e.preventDefault();
-            var EDIT_PATIENT ="http://localhost:8080/ArkhamAsylumSystem/rest/receptionist/update/patient/";	
-            var gend ="M";
-            if ($("#patient_gender-0").is(':checked')){
-                gend = "M";
-            }else if ($("#patient_gender-1").is(':checked')){ 
-                gend = "F";	
-            }
-            var data = {  "id": $("#edit_patientID_input").val() ,
-                          "firstname":$("#edit_patient_firstname_input").val(),
-                          "relative_email":$("#edit_email_input").val(),
-                          "lastname":$("#edit_patient_lastname_input").val(),		
-                          "address":$("#edit_patient_address_input").val(),	
-                          "phonenumber":$("#edit_patient_phonenumber_input").val(),	
-                          "birthday":$("#edit_patient_birthdate_input").val(),
-                          "gender": gend
-                        };	
-            data = JSON.stringify(data); 
-
-            $.post(EDIT_PATIENT,data,function(data){
-                    data = JSON.parse(data);
-                    console.log(data);
-                 $('tr.selected td').eq(1).text(data.firstname);
-                 $('tr.selected td').eq(2).text(data.lastname);
-                 $('tr.selected td').eq(3).text(data.id);
-            });	
-        });
         $('#my-modal').modal('toggle');  
     }else{
         swal("You have to select a patient to edit.");
@@ -75,9 +47,16 @@ function deleteRequest(){
         },
         function(isConfirm) {
             if (isConfirm) {
-                table8.row('.selected').remove().draw(false);
+                var data =   {"requestNumber":$('#example8 tr.selected td').eq(0).text(),"firstname":"0","lastname":"0","patientID":"0","date":"0"};
+                var DELETE_REQUEST="http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/delete_request/"
+                data = JSON.stringify(data); 
+		
+                $.post(DELETE_REQUEST,data,function(data){
+                    $('#example8 tbody tr.selected').remove();
+                });
             }
-        });
+            }
+        );
     }else{
          swal("You have to select a patient's request to delete.");
     }
@@ -98,7 +77,21 @@ function deletePersonel(){
         },
         function(isConfirm) {
             if (isConfirm) {
-                table9.row('.selected').remove().draw(false);
+                                var data =   {"personelID":$('#example9 tr.selected td').eq(0).text(),
+                    "firstname":"0",
+                    "lastname":"0",
+                    "email":"0",
+                    "phonenumber":"0",
+                    "username":"0",
+                    "password":"0",
+                    "type":"0"
+                   };
+                var DELETE_PERSONEL="http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/delete_personel/"
+                data = JSON.stringify(data); 
+		
+                $.post(DELETE_PERSONEL,data,function(data){
+                    $('#example9 tbody tr.selected').remove();
+                });
             }
         });
     }else{

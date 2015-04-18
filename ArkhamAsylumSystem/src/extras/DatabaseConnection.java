@@ -13,7 +13,7 @@ public class DatabaseConnection {
 	private static final String USER="root";
 	private static final String PASSWORD="";
 
-	private static final String DATABASE="EPL362";
+	private static final String DATABASE="arkham_db";
 	private static final String CONF = "useOldAliasMetadataBehavior=true";
 
 	public DatabaseConnection(){	
