@@ -59,4 +59,20 @@ public class View {
 		String result = JSON.parseJSON(rs);
 		return  result;
 	}
+	
+	@POST
+	@Path("/is_deceased/")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON}) 
+	@Produces(MediaType.TEXT_PLAIN)
+	public String isDeceased(String data) throws Exception{
+		ObjectMapper mapper = new ObjectMapper();
+		DeceasedReport deceasedReport = mapper.readValue(data, DeceasedReport.class);
+		String deceased="false";
+		
+		if(DeceasedReport.isDeceased(deceasedReport.patientID))
+			deceased="true";
+		
+		String result = "{\"patientID\":\""+deceasedReport.patientID+"\",\"status\":\""+deceased+"\"}";
+		return  result;
+	}
 }

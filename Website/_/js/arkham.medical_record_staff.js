@@ -25,7 +25,11 @@ $('#edit-rec-btn').on('click',function(e){
         $('#modal-title').text('Edit Patient');
         $('.form-holder').load("components/edit_patient_form.php",function(){});
         editPatientRecord($('#example8 tbody tr.selected td').eq(3).text());
-        $('#my-modal').modal('toggle');  
+        if(isDeceased($('#example8 tbody tr.selected td').eq(3).text())){
+            swal("This record is read-only");
+        }else{
+            $('#my-modal').modal('toggle');  
+        }
     }else{
         swal("You have to select a patient to edit.");
     }
@@ -193,7 +197,11 @@ $('#report-death-form').submit(function(e){
     },
     function(isConfirm) {
         if (isConfirm) {
-            alert("RIP <patient's name.>");
+            var DECEASED_PATIENT="http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/report_deceased/";
+            $.post(DECEASED_PATIENT,"{\"patientID\":\""+$('#death_id_input').val()+"\"}",function(data){
+                console.log(data);
+            });
+            e.preventDefault();
         }
     });
     e.preventDefault();
@@ -245,10 +253,28 @@ function viewPatientRecord(id){
     });
 }
 
+function isDeceased(patientID){
+    var IS_DECEASED="http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/is_deceased/";
+    var result;
+    $.ajax({
+        type: "POST",
+        url: IS_DECEASED,
+        async:"false",
+        cache: "false",
+        data: "{\"patientID\":\""+patientID+"\"}",
+        success: function(data) {
+            result=$.parseJSON(data.d);
+        }
+    });
+    
+    console.log(result);
+    return false;
+}
+
 function editPatientRecord(id){
     var data = {"requestNumber":"0","firstname":"0","lastname":"0","patientID":id,"date":"0"};
     data=JSON.stringify(data);
-    
+
     $.ajax({
         type: "POST",
         url: "http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/view_patient_record/",
@@ -258,7 +284,7 @@ function editPatientRecord(id){
         success: function(patientRecord) {
             patientRecord=JSON.parse(patientRecord);
             patientRecord=patientRecord.results_array[0];
-            
+
             $("#edit_patientID_input").val(patientRecord.id);
             $("#edit_patient_firstname_input").val(patientRecord.firstname);
             $("#edit_email_input").val(patientRecord.relative_email);
@@ -273,4 +299,5 @@ function editPatientRecord(id){
         }
     });
 }
+
 
