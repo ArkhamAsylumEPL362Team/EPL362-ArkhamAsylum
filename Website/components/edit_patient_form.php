@@ -1,4 +1,4 @@
-<form id="add-appointment-form" name='add-appointment-form' action="" method="post" enctype="multipart/form-data" class="form-horizontal"  >
+<form id="edit-patient-form" name='add-appointment-form' action="" method="post" enctype="multipart/form-data" class="form-horizontal"  >
     <fieldset>
         <div class="modal-body">
             <div class="form-group">
@@ -78,7 +78,7 @@
         <div class="modal-footer">
             <div class="form-group">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button"  onclick ="editExistPatient()" class="btn btn-primary" data-dismiss="modal"  >Save</button>
+                <button id="edit_patient_btn" type="button"  onclick ="editExistPatient()" class="btn btn-primary" data-dismiss="modal"  >Save</button>
             </div>
         </div>
     </fieldset>

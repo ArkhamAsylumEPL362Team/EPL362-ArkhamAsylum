@@ -41,7 +41,22 @@
               </div>
             </div>
 
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="add_personel_username_input">Username</label>  
+              <div class="col-md-6">
+              <input id="add_personel_username_input" name="add_personel_username_input" placeholder="Username goes here..." class="form-control input-md" required="" type="text">
 
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="add_personel_password_input">Password</label>  
+              <div class="col-md-6">
+              <input id="add_personel_password_input" name="add_personel_password_input" type="password" placeholder="Password goes here..." class="form-control input-md" required="" type="text">
+
+              </div>
+            </div>
+            
             <div class="form-group">
               <label class="col-md-4 control-label" for="personel_type">Type</label>
               <div class="col-md-4">
