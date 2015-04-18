@@ -263,7 +263,7 @@ function isDeceased(patientID){
         cache: "false",
         data: "{\"patientID\":\""+patientID+"\"}",
         success: function(data) {
-            result=$.parseJSON(data.d);
+            result=$.parseJSON(data);
         }
     });
     
