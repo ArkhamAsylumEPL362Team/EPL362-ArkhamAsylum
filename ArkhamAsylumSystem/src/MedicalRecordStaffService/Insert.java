@@ -61,7 +61,7 @@ public class Insert {
 			ObjectMapper mapper = new ObjectMapper();
 			DeceasedReport deceaseReport = mapper.readValue(data, DeceasedReport.class);
 			
-			String query = "INSERT INTO DECEASED values ('"+deceaseReport.patientID + "');";  
+			String query = "INSERT INTO DECEASED values ('"+deceaseReport.patientID+"');";  
 	
 			database.getStatement().executeUpdate(query);
 						
