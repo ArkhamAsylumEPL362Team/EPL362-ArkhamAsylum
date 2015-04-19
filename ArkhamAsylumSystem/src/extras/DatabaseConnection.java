@@ -12,14 +12,16 @@ public class DatabaseConnection {
 	private static final String HOST="localhost:3306";
 	private static final String USER="root";
 	private static final String PASSWORD="";
-	private static final String DATABASE="EPL362";
-	
+
+	private static final String DATABASE="arkham_db";
+	private static final String CONF = "useOldAliasMetadataBehavior=true";
+
 	public DatabaseConnection(){	
-		
+	
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager
-					.getConnection("jdbc:mysql://"+HOST+"/"+DATABASE,USER, PASSWORD);
+					.getConnection("jdbc:mysql://"+HOST+"/"+DATABASE+ "?"+CONF,USER, PASSWORD);
 			statement = conn.createStatement();
 			
 			if (conn == null){

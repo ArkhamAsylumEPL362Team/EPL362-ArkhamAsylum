@@ -1,0 +1,31 @@
+<table id="example9" class="personel table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Email</th>
+            <th>Phonenumber</th>
+            <th>Type</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>0</td>
+            <td>Tasos</td>
+            <td>Steliou</td>
+            <td>tasos_steliou@arkham.org</td>
+            <td>99234323</td>
+            <td>CLINICAL_STAFF</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>George</td>
+            <td>Giannakopoulos</td>
+            <td>ggianak@arkham.org</td>
+            <td>22323455</td>
+            <td>CLINICAL_STAFF</td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,123 @@
+body{
+    padding: 0px;
+    margin: 0px;
+    margin-top: 0px;
+    background-color: #F26C68;
+    color:#111111;
+}
+
+.diary-menu a{
+    text-decoration: none;
+    color: #444444;
+}
+
+.diary-menu a:hover{
+    color: #111111;
+}
+
+.diary-menu{
+    height: 100%;
+}
+
+.diary-menu tr td i{
+   margin-bottom: 50%;
+}
+
+.dataTables_scrollBody{
+    overflow-x: hidden !important;
+}
+
+.container.diary{
+    padding-top: 40px;
+    height: 100vh !important;
+}
+
+.container.patient{
+    padding-top: 40px;
+    height: 100vh !important;
+}
+
+.container.receptionist-menu{
+    padding-top: 10%;
+    height: 100vh !important;
+}
+
+.container.medical-staff-menu{
+    padding-top: 10%;
+    height: 100vh !important;
+}
+
+.container.view_update{
+    padding-top: 40px;
+    height: 100vh !important;
+}
+
+.container.medicine{
+    padding-top: 40px;
+    height: 100vh !important;
+}
+
+.container.personel{
+    padding-top: 40px;
+    height: 100vh !important;
+}
+
+.container.diagnose{
+    padding-top: 40px;
+    height: 110vh !important;
+}
+
+.container.change_request{
+    padding-top: 40px;
+    height: 110vh !important;
+}
+
+.container.death{
+    padding-top: 40px;
+    height: 110vh !important;
+}
+
+.container.requests{
+    padding-top: 40px;
+    height: 110vh !important;
+}
+
+.medical-staff-review div.col-lg-3{
+    margin: auto;
+}
+
+.navbar-brand{
+    margin: 0;
+    padding: 0;
+    padding-top: 2px;
+    padding-left: 2px;
+    padding-right: 30px;
+}
+
+#scroller-btn{
+    position: fixed;
+    right: 15px;
+    bottom: 40px;
+    text-decoration: none;
+    color:#444444;
+}
+
+#scroller-btn:hover{
+    color:#222222;
+}
+
+#diagnose_slct_treatment{
+    margin-top: 10px;
+}
+
+.diagnose-form .leftside{
+    padding-top: 50px;
+}
+
+.submit-treatment{
+    padding-top: 10px;
+}
+
+.form_section{
+    padding-top: 120px;
+}
