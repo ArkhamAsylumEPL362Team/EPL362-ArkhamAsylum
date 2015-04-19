@@ -39,7 +39,7 @@ public class Receptionist {
 			
 		}catch(SQLException r){
 			r.printStackTrace();
-			return " { \"status\": \"SQLException\" }";
+			return " { \"status\": \""+r.getMessage()+"\" }";
 		}catch(Exception e){
 			e.printStackTrace();
 			return " { \"status\": \"JSONException\" }";	
@@ -72,7 +72,7 @@ public class Receptionist {
 			
 		}catch(SQLException r){
 			r.printStackTrace();
-			return " { \"status\": \"SQLException\" }";
+			return " { \"status\": \""+r.getMessage()+"\" }";
 		}catch(Exception e){
 			e.printStackTrace();
 			return " { \"status\": \"JSONException\" }";	

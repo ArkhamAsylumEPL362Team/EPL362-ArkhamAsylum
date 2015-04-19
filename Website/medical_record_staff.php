@@ -85,7 +85,7 @@
                         <div class="form-group">
                             <label class="col-md-4"></label>
                             <div class="col-md-6 pull-right">
-                                <button type="button" class="btn btn-default">Reset</button>
+                                <button type="reset" class="btn btn-default">Reset</button>
                                 <button type="submit" class="btn btn-primary">Report</button>
                             </div>
                         </div>
@@ -129,6 +129,7 @@
                     scrollTarget: link.hash
                 });
             });
+            
         </script>
     </body>
 </html>

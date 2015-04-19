@@ -227,9 +227,15 @@ function deletePatient(){
 				data = JSON.stringify(data);
 				$.post(DELETE_PATIENT,data,function(data){
 					console.log(data);
+                    data=JSON.parse(data);
+                    if(!data.id){
+                        swal("This record is read-only!");
+                        return false;
+                    }
+                    table1.row('.selected').remove().draw(false);
 				});
 				
-                table1.row('.selected').remove().draw(false);
+                
 				
 				
             }

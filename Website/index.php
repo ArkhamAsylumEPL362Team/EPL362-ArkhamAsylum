@@ -44,7 +44,7 @@
                         <img class="img-circle" src="_/img/medical_record_staff.png" alt="Generic placeholder image" width="140" height="140">
                         <h2>Medical Record Staff</h2>
                         <p>Enter here if you are a medical record staff. You can handle all the patient's requests for information change with ease.</p>
-                        <p><a class="btn btn-default" href="medical_record_staff.php" role="button">Enter this mode &raquo;</a></p>
+                        <p><a class="btn btn-default" id="medical_record_mode" href="#" role="button">Enter this mode &raquo;</a></p>
                     </div>
                     <div class="col-lg-3">
                         <img class="img-circle" src="_/img/patient.png" alt="Generic placeholder image" width="140" height="140">
@@ -87,6 +87,10 @@
                 $('.form-holder').load("components/login_form.php");
                 $('#modal-title').text('Log in');
                 $('#my-modal').modal('toggle'); 
+            });
+            
+            $('#medical_record_mode').on('click',function(){
+                $('#my-modal').modal('toggle')
             });
             
             $('#2requestSection').click(function(event) {

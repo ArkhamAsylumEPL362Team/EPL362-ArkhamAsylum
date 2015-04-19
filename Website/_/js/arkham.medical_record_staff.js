@@ -191,7 +191,11 @@ $('#report-death-form').submit(function(e){
     },
     function(isConfirm) {
         if (isConfirm) {
-            alert("RIP <patient's name.>");
+            var DECEASED_PATIENT="http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/report_deceased/";
+            $.post(DECEASED_PATIENT,"{\"patientID\":\""+$('#death_id_input').val()+"\"}",function(data){
+                console.log(data);
+            });
+            e.preventDefault();
         }
     });
     e.preventDefault();
@@ -213,3 +217,62 @@ $('#delete-per-btn').on('click',function(e){
     deletePersonel();
     e.preventDefault();
 });
+
+function viewPatientRecord(id){
+    var data = {"requestNumber":"0","firstname":"0","lastname":"0","patientID":id,"date":"0"};
+    data=JSON.stringify(data);
+    
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/view_patient_record/",
+        async:"true",
+        cache: "true",
+        data: data,
+        success: function(patientRecord) {
+            patientRecord=JSON.parse(patientRecord);
+            patientRecord=patientRecord.results_array[0];
+            
+            $("#view_patientID_input").val(patientRecord.id);
+            $("#view_patient_firstname_input").val(patientRecord.firstname);
+            $("#view_email_input").val(patientRecord.relative_email);
+            $("#view_patient_lastname_input").val(patientRecord.lastname);		
+            $("#view_patient_address_input").val(patientRecord.address);	
+            $("#view_patient_phonenumber_input").val(patientRecord.phonenumber);	
+            $("#view_patient_birthdate_input").val(patientRecord.birthday);
+            if(patientRecord.gender=="F")
+                $("#patient_gender-1").attr("checked","true");
+            else
+                $("#patient_gender-0").attr("checked","true");
+        }
+    });
+}
+
+function editPatientRecord(id){
+    var data = {"requestNumber":"0","firstname":"0","lastname":"0","patientID":id,"date":"0"};
+    data=JSON.stringify(data);
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/view_patient_record/",
+        async:"true",
+        cache: "true",
+        data: data,
+        success: function(patientRecord) {
+            patientRecord=JSON.parse(patientRecord);
+            patientRecord=patientRecord.results_array[0];
+
+            $("#edit_patientID_input").val(patientRecord.id);
+            $("#edit_patient_firstname_input").val(patientRecord.firstname);
+            $("#edit_email_input").val(patientRecord.relative_email);
+            $("#edit_patient_lastname_input").val(patientRecord.lastname);		
+            $("#edit_patient_address_input").val(patientRecord.address);	
+            $("#edit_patient_phonenumber_input").val(patientRecord.phonenumber);	
+            $("#edit_patient_birthdate_input").val(patientRecord.birthday);
+            if(patientRecord.gender=="F")
+                $("#patient_gender-1").attr("checked","true");
+            else
+                $("#patient_gender-0").attr("checked","true");
+        }
+    });
+}
+
