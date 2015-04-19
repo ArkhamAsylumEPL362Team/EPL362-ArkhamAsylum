@@ -110,6 +110,10 @@
 		$.post(EDIT_PATIENT,data,function(data){
 				data = JSON.parse(data);
 				console.log(data);
+                if(!data.id){
+                    swal("This record is read-only!");
+                    return false;
+                }
             $('#example1 tr.selected td').eq(0).text(data.id);
             $('#example1 tr.selected td').eq(1).text(data.firstname);
             $('#example1 tr.selected td').eq(2).text(data.lastname);
