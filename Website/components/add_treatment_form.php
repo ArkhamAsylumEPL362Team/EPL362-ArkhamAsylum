@@ -52,7 +52,7 @@
         <div class="modal-footer">
             <div class="form-group">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary" >Add</button>
+                <button type="button" id="add_btn" class="btn btn-primary" >Add</button>
             </div>
         </div>
     </fieldset>
