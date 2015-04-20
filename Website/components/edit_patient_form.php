@@ -1,4 +1,4 @@
-<form id="edit-patient-form" name='add-appointment-form' action="" method="post" enctype="multipart/form-data" class="form-horizontal"  >
+<form id="add-appointment-form" name='add-appointment-form' action="" method="post" enctype="multipart/form-data" class="form-horizontal"  >
     <fieldset>
         <div class="modal-body">
             <div class="form-group">
@@ -78,7 +78,7 @@
         <div class="modal-footer">
             <div class="form-group">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button id="edit_patient_btn" type="button"  onclick ="editExistPatient()" class="btn btn-primary" data-dismiss="modal"  >Save</button>
+                <button type="button"  onclick ="editExistPatient()" class="btn btn-primary" data-dismiss="modal"  >Save</button>
             </div>
         </div>
     </fieldset>
@@ -93,7 +93,7 @@
 		var gend ="M";
 		if ($("#patient_gender-0").is(':checked')){
 			gend = "M";
-		}else if ($("#patient_gender-1").is(':checked')){ 
+		}else if ($("#patient_gender-0").is(':checked')){ 
 			gend = "F";	
 		}
 		var data = {  "id": $("#edit_patientID_input").val() ,
@@ -110,6 +110,16 @@
 		$.post(EDIT_PATIENT,data,function(data){
 				data = JSON.parse(data);
 				console.log(data);
+<<<<<<< HEAD
+		   	 $('tr.selected td').eq(0).text(data.id);
+		     $('tr.selected td').eq(1).text(data.firstname);
+             $('tr.selected td').eq(2).text(data.lastname);
+             $('tr.selected td').eq(3).text(data.relative_email);
+             $('tr.selected td').eq(4).text(data.address);
+             $('tr.selected td').eq(5).text(data.phonenumber);
+             $('tr.selected td').eq(6).text(data.birthday);
+             $('tr.selected td').eq(7).text(data.gender);
+=======
                 if(!data.id){
                     swal("This record is read-only!");
                     return false;
@@ -126,6 +136,7 @@
             $('#example8 tr.selected td').eq(1).text(data.firstname);
             $('#example8 tr.selected td').eq(2).text(data.lastname);
             $('#example8 tr.selected td').eq(3).text(data.id);
+>>>>>>> dd19eaa1080af10d9b3616124e261bb4065ca672
 			
 		});	
 	}

@@ -10,7 +10,7 @@
             <h3>Choose medicines</h3>
             <div class="row">
                 <div class="col-md-10">
-                    <table id="example6" class="choose_medicine table table-striped table-bordered" cellspacing="0" width="100%">
+                    <table id="treat_meds" class="choose_medicine table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -18,23 +18,6 @@
                                 <th>Side-Effects</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>Viagra</td>
-                                <td>You know what i mean!</td>
-                                <td>Might cause a heart attack</td>
-                            </tr>
-                            <tr>
-                                <td>Panadol</td>
-                                <td>Can cure headache</td>
-                                <td>There are no side-effects</td>
-                            </tr>
-                            <tr>
-                                <td>Remedol</td>
-                                <td>Can cure headache</td>
-                                <td>There are no side-effects</td>
-                            </tr>
-                        </tbody>
                     </table>
                 </div>  
                 <div class="col-md-2">

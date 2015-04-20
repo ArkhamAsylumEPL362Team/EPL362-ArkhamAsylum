@@ -7,22 +7,23 @@ $.extend( $.fn.dataTable.defaults, {
     "scrollX": false
 } );
 
-var table3 = $('#example3').DataTable({
-    "searching": true
+var table3 = $('#med_records').DataTable({
+    searching: true,
+    ordering:false
 });
 
-$('#example3 tbody').on('click','tr',function(){
+$('#med_records tbody').on('click','tr',function(){
     if ($(this).hasClass('selected')) {
         $(this).removeClass('selected');
     }
     else {
-            table3.$('tr.selected').removeClass('selected');
+            $('#med_records tbody tr.selected').removeClass('selected');
             $(this).addClass('selected');
         }
 });
 
 $('#edit-rcrd-btn').on('click',function(e){
-    if($('#example3 tbody tr').hasClass('selected')){                    
+    if($('#med_records tbody tr').hasClass('selected')){
         $('#modal-title').text('Edit record');
         $('.form-holder').load("components/edit_record_form.php",function(){});
         $('#my-modal').modal('toggle');  
@@ -33,7 +34,7 @@ $('#edit-rcrd-btn').on('click',function(e){
 });
 
 $('#view-rcrd-btn').on('click',function(e){
-    if($('#example3 tbody tr').hasClass('selected')){                    
+    if($('#med_records tbody tr').hasClass('selected')){
         $('#modal-title').text('View record');
         $('.form-holder').load("components/view_record_form.php",function(){});
         $('#my-modal').modal('toggle');  
@@ -44,7 +45,7 @@ $('#view-rcrd-btn').on('click',function(e){
 });
 
 $('#download-rcrd-btn').on('click',function(e){
-    if($('#example3 tbody tr').hasClass('selected')){                    
+    if($('#med_records tbody tr').hasClass('selected')){
         alert('Downloading...');
     }else{
         swal("You have to select a record to download.");
@@ -52,11 +53,11 @@ $('#download-rcrd-btn').on('click',function(e){
     e.preventDefault();
 });
 
-var table2 = $('#example2').DataTable({
+var table2 = $('#meds').DataTable({
     "searching": true
 });
 
-$('#example2 tbody').on('click','tr',function(){
+$('#meds tbody').on('click','tr',function(){
     if ($(this).hasClass('selected')) {
         $(this).removeClass('selected');
     }
@@ -71,12 +72,12 @@ function loadForm(operation){
     $('#my-modal').modal('toggle');  
 }
 
-var table4 = $('#example4').DataTable({
+var table4 = $('#poss_treat_table').DataTable({
     "searching": true,
     "pageLength": 5
 });
 
-$('#example4 tbody').on('click','tr',function(){
+$('#poss_treat_table tbody').on('click','tr',function(){
     if ($(this).hasClass('selected')) {
         $(this).removeClass('selected');
     }
@@ -89,12 +90,31 @@ $('#example4 tbody').on('click','tr',function(){
 $('#add-tr-btn').on('click',function(e){              
     $('#modal-title').text('Add treatment');
     $('.form-holder').load("components/add_treatment_form.php",function(){
-        var table6= $('#example6').DataTable({
+        var table6= $('#treat_meds').DataTable({
             "searching": true,
             "bPaginate": true
         });
 
-        $('#example6 tbody').on('click','tr',function(){
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/Medicine",
+            async:"false",
+            cache: "true",
+            success: function(result) {
+                requests = JSON.parse(result);
+                table6= $('#treat_meds').dataTable({
+                    "aaData": requests.results_array,
+                    "aoColumns": [
+                        { "mDataProp": "name" },
+                        { "mDataProp": "description" },
+                        { "mDataProp": "side_effect" }
+                    ],
+                    "destroy":true
+                });
+            }
+        });
+
+        $('#treat_meds tbody').on('click','tr',function(){
             if ($(this).hasClass('selected')) {
                 $(this).removeClass('selected');
             }
@@ -103,6 +123,7 @@ $('#add-tr-btn').on('click',function(e){
                     $(this).addClass('selected');
                 }
         });
+
 
         var table7= $('#example7').DataTable({
             "searching": false,
@@ -120,7 +141,7 @@ $('#add-tr-btn').on('click',function(e){
         });
         
         $('#add-meds-btn').on('click',function(e){
-            if($('#example6 tbody tr').hasClass('selected')){
+            if($('#treat_meds tbody tr').hasClass('selected')){
                 table7.row.add([
                     $('tr.selected td').eq(0).text(),
                     $('tr.selected td').eq(1).text(),
@@ -174,15 +195,15 @@ $('#add-tr-btn').on('click',function(e){
 
 var table5api;
    
-var table5= $('#example5').DataTable({
-    "searching": true,
+var table5= $('#cur_treat_table').DataTable({
+    "searching": false,
     "bPaginate": false, 
     "initComplete": function () {
         table5api=this.api();
     }
 });
 
-$('#example5 tbody').on('click','tr',function(){
+$('#cur_treat_table tbody').on('click','tr',function(){
     if ($(this).hasClass('selected')) {
         $(this).removeClass('selected');
     }
@@ -193,7 +214,7 @@ $('#example5 tbody').on('click','tr',function(){
 });
 
 $('#select-tr-btn').on('click',function(e){              
-    if($('#example4 tbody tr').hasClass('selected')){
+    if($('#poss_treat_table tbody tr').hasClass('selected')){
         table5.row.add([
             $('tr.selected td').eq(0).text(),
             $('tr.selected td').eq(1).text(),
@@ -207,7 +228,7 @@ $('#select-tr-btn').on('click',function(e){
 });
 
 $('#delete-ctr-btn').on('click',function(e){
-    if($('#example5 tbody tr').hasClass('selected')){
+    if($('#cur_treat_table tbody tr').hasClass('selected')){
        table5.row('.selected').remove().draw(false);
     }else{
         swal("You have to select a treatment to delete.");
@@ -215,6 +236,87 @@ $('#delete-ctr-btn').on('click',function(e){
     e.preventDefault();
 });
 
-$('#diagnose_patient_id_input').on('change',function(e){
-    table5api.search(this.value).draw();
+$('#diagnose_patient_id_input').on('focusout',function(e){
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/Possible_treatmentmeds/"+$('#diagnose_patient_id_input').val(),
+        async:"false",
+        cache: "true",
+        success: function(result) {
+            requests = JSON.parse(result);
+            table4= $('#poss_treat_table').dataTable({
+                "searching": true,
+                "aaData": requests.results_array,
+                "aoColumns": [
+                    { "mDataProp": "condition" },
+                    { "mDataProp": "medicine" },
+                    { "mDataProp": "quantity" }
+                ],
+                "destroy":true
+            });
+        }
+    });
 });
+
+$.ajax({
+    type: "GET",
+    url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/Medicine",
+    async:"false",
+    cache: "true",
+    success: function(result) {
+        requests = JSON.parse(result);
+        table2= $('#meds').dataTable({
+            "aaData": requests.results_array,
+            "aoColumns": [
+                { "mDataProp": "name" },
+                { "mDataProp": "description" },
+                { "mDataProp": "side_effect" }
+            ],
+            "destroy":true
+        });
+    }
+});
+
+$.ajax({
+    type: "GET",
+    url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/NonUpdatedMedicalRecord",
+    async:"false",
+    cache: "true",
+    success: function(result) {
+        requests = JSON.parse(result);
+        $.each(requests.results_array,function(key,value){
+            table3.row.add( [
+                value.id,
+                value.firstname,
+                value.lastname,
+                value.dangerousness,
+                value.last_updated
+            ] ).draw();
+        });
+        $.each($('#med_records tbody tr'),function(key,value){
+            $(this).addClass("not_updated");
+            $(this).children("td:last-child").addClass("not_updated");
+        });
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/UpdatedMedicalRecord",
+            async:"false",
+            cache: "true",
+            success: function(result) {
+                requests = JSON.parse(result);
+                $.each(requests.results_array,function(key,value){
+                    table3.row.add( [
+                        value.id,
+                        value.firstname,
+                        value.lastname,
+                        value.dangerousness,
+                        value.last_updated
+                    ] ).draw();
+                });
+            }
+        });
+    }
+});
+table3.columns('.ID').order('desc');
+
+

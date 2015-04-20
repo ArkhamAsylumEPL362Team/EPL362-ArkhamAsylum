@@ -93,7 +93,7 @@
 		var gend ="M";
 		if ($("#patient_gender-0").is(':checked')){
 			gend = "M";
-		}else if ($("#patient_gender-1").is(':checked')){ 
+		}else if ($("#patient_gender-0").is(':checked')){ 
 			gend = "F";	
 		}
 		var data = {  "id": $("#add_patientID_input").val() ,

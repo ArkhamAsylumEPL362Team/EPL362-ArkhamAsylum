@@ -1,5 +1,6 @@
 var DELETE_PATIENT = "http://localhost:8080/ArkhamAsylumSystem/rest/receptionist/delete/patient/";
 var DELETE_APPOINTMENT = "http://localhost:8080/ArkhamAsylumSystem/rest/receptionist/delete/appointment/";
+
 $.extend( $.fn.dataTable.defaults, {
     "searching": true,
     "ordering": true,
@@ -37,17 +38,16 @@ $('#editbtn').on('click',function(e){
     if($('#example tbody tr').hasClass('selected')){                    
         $('#modal-title').text('Edit appointment');
         $('.form-holder').load("components/edit_appointment_form.php",function(){
-            var id=$('#example tr.selected td').eq(0).text();
-            var patient=$('#example tr.selected td').eq(1).text().split(" ");
-			
-            var clinic=$('#example tr.selected td').eq(2).text();
-            var date=$('#example tr.selected td').eq(3).text();
-            var time=$('#example tr.selected td').eq(4).text();
-            var type=$('#example tr.selected td').eq(5).text();
-            var clinician=$('#example tr.selected td').eq(6).text();
-            var status=$('#example tr.selected td').eq(7).text();
+            var id=$('tr.selected td').eq(0).text();
+            var patient=$('tr.selected td').eq(1).text();
+            var clinic=$('tr.selected td').eq(2).text();
+            var date=$('tr.selected td').eq(3).text();
+            var time=$('tr.selected td').eq(4).text();
+            var type=$('tr.selected td').eq(5).text();
+            var clinician=$('tr.selected td').eq(6).text();
+            var status=$('tr.selected td').eq(7).text();
 
-            $('#edit_patientID_input').val(id);
+            $('#edit_patientID_input').val(patient+" id");
             $('#edit_date_input').val(date);
             $('#edit_time_input').val(time);
 
@@ -116,37 +116,23 @@ function deleteAppointment(){
         },
         function(isConfirm) {
             if (isConfirm) {
-					
-			var id=$('#example tr.selected td').eq(0).text();
-            var patient=$('#example tr.selected td').eq(1).text().split(" ")[0];
-            var clinic=$('#example tr.selected td').eq(2).text();
-            var date=$('#example tr.selected td').eq(3).text();
-            var time=$('#example tr.selected td').eq(4).text();
-            var type=$('#example tr.selected td').eq(5).text();
-            var clinician=$('#example tr.selected td').eq(6).text();
-            var status=$('#example tr.selected td').eq(7).text();
-				
-				var data = { 
-							"id": id,
-							"date":date,
-							"patient":patient,
-							"clinician":clinician ,		
-							"clinic":clinic ,	
-							"time":time,	
-							"type":type,
-							"status": status
-					};	
-				data = JSON.stringify(data);
-				$.post(DELETE_APPOINTMENT,data,function(data){
-					console.log(data);
-				});
-				
                 table.row('.selected').remove().draw(false);
             }
         });
     }else{
          swal("You have to select an appointment to delete.");
     }
+}
+
+function addAppointment(){
+    table.row.add([
+        "Demetris Paschalides",
+        "Software Engineer",
+        "New New York",
+        "43",
+        "2015/04/08",
+        "$0.5"
+    ] ).draw();
 }
 
 var table1 = $('#example1').DataTable({
@@ -178,13 +164,13 @@ $('#edit-ptn-btn').on('click',function(e){
         $('#modal-title').text('Edit Patient');
         $('.form-holder').load("components/edit_patient_form.php",function(){
             var id=$('tr.selected td').eq(0).text();
-            var firstname=$('#example1 tr.selected td').eq(1).text();
-            var lastname=$('#example1 tr.selected td').eq(2).text();
-            var email=$('#example1 tr.selected td').eq(3).text();
-            var address=$('#example1 tr.selected td').eq(4).text();
-            var phonenumber=$('#example1 tr.selected td').eq(5).text();
-            var birthdate=$('#example1 tr.selected td').eq(6).text();
-            var gender=$('#example1 tr.selected td').eq(7).text();
+            var firstname=$('tr.selected td').eq(1).text();
+            var lastname=$('tr.selected td').eq(2).text();
+            var email=$('tr.selected td').eq(3).text();
+            var address=$('tr.selected td').eq(4).text();
+            var phonenumber=$('tr.selected td').eq(5).text();
+            var birthdate=$('tr.selected td').eq(6).text();
+            var gender=$('tr.selected td').eq(7).text();
             
             $('#edit_patientID_input').val(id);
             $('#edit_patient_firstname_input').val(firstname);
@@ -220,14 +206,14 @@ function deletePatient(){
         },
         function(isConfirm) {
             if (isConfirm) {
-			 var id=$('#example1 tr.selected td').eq(0).text();
-		     var firstname=$('#example1 tr.selected td').eq(1).text();
-             var lastname=$('#example1 tr.selected td').eq(2).text();
-             var email=$('#example1 tr.selected td').eq(3).text();
-             var address=$('#example1 tr.selected td').eq(4).text();
-             var phonenumber=$('#example1 tr.selected td').eq(5).text();
-             var birthdate=$('#example1 tr.selected td').eq(6).text();
-             var gender=$('#example1 tr.selected td').eq(7).text();
+			 var id=$('tr.selected td').eq(0).text();
+		     var firstname=$('tr.selected td').eq(1).text();
+             var lastname=$('tr.selected td').eq(2).text();
+             var email=$('tr.selected td').eq(3).text();
+             var address=$('tr.selected td').eq(4).text();
+             var phonenumber=$('tr.selected td').eq(5).text();
+             var birthdate=$('tr.selected td').eq(6).text();
+             var gender=$('tr.selected td').eq(7).text();
 				
 			var data = {  "id": id,
 					  "firstname":firstname,

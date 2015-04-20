@@ -73,23 +73,6 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-4 control-label" for="diagnose_incedent_type">Incedent's type</label>
-                                        <div class="col-md-4">
-                                            <div class="radio">
-                                                <label for="diagnose_incedent_type-0">
-                                                    <input name="diagnose_incedent_type" id="diagnose_incedent_type-0" value="1" checked="checked" type="radio">
-                                                    Threat
-                                                </label>
-                                            </div>
-                                            <div class="radio">
-                                                <label for="diagnose_incedent_type-1">
-                                                    <input name="diagnose_incedent_type" id="diagnose_incedent_type-1" value="2" type="radio">
-                                                    Other
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
                                         <label class="col-md-4 control-label" for="diagnose_incedent_status">Incedent's status</label>
                                         <div class="col-md-4">
                                             <div class="radio">
@@ -113,20 +96,20 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-4 control-label" for="diagnose_patient_status_inputs">Patient's Status</label>
-                                        <div class="col-md-8">
-                                            <div class="radio">
-                                                <label for="diagnose_patient_status_inputs-0">
-                                                    <input name="diagnose_patient_status_inputs" id="diagnose_patient_status_inputs-0" value="1" checked="checked" type="radio">
-                                                    Dangerous
-                                                </label>
-                                            </div>
-                                            <div class="radio">
-                                                <label for="diagnose_patient_status_inputs-1">
-                                                    <input name="diagnose_patient_status_inputs" id="diagnose_patient_status_inputs-1" value="2" type="radio">
-                                                    Not dangerous
-                                                </label>
-                                            </div>
+                                        <label class="col-md-pull-2 col-md-6 control-label" for="diagnose_patient_dangerousness_input">Patient's Dangerousness Level:</label>
+                                        <div class="col-md-pull-2 col-md-6">
+                                            <select class="form-control" id="diagnose_patient_dangerousness_input">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                                <option>6</option>
+                                                <option>7</option>
+                                                <option>8</option>
+                                                <option>9</option>
+                                                <option>10</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -152,10 +135,9 @@
                                     <h3>Current Treatment</h3>
                                     <div class="row">
                                         <div class="col-md-11">
-                                            <table id="example5" class="current_treatment table table-striped table-bordered" cellspacing="0" width="100%">
+                                            <table id="cur_treat_table" class="current_treatment table table-striped table-bordered" cellspacing="0" width="100%">
                                                 <thead>
                                                     <tr>
-                                                        <th>Number</th>
                                                         <th>Condition</th>
                                                         <th>Medicine</th>
                                                         <th>Quantity</th>

@@ -41,22 +41,7 @@
               </div>
             </div>
 
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="add_personel_username_input">Username</label>  
-              <div class="col-md-6">
-              <input id="add_personel_username_input" name="add_personel_username_input" placeholder="Username goes here..." class="form-control input-md" required="" type="text">
 
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label class="col-md-4 control-label" for="add_personel_password_input">Password</label>  
-              <div class="col-md-6">
-              <input id="add_personel_password_input" name="add_personel_password_input" type="password" placeholder="Password goes here..." class="form-control input-md" required="" type="text">
-
-              </div>
-            </div>
-            
             <div class="form-group">
               <label class="col-md-4 control-label" for="personel_type">Type</label>
               <div class="col-md-4">
@@ -90,51 +75,3 @@
         </div>
     </fieldset>
 </form>
-
-<script>
-function addPersonelInfo(){
-        var personelType;
-        if($('#personel_type-0').is(':checked'))
-            personelType="MEDICAL_RECORD_STAFF";
-        else if($('#personel_type-1').is(':checked'))
-            personelType="RECEPTIONIST";
-        else
-            personelType="CLINICAL_STAFF";
-
-        var data = {"personelID":$('#add_personelID_input').val(),
-                    "firstname":$('#add_personel_firstname_input').val(),
-                    "lastname":$('#add_personel_lastname_input').val(),
-                    "email":$('#add_personel_email_input').val(),
-                    "phonenumber":$('#add_personel_phonenumber_input').val(),
-                    "username":$('#add_personel_username_input').val(),
-                    "password":$('#add_personel_password_input').val(),
-                    "type":personelType
-                   };
-        data=JSON.stringify(data);
-
-        $.ajax({
-            type: "POST",
-            url: "http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/insert_personel/",
-            async:"true",
-            cache: "true",
-            data: data,
-            success: function(personelInfo) {
-                personelInfo = JSON.parse(personelInfo);
-                console.log(personelInfo);
-                $('#example9 tbody').append('<tr><td>'+personelInfo.personelID
-                                            +'</td><td>'+personelInfo.firstname
-                                            +'</td><td>'+personelInfo.lastname
-                                            +'</td><td>'+personelInfo.email
-                                            +'</td><td>'+personelInfo.phonenumber
-                                            +'</td><td>'+personelInfo.type
-                                            +'</td></tr>');
-            }
-        });
-    }
-    
-    $('#add-personel-form').submit(function(e){
-        addPersonelInfo();
-        e.preventDefault();
-        $('#my-modal').modal('toggle');  
-    });
-</script>

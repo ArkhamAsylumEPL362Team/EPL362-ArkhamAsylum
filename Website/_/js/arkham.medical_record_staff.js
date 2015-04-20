@@ -8,7 +8,28 @@ $.extend( $.fn.dataTable.defaults, {
     "scrollX": false
 } );
 
-var table8=$('#example8').dataTable();
+var table8; 
+$.ajax({
+    type: "GET",
+    url: "http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/view_patient_requests/",
+    async:"false",
+    cache: "true",
+    success: function(result) {
+        requests = result;
+        console.log(requests);
+        table8= $('#example8').dataTable({
+            "aaData": JSON.parse(jsonappointment),
+            "aoColumns": [
+                { "mDataProp": "id" },
+                { "mDataProp": "firstname" },
+                { "mDataProp": "lastname" },
+                { "mDataProp": "id" },
+                { "mDataProp": "date" }
+            ],
+            "destroy":true
+        });
+    }
+});
 
 $('#example8 tbody').on('click','tr',function(){
     if ($(this).hasClass('selected')) {
@@ -24,7 +45,6 @@ $('#edit-rec-btn').on('click',function(e){
     if($('#example8 tbody tr').hasClass('selected')){                    
         $('#modal-title').text('Edit Patient');
         $('.form-holder').load("components/edit_patient_form.php",function(){});
-        editPatientRecord($('#example8 tbody tr.selected td').eq(3).text());
         $('#my-modal').modal('toggle');  
     }else{
         swal("You have to select a patient to edit.");
@@ -47,16 +67,9 @@ function deleteRequest(){
         },
         function(isConfirm) {
             if (isConfirm) {
-                var data =   {"requestNumber":$('#example8 tr.selected td').eq(0).text(),"firstname":"0","lastname":"0","patientID":"0","date":"0"};
-                var DELETE_REQUEST="http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/delete_request/"
-                data = JSON.stringify(data); 
-		
-                $.post(DELETE_REQUEST,data,function(data){
-                    $('#example8 tbody tr.selected').remove();
-                });
+                table8.row('.selected').remove().draw(false);
             }
-            }
-        );
+        });
     }else{
          swal("You have to select a patient's request to delete.");
     }
@@ -77,21 +90,7 @@ function deletePersonel(){
         },
         function(isConfirm) {
             if (isConfirm) {
-                                var data =   {"personelID":$('#example9 tr.selected td').eq(0).text(),
-                    "firstname":"0",
-                    "lastname":"0",
-                    "email":"0",
-                    "phonenumber":"0",
-                    "username":"0",
-                    "password":"0",
-                    "type":"0"
-                   };
-                var DELETE_PERSONEL="http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/delete_personel/"
-                data = JSON.stringify(data); 
-		
-                $.post(DELETE_PERSONEL,data,function(data){
-                    $('#example9 tbody tr.selected').remove();
-                });
+                table9.row('.selected').remove().draw(false);
             }
         });
     }else{
@@ -108,7 +107,6 @@ $('#view-rec-btn').on('click',function(e){
     if($('#example8 tbody tr').hasClass('selected')){                    
         $('#modal-title').text('View patient\'s record');
         $('.form-holder').load("components/view_patient_form.php",function(){});
-        viewPatientRecord($('#example8 tbody tr.selected td').eq(3).text());
         $('#my-modal').modal('toggle');  
     }else{
         swal("You have to select a request to view.");
@@ -277,5 +275,4 @@ function editPatientRecord(id){
         }
     });
 }
-
 
