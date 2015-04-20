@@ -50,7 +50,7 @@
                         <img class="img-circle" src="_/img/patient.png" alt="Generic placeholder image" width="140" height="140">
                         <h2>Patient</h2>
                         <p>Are you a patient? Is there something wrong with your information in the system? Request a change by entering here.</p>
-                        <p><a id="2requestSection" class="btn btn-default" href="#request_form_section" role="button">Proceed for a request &raquo;</a></p>
+                        <p><a id="2requestSection" class="btn btn-default" href="#request_form_section">Proceed for a request &raquo;</a></p>
                     </div>
                 </div>
             </div>
@@ -86,11 +86,11 @@
             $(document).ready(function(){
                 $('.form-holder').load("components/login_form.php");
                 $('#modal-title').text('Log in');
-                $('#my-modal').modal('toggle'); 
             });
             
-            $('#medical_record_mode').on('click',function(){
-                $('#my-modal').modal('toggle')
+            $('a[role="button"]').on('click',function(e){
+                $('#my-modal').modal('toggle');
+                e.preventDefault();
             });
             
             $('#2requestSection').click(function(event) {
