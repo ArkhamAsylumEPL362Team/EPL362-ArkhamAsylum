@@ -27,7 +27,7 @@ public class ServiceInsert {
 			
 			database = new DatabaseConnection();
 		
-			String query = "INSERT INTO INCIDENT values ( '"+ incident.id + "','" + incident.patient + "','"+ 
+			String query = "INSERT INTO INCIDENT(patient,details,incident_type) values ('" + incident.patient + "','"+ 
 						incident.details + "','"+incident.type + "')";  
 		
 			database.getStatement().executeUpdate(query);
@@ -61,8 +61,8 @@ public class ServiceInsert {
 			
 			database = new DatabaseConnection();
 		
-			String query = "INSERT INTO COMMENT values ( '"+ comments.id + "','" + comments.content + "','"+ 
-						comments.patient + "','"+comments.clinician + "','"+comments.date+"')";  
+			String query = "INSERT INTO COMMENT(content,patient,clinician,date)  values ('" + comments.content + "','"+ 
+						comments.patient + "','"+comments.clinician + "',"+comments.date+")";  
 		
 			database.getStatement().executeUpdate(query);
 			
@@ -95,7 +95,7 @@ public class ServiceInsert {
 			
 			database = new DatabaseConnection();
 		
-			String query = "INSERT INTO TREATMENT values ( '"+ treatment.id + "','" + treatment.prev_id + "','"+ 
+			String query = "INSERT INTO TREATMENT(prev_id,patient) values ('" + treatment.prev_id + "','"+ 
 					treatment.patient+"')";  
 		
 			database.getStatement().executeUpdate(query);
@@ -174,6 +174,40 @@ public class ServiceInsert {
 			}
 			
 			 
+			
+		}catch(SQLException r){
+			r.printStackTrace();
+			return Response
+					.status(Status.BAD_REQUEST)
+					.entity(((String)" { \"status\": \"JSONException\" }"))
+					.build();
+		}catch(Exception e){
+			e.printStackTrace();
+			return Response
+					.status(Status.BAD_REQUEST)
+					.entity(((String)" { \"status\": \"JSONException\" }"))
+					.build();	
+		}finally{
+			database.CloseConnection();
+		}
+		return    Response.ok().build();
+	}
+	
+	@POST
+	@Path("/OverruledWarning/")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON})
+	public Response insertOverruledWarning(String data){
+		DatabaseConnection database =null;
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			WarningOverruled warningOverruled = mapper.readValue(data, WarningOverruled.class);
+			
+			database = new DatabaseConnection();
+		
+			String query = "INSERT INTO warning_overruled values ( '"+ warningOverruled.clinician + "','" + warningOverruled.warning + "',"+ 
+					warningOverruled.date+")";  
+		
+			database.getStatement().executeUpdate(query);
 			
 		}catch(SQLException r){
 			r.printStackTrace();

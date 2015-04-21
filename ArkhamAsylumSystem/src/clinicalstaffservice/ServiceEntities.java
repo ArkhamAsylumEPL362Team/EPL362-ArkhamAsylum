@@ -10,6 +10,12 @@ class Incident {
 	public String type;		//INCIDENT or THREAT//
 }
 
+class WarningOverruled{
+	public String clinician; //int//
+	public String warning; //text//
+	public String date; // DATE: YYYY-MM-DD //
+}
+
 class Comment{
 	public String id;		 //int//
 	public String content;	 //text//

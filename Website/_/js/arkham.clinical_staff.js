@@ -1,3 +1,5 @@
+var TREATMENT_ID=-1;
+
 $.extend( $.fn.dataTable.defaults, {
     "ordering": true,
     "searching": false,
@@ -315,6 +317,9 @@ $('#diagnose_patient_id_input').on('focusout',function(e){
         cache: "true",
         success: function(result) {
             requests = JSON.parse(result);
+            if(requests.results_array.length!=0){
+                TREATMENT_ID=requests.results_array[0].treatment_id;
+            }
             $.each(requests.results_array,function(key,value){
                 table5.row.add( [
                     value.condition,
@@ -329,6 +334,87 @@ getTreatmentmeds();
 getMedicine();
 getMedicalRecords();
 
+/*$(".diagnose-form #submit_btn").click(function(){
+ insertIncident();
+ insertComments();
+})*/
+
+table3.columns('.ID').order('desc');
+
+function insertIncident(){
+    var incident_details="No incident details entered";
+    var patient_id=$('#diagnose_patient_id_input').val();
+    var incident_type=$('#diagnose_incedent_status:checked').val();
+    if($('#diagnose_incedent_input').val()!=""){
+        incident_details=$('#diagnose_incedent_input').val();
+    }
+    var incidentjson=JSON.stringify({"patient":"\""+patient_id+"\"","details":"\""+incident_details+"\"","type":"\""+incident_type+"\""});
+    $.post("http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/insert/Incident/",
+        incidentjson,
+        function(data){
+            console.log("incident post success");
+        });
+}
+
+function insertComments(){
+    var patient_id=$('#diagnose_patient_id_input').val();
+    var comments="No comments entered";
+    if($('diagnose_patient_comment_input').val()!=""){
+        comments=$('diagnose_patient_comment_input').val();
+    }
+    var commentjson=JSON.stringify({"content":"\""+comments+"\"","patient":"\""+patient_id+"\"","clinician":"1","date":"CURDATE()"});
+    $.post("http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/insert/ConsultationComment/",
+        commentjson,
+        function(data){
+            console.log("incident post success");
+        });
+}
+function insertTreatment(){
+   if(TREATMENT_ID==-1) {
+       if(!$('#cur_treat_table tbody tr:first-child td:first-child').hasClass('dataTables_empty')){
+           var prev_id=0;
+           var patient_id=$('#diagnose_patient_id_input').val();
+           var jsontreatment=JSON.stringify({ "id": "1",  "prev_id": "\""+prev_id+"\"", "patient":"\""+patient_id+"\""});
+           $.post("http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/insert/Treatment/",jsontreatment,function(data){
+                   var medname;
+                   var quantity;
+                   var condition;
+                   $.each($('#cur_treat_table tbody tr'),function(key,value){
+                       $.each($(this).children('td'),function(key,value){
+                           if(key==0)
+                               medname=$(this).html();
+                           else if (key==1){
+                               condition=$(this).html();
+                           }else{
+                               quantity=$(this).children('.quantity').val();
+                           }
+                       });
+                       var jsontreatmed=JSON.stringify({ "treatment_id":"\""+TREATMENT_ID+"\"", "medicine": "\""+medname+"\"", "quantity":"\""+quantity+"\"","condition":"\""+condition+"\""});
+                           $.post("http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/insert/TreatmentMedicine/",jsontreatmed,function(data){});
+                   });
+               }
+           );
+       }
+   }
+}
+/*
+function updateMedicalRecord(){
+
+}*/
+function getTreatment(){
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/Treatment/",
+        async: "false",
+        cache: "true",
+        success: function (result) {
+            requests = JSON.parse(result);
+            if(requests.results_array.length!=0){
+                TREATMENT_ID=requests.results_array[0].treatment_id;
+            }
+        }
+    });
+}
 function getTreatmentmeds() {
     $.ajax({
         type: "GET",
@@ -410,11 +496,5 @@ function getMedicalRecords() {
     });
 }
 
-$(".diagnose-form #submit_btn").click(function(){
-    
-})
-
-
-table3.columns('.ID').order('desc');
 
 
