@@ -7,15 +7,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><img height="46px" width="46px" src="_/img/brand.png"/></a>
+            <a class="navbar-brand" href="index.php"><img height="46px" width="46px" src="_/img/brand.png"/></a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="#">Sample link</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Log out</a></li>
+                <li><a id="log_out_btn" href="index.php">Log out</a></li>
             </ul>
         </div>
     </div>

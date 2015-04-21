@@ -110,16 +110,7 @@
 		$.post(EDIT_PATIENT,data,function(data){
 				data = JSON.parse(data);
 				console.log(data);
-<<<<<<< HEAD
-		   	 $('tr.selected td').eq(0).text(data.id);
-		     $('tr.selected td').eq(1).text(data.firstname);
-             $('tr.selected td').eq(2).text(data.lastname);
-             $('tr.selected td').eq(3).text(data.relative_email);
-             $('tr.selected td').eq(4).text(data.address);
-             $('tr.selected td').eq(5).text(data.phonenumber);
-             $('tr.selected td').eq(6).text(data.birthday);
-             $('tr.selected td').eq(7).text(data.gender);
-=======
+
                 if(!data.id){
                     swal("This record is read-only!");
                     return false;
@@ -136,7 +127,6 @@
             $('#example8 tr.selected td').eq(1).text(data.firstname);
             $('#example8 tr.selected td').eq(2).text(data.lastname);
             $('#example8 tr.selected td').eq(3).text(data.id);
->>>>>>> dd19eaa1080af10d9b3616124e261bb4065ca672
 			
 		});	
 	}

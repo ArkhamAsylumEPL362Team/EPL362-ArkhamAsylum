@@ -1,4 +1,4 @@
-<form id="add-personel-form" name='add-personel-form' action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+<form id="edit-personel-form" name='edit-personel-form' action="" method="post" enctype="multipart/form-data" class="form-horizontal">
     <fieldset>
         <div class="modal-body">
             <div class="form-group">
@@ -74,3 +74,47 @@
         </div>
     </fieldset>
 </form>
+<script>
+    function editPersonelInfo(){
+        var personelType;
+        if($('#personel_type-0').is(':checked'))
+            personelType="MEDICAL_RECORD_STAFF";
+        else if($('#personel_type-1').is(':checked'))
+            personelType="RECEPTIONIST";
+        else
+            personelType="CLINICAL_STAFF";
+        var data = {"personelID":$('#edit_personelID_input').val(),
+                    "firstname":$('#edit_personel_firstname_input').val(),
+                    "lastname":$('#edit_personel_lastname_input').val(),
+                    "email":$('#edit_personel_email_input').val(),
+                    "phonenumber":$('#edit_personel_phonenumber_input').val(),
+                    "username":"0",
+                    "password":"0",
+                    "type":personelType
+                   };
+        data=JSON.stringify(data);
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/update_personel/",
+            async:"true",
+            cache: "true",
+            data: data,
+            success: function(personelInfo) {
+                personelInfo = JSON.parse(personelInfo);
+                console.log(personelInfo);
+                $('#example9 tbody tr.selected td').eq(0).text(personelInfo.personelID);
+                $('#example9 tbody tr.selected td').eq(1).text(personelInfo.firstname);
+                $('#example9 tbody tr.selected td').eq(2).text(personelInfo.lastname);
+                $('#example9 tbody tr.selected td').eq(3).text(personelInfo.email);
+                $('#example9 tbody tr.selected td').eq(4).text(personelInfo.phonenumber);
+                $('#example9 tbody tr.selected td').eq(5).text(personelInfo.type);  
+            }
+        });
+    }
+    
+    $('#edit-personel-form').submit(function(e){
+        editPersonelInfo();
+        e.preventDefault();
+        $('#my-modal').modal('toggle');  
+    });
+</script>
