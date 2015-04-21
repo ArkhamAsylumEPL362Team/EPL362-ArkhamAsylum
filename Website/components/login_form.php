@@ -27,6 +27,18 @@
 <script>
 $('#login-form').submit(function(e){
     var LOG_IN="http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/log_in/";
+    var usertype;
+    switch ($("a.mode_selected").attr("href")){
+        case "receptionist.php":
+            usertype="RECEPTIONIST";
+            break;
+        case "clinical_staff.php":
+            usertype="CLINICAL_STAFF";
+            break;
+        case "#":
+            usertype="\""+"MEDICAL_RECORD_STAFF"+"\"";
+            break;
+    }
     var data={
         "personelID":"0",
         "firstname":"0",
@@ -35,13 +47,13 @@ $('#login-form').submit(function(e){
         "phonenumber":"0",
         "username":$('#user_id_input').val(),
         "password":$('#user_password_input').val(),
-        "type":"0"
+        "type":usertype
     };
     data=JSON.stringify(data);
     $.post(LOG_IN,data,function(data){
             data = JSON.parse(data);
             if(data.status=="ok"){
-                window.location.href = "medical_record_staff.php";
+                window.location.href = $("a.mode_selected").attr("href");
             }else{
                 swal("Error in username or password!","Please try again.");
             }

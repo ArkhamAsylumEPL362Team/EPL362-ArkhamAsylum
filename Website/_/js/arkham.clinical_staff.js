@@ -395,6 +395,8 @@ function insertTreatment(){
                }
            );
        }
+   }else{
+
    }
 }
 /*
