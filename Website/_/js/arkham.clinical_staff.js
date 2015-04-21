@@ -26,9 +26,18 @@ $('#med_records tbody').on('click','tr',function(){
 
 $('#edit-rcrd-btn').on('click',function(e){
     if($('#med_records tbody tr').hasClass('selected')){
-        $('#modal-title').text('Edit record');
-        $('.form-holder').load("components/edit_record_form.php",function(){});
-        $('#my-modal').modal('toggle');  
+        if(!$('#med_records tbody tr.selected').hasClass('deceased')) {
+            if(!$('#med_records tbody tr.selected').hasClass("not_updated")) {
+                $('#diagnose_patient_id_input').val($('#med_records tbody tr.selected td:first-child').html());
+                window.location.href="#diagnose";
+                /*$('#modal-title').text('Edit record');
+                $('.form-holder').load("components/edit_record_form.php", function () {
+                });
+                $('#my-modal').modal('toggle');*/
+            }
+        }else{
+            swal("You can't edit a deceased patient's medical record.");
+        }
     }else{
         swal("You have to select a record to edit.");
     }
@@ -283,7 +292,7 @@ $('#cur_treat_table tbody').on('click','tr',function(){
     else {
             table5.$('tr.selected').removeClass('selected');
             $(this).addClass('selected');
-        }
+    }
 });
 
 $('#select-tr-btn').on('click',function(e){              
@@ -316,6 +325,7 @@ $('#diagnose_patient_id_input').on('focusout',function(e){
         async:"false",
         cache: "true",
         success: function(result) {
+            table5.clear().draw();
             requests = JSON.parse(result);
             if(requests.results_array.length!=0){
                 TREATMENT_ID=requests.results_array[0].treatment_id;
@@ -327,33 +337,72 @@ $('#diagnose_patient_id_input').on('focusout',function(e){
                     '<input type="text" class="quantity" value="'+value.quantity+'">'
                 ] ).draw();
             });
+        },
+        error:function(){
+            table5.clear().draw();
         }
     });
 });
 getTreatmentmeds();
 getMedicine();
+var deceasedjson;
+
+$.ajax({
+    type: "GET",
+    url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/Deceased/",
+    async:"false",
+    cache: "true",
+    success: function(result) {
+        result=JSON.parse(result);
+        deceasedjson=result.results_array;
+    }
+});
 getMedicalRecords();
-
-/*$(".diagnose-form #submit_btn").click(function(){
- insertIncident();
- insertComments();
-})*/
-
 table3.columns('.ID').order('desc');
+
+$(".diagnose-form #submit_btn").click(function(e){
+    e.preventDefault();
+    var flag=0;
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/Treatment/"+$('#diagnose_patient_id_input').val(),
+        async: "false",
+        cache: "true",
+        success: function (result) {
+            requests = JSON.parse(result);
+            if(requests.results_array.length!=0){
+                console.log(requests.results_array[0].treatment_id);
+                TREATMENT_ID=requests.results_array[0].treatment_id;
+            }
+            insertTreatment();
+            if(flag) {
+                insertIncident();
+                insertComments();
+                updateMedicalRecord();
+            }
+        }
+    });
+
+});
 
 function insertIncident(){
     var incident_details="No incident details entered";
     var patient_id=$('#diagnose_patient_id_input').val();
-    var incident_type=$('#diagnose_incedent_status:checked').val();
+    var incident_type=$('input[name="diagnose_incedent_status"]:checked').val();
     if($('#diagnose_incedent_input').val()!=""){
         incident_details=$('#diagnose_incedent_input').val();
     }
-    var incidentjson=JSON.stringify({"patient":"\""+patient_id+"\"","details":"\""+incident_details+"\"","type":"\""+incident_type+"\""});
-    $.post("http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/insert/Incident/",
-        incidentjson,
-        function(data){
-            console.log("incident post success");
-        });
+    var incidentjson={"patient":patient_id,"details":incident_details,"type":incident_type};
+    var jsonSTRING=JSON.stringify(incidentjson);
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/insert/Incident/",
+        async:"false",
+        data:jsonSTRING,
+        success:function(data){
+            console.log(data);
+        }
+    });
 }
 
 function insertComments(){
@@ -362,7 +411,7 @@ function insertComments(){
     if($('diagnose_patient_comment_input').val()!=""){
         comments=$('diagnose_patient_comment_input').val();
     }
-    var commentjson=JSON.stringify({"content":"\""+comments+"\"","patient":"\""+patient_id+"\"","clinician":"1","date":"CURDATE()"});
+    var commentjson=JSON.stringify({"content":comments,"patient":patient_id,"clinician":"1","date":"CURDATE()"});
     $.post("http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/insert/ConsultationComment/",
         commentjson,
         function(data){
@@ -370,52 +419,111 @@ function insertComments(){
         });
 }
 function insertTreatment(){
-   if(TREATMENT_ID==-1) {
+   if(TREATMENT_ID==-1||TREATMENT_ID=="null") {
        if(!$('#cur_treat_table tbody tr:first-child td:first-child').hasClass('dataTables_empty')){
+           flag=1;
            var prev_id=0;
            var patient_id=$('#diagnose_patient_id_input').val();
-           var jsontreatment=JSON.stringify({ "id": "1",  "prev_id": "\""+prev_id+"\"", "patient":"\""+patient_id+"\""});
+           var jsontreatment=JSON.stringify({ "id": "1",  "prev_id": prev_id, "patient":patient_id});
            $.post("http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/insert/Treatment/",jsontreatment,function(data){
                    var medname;
                    var quantity;
                    var condition;
-                   $.each($('#cur_treat_table tbody tr'),function(key,value){
-                       $.each($(this).children('td'),function(key,value){
-                           if(key==0)
-                               medname=$(this).html();
-                           else if (key==1){
-                               condition=$(this).html();
-                           }else{
-                               quantity=$(this).children('.quantity').val();
+                   $.ajax({
+                       type: "GET",
+                       url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/Treatment/"+$('#diagnose_patient_id_input').val(),
+                       async: "false",
+                       cache: "true",
+                       success: function (result) {
+                           requests = JSON.parse(result);
+                           if(requests.results_array.length!=0){
+                               console.log(requests.results_array[0].treatment_id);
+                               TREATMENT_ID=requests.results_array[0].treatment_id;
                            }
-                       });
-                       var jsontreatmed=JSON.stringify({ "treatment_id":"\""+TREATMENT_ID+"\"", "medicine": "\""+medname+"\"", "quantity":"\""+quantity+"\"","condition":"\""+condition+"\""});
-                           $.post("http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/insert/TreatmentMedicine/",jsontreatmed,function(data){});
+                               $.each($('#cur_treat_table tbody tr'), function (key, value) {
+                                   $.each($(this).children('td'), function (key, value) {
+                                       if (key == 0)
+                                           condition = $(this).html();
+                                       else if (key == 1) {
+                                           medname = $(this).html();
+                                       } else {
+                                           quantity = $(this).children('.quantity').val();
+                                       }
+                                   });
+                                   var jsontreatmed = JSON.stringify({
+                                       "treatment_id": TREATMENT_ID,
+                                       "medicine": medname,
+                                       "quantity": quantity,
+                                       "condition": condition
+                                   });
+                                   $.post("http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/insert/TreatmentMedicine/", jsontreatmed, function (data) {
+                                   });
+                               });
+                       }
                    });
                }
            );
+       }else{
+           swal("You haven't put any treatment for this new patient!");
        }
    }else{
+       flag=1;
+       var prev_id=TREATMENT_ID;
+       var patient_id=$('#diagnose_patient_id_input').val();
+       var jsontreatment=JSON.stringify({ "id": "1",  "prev_id": prev_id, "patient":patient_id});
+       if($('#cur_treat_table tbody tr.just_updated')!=undefined) {
+           $.post("http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/insert/Treatment/", jsontreatment, function (data) {
+               var medname;
+               var quantity;
+               var condition;
+               $.ajax({
+                   type: "GET",
+                   url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/Treatment/"+$('#diagnose_patient_id_input').val(),
+                   async: "false",
+                   cache: "true",
+                   success: function (result) {
+                       requests = JSON.parse(result);
+                       if(requests.results_array.length!=0){
+                           console.log(requests.results_array[0].treatment_id);
+                           TREATMENT_ID=requests.results_array[0].treatment_id;
+                       }
+                       if($('#cur_treat_table tbody tr.just_updated').html()!=undefined) {
+                           $.each($('#cur_treat_table tbody tr'), function (key, value) {
+                               $.each($(this).children('td'), function (key, value) {
+                                   if (key == 0)
+                                       condition = $(this).html();
+                                   else if (key == 1) {
+                                       medname = $(this).html();
+                                   } else {
+                                       quantity = $(this).children('.quantity').val();
+                                   }
+                               });
+                               var jsontreatmed = JSON.stringify({
+                                   "treatment_id": TREATMENT_ID,
+                                   "medicine": medname,
+                                   "quantity": quantity,
+                                   "condition": condition
+                               });
+                               $.post("http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/insert/TreatmentMedicine/", jsontreatmed, function (data) {
+                               });
 
+                           });
+                       }
+                   }
+               });
+
+           });
+       }
    }
 }
-/*
-function updateMedicalRecord(){
 
-}*/
-function getTreatment(){
-    $.ajax({
-        type: "GET",
-        url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/Treatment/",
-        async: "false",
-        cache: "true",
-        success: function (result) {
-            requests = JSON.parse(result);
-            if(requests.results_array.length!=0){
-                TREATMENT_ID=requests.results_array[0].treatment_id;
-            }
-        }
-    });
+function updateMedicalRecord(){
+    var jsonmedical = JSON.stringify({ "patient": $('#diagnose_patient_id_input').val(),  "last_updated": "CURDATE()", "dangerousness": $( "#diagnose_patient_dangerousness_input option:selected" ).text()});
+    $.post("http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/insert/MedicalRecord/",
+        jsonmedical,
+        function(data){
+            console.log('medical record updated');
+        });
 }
 function getTreatmentmeds() {
     $.ajax({
@@ -463,14 +571,15 @@ function getMedicalRecords() {
         cache: "true",
         success: function (result) {
             requests = JSON.parse(result);
-            $.each(requests.results_array, function (key, value) {
-                table3.row.add([
-                    value.id,
-                    value.firstname,
-                    value.lastname,
-                    value.dangerousness,
-                    value.last_updated
-                ]).draw();
+            console.log(deceasedjson);
+            $.each(requests.results_array, function (key1, value1) {
+                    table3.row.add([
+                        value1.id,
+                        value1.firstname,
+                        value1.lastname,
+                        value1.dangerousness,
+                        value1.last_updated
+                    ]).draw();
             });
             $.each($('#med_records tbody tr'), function (key, value) {
                 $(this).addClass("not_updated");
@@ -483,14 +592,40 @@ function getMedicalRecords() {
                 cache: "true",
                 success: function (result) {
                     requests = JSON.parse(result);
-                    $.each(requests.results_array, function (key, value) {
-                        table3.row.add([
-                            value.id,
-                            value.firstname,
-                            value.lastname,
-                            value.dangerousness,
-                            value.last_updated
-                        ]).draw();
+                    $.each(requests.results_array, function (key1, value1) {
+                            table3.row.add([
+                                value1.id,
+                                value1.firstname,
+                                value1.lastname,
+                                value1.dangerousness,
+                                value1.last_updated
+                            ]).draw();
+                    });
+                    $.each($('#med_records tbody tr'),function(key1,value1){
+                        var colval=$(this).children("td:first-child").html();
+                        $.each(deceasedjson,function(key3,value3){
+                            console.log(colval+"=="+value3.id);
+                            if(value3.id==colval){
+                                var pos=key1+1;
+                                if(!$('#med_records tbody tr:nth-child('+pos+')').hasClass("deceased")) {
+                                    $('#med_records tbody tr:nth-child(' + pos + ')').addClass("deceased");
+                                    $('#med_records tbody tr:nth-child(' + pos + ') td:last-child').append('<i style="color:#F26C68;margin-left:15px"' +
+                                    'class="fa fa-exclamation fa-lg" data-container="body" data-toggle="popover" ' +
+                                    'data-placement="top" data-content="The patient is deceased you can only view his records"></i>');
+
+                                    $('#med_records i.fa-exclamation').mouseover(function(){
+                                        $(this).css('cursor','pointer');
+                                        $(this).popover('show');
+                                    });
+
+                                    $('#med_records i.fa-exclamation').mouseout(function(){
+                                        $(this).css('cursor','pointer');
+                                        $(this).popover('hide');
+                                    });
+                                }
+                                return false;
+                            }
+                        });
                     });
                 }
             });

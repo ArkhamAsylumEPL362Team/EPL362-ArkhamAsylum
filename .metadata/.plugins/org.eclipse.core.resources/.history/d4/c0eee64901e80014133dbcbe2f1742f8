@@ -79,7 +79,8 @@ public class ServiceGet {
 			String result=null;
 			try {
 			database = new DatabaseConnection();
-			ResultSet rs= database.getStatement().executeQuery("SELECT * FROM DECEASED");
+			ResultSet rs= database.getStatement().executeQuery("SELECT * FROM DECEASED"
+					+ "where patient="+patient);
 			result = JSON.parseJSON(rs);
 			}catch(SQLException r){
 				r.printStackTrace();
