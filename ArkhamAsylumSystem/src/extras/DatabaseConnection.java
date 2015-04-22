@@ -12,8 +12,7 @@ public class DatabaseConnection {
 	private static final String HOST="localhost:3306";
 	private static final String USER="root";
 	private static final String PASSWORD="";
-
-	private static final String DATABASE="epl362";
+	private static final String DATABASE="EPL362";
 	private static final String CONF = "useOldAliasMetadataBehavior=true";
 
 	public DatabaseConnection(){	
