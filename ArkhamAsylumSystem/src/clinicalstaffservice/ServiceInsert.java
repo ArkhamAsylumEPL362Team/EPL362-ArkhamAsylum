@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -18,7 +19,7 @@ public class ServiceInsert {
 	
 	@POST
 	@Path("/Incident/")
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON})
 	public Response insertStaffService(String data){
 		DatabaseConnection database =null;
 		try {
@@ -52,7 +53,7 @@ public class ServiceInsert {
 	
 	@POST
 	@Path("/ConsultationComment/")
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON})
 	public Response insertConsultationComment(String data){
 		DatabaseConnection database =null;
 		try {
@@ -86,7 +87,8 @@ public class ServiceInsert {
 	
 	@POST
 	@Path("/Treatment/")
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON})
+	@Produces(MediaType.TEXT_PLAIN)
 	public Response insertNewTreatment(String data){
 		DatabaseConnection database =null;
 		try {
@@ -120,7 +122,7 @@ public class ServiceInsert {
 	
 	@POST
 	@Path("/TreatmentMedicine/")
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON})
 	public Response insertNewTreatmentMedicine(String data){
 		DatabaseConnection database =null;
 		try {
@@ -154,7 +156,7 @@ public class ServiceInsert {
 	
 	@POST
 	@Path("/MedicalRecord/")
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON})
 	public Response insertUpdateMedicalRecord(String data){
 		DatabaseConnection database =null;
 		try {

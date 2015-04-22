@@ -29,7 +29,9 @@ public class LogIn {
 			ObjectMapper mapper = new ObjectMapper();
 			Personel personel = mapper.readValue(data, Personel.class);
 			
-			String query = "SELECT * FROM USER WHERE username='"+personel.username+"' AND password='"+personel.password+"';";  
+			String query = "SELECT * FROM USER WHERE "
+					+ "username='"+personel.username+"' "
+							+ "AND password='"+personel.password+"'AND type='"+personel.type+"'";  
 			boolean result=true;
 			
 			ResultSet rs=database.getStatement().executeQuery(query);

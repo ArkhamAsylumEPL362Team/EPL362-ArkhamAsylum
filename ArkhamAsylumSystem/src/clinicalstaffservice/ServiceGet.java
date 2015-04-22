@@ -44,14 +44,15 @@ public class ServiceGet {
 			return Response.ok().entity((String)result).build();
 		}
 		@GET
-		@Path("/Treatment/")
+		@Path("/Treatment/{patient}")
 		@Produces(MediaType.TEXT_PLAIN)
-		public Response getTreatment()throws Exception{
+		public Response getTreatment(@PathParam("patient") int patient)throws Exception{
 			DatabaseConnection database =null;
 			String result=null;
 			try {
 			database = new DatabaseConnection();
-			ResultSet rs= database.getStatement().executeQuery("SELECT * FROM epl362.treatment");
+			ResultSet rs= database.getStatement().executeQuery("SELECT MAX(id) as treatment_id FROM epl362.treatment "
+					+ "where patient="+patient);
 			result = JSON.parseJSON(rs);
 			}catch(SQLException r){
 				r.printStackTrace();
@@ -70,6 +71,33 @@ public class ServiceGet {
 			}
 			return Response.ok().entity((String)result).build();
 		}
+		@GET
+		@Path("/Deceased/")
+		@Produces(MediaType.TEXT_PLAIN)
+		public Response getDeceased(@PathParam("patient") int patient)throws Exception{
+			DatabaseConnection database =null;
+			String result=null;
+			try {
+			database = new DatabaseConnection();
+			ResultSet rs= database.getStatement().executeQuery("SELECT * FROM DECEASED");
+			result = JSON.parseJSON(rs);
+			}catch(SQLException r){
+				r.printStackTrace();
+				return Response
+						.status(Status.BAD_REQUEST)
+						.entity(((String)" { \"status\": \"JSONException\" }"))
+						.build();
+			}catch(Exception e){
+				e.printStackTrace();
+				return Response
+						.status(Status.BAD_REQUEST)
+						.entity(((String)" { \"status\": \"JSONException\" }"))
+						.build();	
+			}finally{
+				database.CloseConnection();
+			}
+			return Response.ok().entity((String)result).build();
+		}	
 	@GET
 	@Path("/Possible_treatmentmeds/{patient}")
 	@Produces(MediaType.TEXT_PLAIN)
@@ -81,7 +109,7 @@ public class ServiceGet {
 		ResultSet rs= database.getStatement().executeQuery("SELECT * "
 				+ "FROM treatment_medicine "
 				+ "WHERE treatment_id IN"
-				+ "(SELECT MAX(id) "
+				+ "(SELECT MAX(id)"
 				+ "FROM treatment WHERE patient="+patient+");");
 		result = JSON.parseJSON(rs);
 		}catch(SQLException r){

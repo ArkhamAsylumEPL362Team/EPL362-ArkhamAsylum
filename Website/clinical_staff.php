@@ -77,13 +77,13 @@
                                         <div class="col-md-4">
                                             <div class="radio">
                                                 <label for="diagnose_incedent_status-0">
-                                                    <input name="diagnose_incedent_status" id="diagnose_incedent_status-0" value="1" checked="checked" type="radio">
+                                                    <input name="diagnose_incedent_status" id="diagnose_incedent_status-0" value="ACCIDENTAL" checked="checked" type="radio">
                                                     Accidental
                                                 </label>
                                             </div>
                                             <div class="radio">
                                                 <label for="diagnose_incedent_status-1">
-                                                    <input name="diagnose_incedent_status" id="diagnose_incedent_status-1" value="2" type="radio">
+                                                    <input name="diagnose_incedent_status" id="diagnose_incedent_status-1" value="DELIBERATED" type="radio">
                                                     Deliberated
                                                 </label>
                                             </div>

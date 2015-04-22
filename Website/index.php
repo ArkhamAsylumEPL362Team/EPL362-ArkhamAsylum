@@ -92,6 +92,8 @@
             });
             
             $('a[role="button"]').on('click',function(e){
+                $('a[role="button"].mode_selected').removeClass("mode_selected");
+                $(this).addClass("mode_selected");
                 $('#my-modal').modal('toggle');
                 e.preventDefault();
             });
