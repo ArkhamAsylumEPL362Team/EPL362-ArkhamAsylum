@@ -126,17 +126,17 @@
 				status = "SHOW_UP";
 		}
 		
-		if ($("#edit_appointment_type-0").is(':checked')){
+		if ($("#appointment_type-0").is(':checked')){
 				type = "PRE_ARRANGED";	
 		}else{
 				type = "DROP_IN";
 		}
 		
-		
+		console.log(type);
 		
 		var data = {	"id": $("#edit_patientID_input").val(),
 					 	"date":$("#edit_date_input").val(),
-						"patient":$('tr.selected td').eq(1).text().split(" ")[0],
+						"patient":$("#example tr.selected td").eq(1).text().split(" ")[0],
 						"clinician":$("#edit_clinicianID_input :selected").attr("id"),		
 						"clinic":$('#edit_clinic_input :selected').text(),	
 						"time":$("#edit_time_input").val(),			

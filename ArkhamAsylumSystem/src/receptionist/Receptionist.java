@@ -155,7 +155,7 @@ public class Receptionist {
 					+ " U.lastname clinicianL, C.name clinicName " 
 					+ " FROM APPOINTMENT A, PATIENT P, USER U , CLINIC C"
 					+ " WHERE A.patient = '" + app.patient + "' and  P.id = '" + app.patient  +"' and U.id = '" + app.clinician
-					+ "' and C.name = '" + app.clinic +"'"
+					+ "' and C.name = '" + app.clinic +"' and A.id = '"+app.id + "'"
 					+ "ORDER BY A.date ASC";
 			
 			
