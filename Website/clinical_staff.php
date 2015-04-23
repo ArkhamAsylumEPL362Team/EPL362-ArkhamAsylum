@@ -23,6 +23,7 @@
 
     <body>  
         <?php include'components/modal.php' ?>
+        <?php include'components/edit-treatment-modal.php' ?>
         
         <a id="scroller-btn" href="#wrapper"><span><i class="fa fa-arrow-circle-up fa-4x"></i></span></a>
         

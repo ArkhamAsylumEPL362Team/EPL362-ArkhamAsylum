@@ -35,7 +35,6 @@ $('#edit-rcrd-btn').on('click',function(e){
 
             }else{
                  $('#modal-title').text('Edit Patient\'s Treatment');
-
                 $.ajax({
                     type: "GET",
                     url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/Treatmentmeds/",
@@ -49,7 +48,6 @@ $('#edit-rcrd-btn').on('click',function(e){
                             "scrollY":200,
                             "destroy": true
                         });
-
                         $('#poss_treat_edit_table tbody').on('click','tr',function(){
                             if ($(this).hasClass('selected')) {
                                 $(this).removeClass('selected');
@@ -66,69 +64,132 @@ $('#edit-rcrd-btn').on('click',function(e){
                                 '<input type="text" class="quantity" value="' + value.quantity + '">'
                             ]).draw();
                         });
-                    }
-                });
-                $.ajax({
-                    type: "GET",
-                    url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/Possible_treatmentmeds/"+$('#med_records tbody tr.selected td:first-child').html(),
-                    async:"false",
-                    cache: "true",
-                    success: function(result) {
-                        var tablectrapi;
+                        $.ajax({
+                            type: "GET",
+                            url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/Possible_treatmentmeds/"+$('#med_records tbody tr.selected td:first-child').html(),
+                            async:"false",
+                            cache: "true",
+                            success: function(result) {
+                                var tablectrapi;
 
-                        var tablectr= $('#cur_treat_edit_table').DataTable({
-                            "searching": true,
-                            "bPaginate": false,
-                            "scrollY":200,
-                            "destroy": true,
-                            "initComplete": function () {
-                                tablectrapi=this.api();
+                                var tablectr= $('#cur_treat_edit_table').DataTable({
+                                    "searching": true,
+                                    "bPaginate": false,
+                                    "scrollY":200,
+                                    "destroy": true,
+                                    "initComplete": function () {
+                                        tablectrapi=this.api();
+                                    }
+                                });
+                                $('#cur_treat_edit_table tbody').on('click','tr',function(){
+                                    if ($(this).hasClass('selected')) {
+                                        $(this).removeClass('selected');
+                                    }
+                                    else {
+                                        tablectr.$('tr.selected').removeClass('selected');
+                                        $(this).addClass('selected');
+                                    }
+                                });
+                                $('#select-tr-edit-btn').on('click',function(e){
+                                    if($('#poss_treat_edit_table tbody tr').hasClass('selected')){
+                                        tablectr.row.add([
+                                            $('#poss_treat_edit_table tr.selected td').eq(0).text(),
+                                            $('#poss_treat_edit_table tr.selected td').eq(1).text(),
+                                            '<input type="text" class="quantity" value="'+$('#poss_treat_edit_table tr.selected td:last-child input').val()+'">'
+                                        ]).draw();
+                                        $('#cur_treat_edit_table tbody tr:last-child').addClass('just_updated');
+                                    }else{
+                                        swal("You have to select a treatment to use.");
+                                    }
+                                    e.preventDefault();
+                                });
+                                loadTreatModalForMedRec(table_ptr,tablectr);
+                                $('#delete-ctr-edit-btn').on('click',function(e){
+                                    if($('#cur_treat_edit_table tbody tr').hasClass('selected')){
+                                        tablectr.row('.selected').remove().draw(false);
+                                    }else{
+                                        swal("You have to select a treatment to delete.");
+                                    }
+                                    e.preventDefault();
+                                });
+                                $("#submit_edited_btn").click(function(e){
+                                    e.preventDefault();
+                                    $.ajax({
+                                        type: "GET",
+                                        url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/Treatment/" + $('#med_records tbody tr.selected td:first-child').html(),
+                                        async: "false",
+                                        cache: "true",
+                                        success: function (result) {
+                                            requests = JSON.parse(result);
+                                            if (requests.results_array.length != 0) {
+                                                var treat_id = requests.results_array[0].treatment_id;
+                                            }
+                                            var prev_id=treat_id;
+                                            var patient_id=$('#med_records tbody tr.selected td:first-child').html();
+                                            var jsontreatment=JSON.stringify({ "id": "1",  "prev_id": prev_id, "patient":patient_id});
+                                            if($('#cur_treat_edit_table tbody tr.just_updated').html()!=undefined) {
+                                                $.post("http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/insert/Treatment/", jsontreatment, function (data) {
+                                                    var medname;
+                                                    var quantity;
+                                                    var condition;
+                                                    $.ajax({
+                                                        type: "GET",
+                                                        url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/Treatment/"+patient_id,
+                                                        async: "false",
+                                                        cache: "true",
+                                                        success: function (result) {
+                                                            requests = JSON.parse(result);
+                                                            if(requests.results_array.length!=0){
+                                                                treat_id=requests.results_array[0].treatment_id;
+                                                            }
+                                                            if($('#cur_treat_edit_table tbody tr.just_updated').html()!=undefined) {
+                                                                $.each($('#cur_treat_edit_table tbody tr'), function (key, value) {
+                                                                    $.each($(this).children('td'), function (key, value) {
+                                                                        if (key == 0)
+                                                                            condition = $(this).html();
+                                                                        else if (key == 1) {
+                                                                            medname = $(this).html();
+                                                                        } else {
+                                                                            quantity = $(this).children('.quantity').val();
+                                                                        }
+                                                                    });
+                                                                    var jsontreatmed = JSON.stringify({
+                                                                        "treatment_id": treat_id,
+                                                                        "medicine": medname,
+                                                                        "quantity": quantity,
+                                                                        "condition": condition
+                                                                    });
+                                                                    $.post("http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/insert/TreatmentMedicine/", jsontreatmed, function (data) {
+                                                                    });
+
+                                                                });
+                                                            }
+                                                        }
+                                                    });
+
+                                                });
+                                            }
+                                            $("#my-modal").modal('hide');
+                                        }
+                                    });
+                                });
+
+                                requests = JSON.parse(result);
+                                if(requests.results_array.length!=0){
+                                    TREATMENT_ID=requests.results_array[0].treatment_id;
+                                }
+                                $.each(requests.results_array,function(key,value){
+                                    tablectr.row.add( [
+                                        value.condition,
+                                        value.medicine,
+                                        '<input type="text" class="quantity" value="'+value.quantity+'">'
+                                    ] ).draw();
+                                });
+                            },
+                            error:function(){
+                                tablectr.clear().draw();
                             }
                         });
-                        $('#cur_treat_edit_table tbody').on('click','tr',function(){
-                            if ($(this).hasClass('selected')) {
-                                $(this).removeClass('selected');
-                            }
-                            else {
-                                tablectr.$('tr.selected').removeClass('selected');
-                                $(this).addClass('selected');
-                            }
-                        });
-                        $('#select-tr-edit-btn').on('click',function(e){
-                            if($('#poss_treat_edit_table tbody tr').hasClass('selected')){
-                                tablectr.row.add([
-                                    $('#poss_treat_edit_table tr.selected td').eq(0).text(),
-                                    $('#poss_treat_edit_table tr.selected td').eq(1).text(),
-                                    '<input type="text" class="quantity" value="'+$('#poss_treat_edit_table tr.selected td:last-child input').val()+'">'
-                                ]).draw();
-                                $('#cur_treat_edit_table tbody tr:last-child').addClass('just_updated');
-                            }else{
-                                swal("You have to select a treatment to use.");
-                            }
-                            e.preventDefault();
-                        });
-                        $('#delete-ctr-edit-btn').on('click',function(e){
-                            if($('#cur_treat_edit_table tbody tr').hasClass('selected')){
-                                tablectr.row('.selected').remove().draw(false);
-                            }else{
-                                swal("You have to select a treatment to delete.");
-                            }
-                            e.preventDefault();
-                        });
-                        requests = JSON.parse(result);
-                        if(requests.results_array.length!=0){
-                            TREATMENT_ID=requests.results_array[0].treatment_id;
-                        }
-                        $.each(requests.results_array,function(key,value){
-                            tablectr.row.add( [
-                                value.condition,
-                                value.medicine,
-                                '<input type="text" class="quantity" value="'+value.quantity+'">'
-                            ] ).draw();
-                        });
-                    },
-                    error:function(){
-                        tablectr.clear().draw();
                     }
                 });
 
@@ -403,7 +464,7 @@ $('#select-tr-btn').on('click',function(e){
             $('#poss_treat_table tr.selected td').eq(1).text(),
             '<input type="text" class="quantity" value="'+$('#poss_treat_table tr.selected td:last-child input').val()+'">'
         ]).draw();
-        $('#cur_treat_table tbody tr:last-child').addClass('just_updated');
+        $('#cur_treat_edit_table tbody tr:last-child').addClass('just_updated');
     }else{
         swal("You have to select a treatment to use.");
     }
@@ -427,7 +488,36 @@ $('#diagnose_patient_id_input').on('focusout',function(e){
             return false;
         }
     });
-    if(foundnup) {
+    $.each($('#med_records tbody tr.deceased'),function(key,value){
+        if($(this).children('td:first-child').html()==$('#diagnose_patient_id_input').val()){
+            foundnup=2;
+            return false;
+        }
+    });
+    $.each($('#med_records tbody tr.updated'),function(key,value){
+        if(!$('#med_records tbody tr.updated').hasClass('deceased')&&$(this).children('td:first-child').html()==$('#diagnose_patient_id_input').val()){
+            swal({
+                    title: "Are you sure?",
+                    text: "The record is already updated.Do you want to start a new session?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                },
+                function(isConfirm) {
+                    if (isConfirm) {
+                        foundnup==1;
+                    } else {
+                        foundnup==3;
+                    }
+                });
+            return false;
+        }
+    });
+    if(foundnup==1 || foundnup==0) {
         $.ajax({
             type: "GET",
             url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/Possible_treatmentmeds/" + $('#diagnose_patient_id_input').val(),
@@ -451,8 +541,8 @@ $('#diagnose_patient_id_input').on('focusout',function(e){
                 table5.clear().draw();
             }
         });
-    }else{
-        swal('You can\'t update this patient\'s medical record because is up to date');
+    }else if(foundnup==2){
+        swal('You can\'t update this patient\'s medical record because is read-only');
     }
 });
 getTreatmentmeds();
@@ -481,7 +571,13 @@ $(".diagnose-form #submit_btn").click(function(e){
             return false;
         }
     });
-    if(foundnup) {
+    $.each($('#med_records tbody tr.not_updated'),function(key,value){
+        if($(this).children('td:first-child').html()==$('#diagnose_patient_id_input').val()){
+            foundnup=2;
+            return false;
+        }
+    });
+    if(foundnup==0 || foundup==1) {
         $.ajax({
             type: "GET",
             url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/Treatment/" + $('#diagnose_patient_id_input').val(),
@@ -501,185 +597,199 @@ $(".diagnose-form #submit_btn").click(function(e){
             }
         });
     }else{
-        swal('You can\'t update this patient\'s medical record because is up to date');
+        swal("Can\'t Edit", "This patient\'s medical record because is read-only", "error");
     }
 
 });
 
-$('#add-tr-edit-btn').on('click',function(e){
-    $('#modal-edit-title').text('Add treatment');
-    $('.form-edit-holder').load("components/add_treatment_form.php",function(){
-        var table6= $('#treat_meds').DataTable({
-            "searching": true,
-            "bPaginate": true
-        });
-
-        $.ajax({
-            type: "GET",
-            url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/Medicine",
-            async:"false",
-            cache: "true",
-            success: function(result) {
-                requests = JSON.parse(result);
-                $.each(requests.results_array,function(key,value){
-                    table6.row.add( [
-                        value.name,
-                        value.description,
-                        '<span>'+value.side_effect+'</span>',
-                    ] ).draw();
-                });
-                $.ajax({
-                    type: "GET",
-                    url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/NonAllergicMedicines/"+$('#diagnose_patient_id_input').val(),
-                    async:"false",
-                    cache: "true",
-                    success: function(result) {
-                        requests = JSON.parse(result);
-                        $.each(requests.results_array,function(key,value1){
-                            $.each($('#treat_meds tbody tr'),function(key,value2){
-                                if(value1.name==$(this).children("td:first-child").html()) {
-                                    $(this).addClass("allergic");
-                                    $(this).children("td:last-child").append('<i style="color:#F26C68;margin-left:15px"' +
-                                    'class="fa fa-exclamation fa-lg" data-container="body" data-toggle="popover" ' +
-                                    'data-placement="top" data-content="The patient is allergic to this medicine!"></i>');
-                                }
-                            });
-                        });
-                        $('#treat_meds i.fa-exclamation').mouseover(function(){
-                            $(this).css('cursor','pointer');
-                            $(this).popover('show');
-                        });
-
-                        $('#treat_meds i.fa-exclamation').mouseout(function(){
-                            $(this).css('cursor','pointer');
-                            $(this).popover('hide');
-                        });
-                    }
-                });
-
-            }
-        });
-
-        $('#treat_meds tbody').on('click','tr',function(){
-            if ($(this).hasClass('selected')) {
-                $(this).removeClass('selected');
-            }
-            else {
-                table6.$('tr.selected').removeClass('selected');
-                $(this).addClass('selected');
-            }
-        });
-
-
-        var table7= $('#example7').DataTable({
-            "searching": false,
-            "bPaginate": false
-        });
-
-        $('#example7 tbody').on('click','tr',function(){
-            if ($(this).hasClass('selected')) {
-                $(this).removeClass('selected');
-            }
-            else {
-                table7.$('tr.selected').removeClass('selected');
-                $(this).addClass('selected');
-            }
-        });
-
-        $('#add-meds-btn').on('click',function(e){
-            if($('#treat_meds tbody tr').hasClass('selected')){
-                if($('tr.selected').hasClass('allergic')) {
-                    swal({
-                            title: "Are you sure?",
-                            text: "You are trying to insert a medicine that the patient is allergic to.",
-                            type: "warning",
-                            showCancelButton: true,
-                            confirmButtonClass: "btn-warning",
-                            confirmButtonText: "Yes",
-                            cancelButtonText: "No",
-                            closeOnConfirm: true,
-                            closeOnCancel: true
-                        },
-                        function(isConfirm) {
-                            if (isConfirm) {
-                                table7.row.add([
-                                    $('tr.selected td').eq(0).text(),
-                                    $('tr.selected td').eq(1).text(),
-                                    $('tr.selected td').eq(2).text(),
-                                    '<input  value="0" type="text">'
-
-                                ]).draw();
-                                var jsonwarning = {"clinician":"1","warning":"Patient is allergic to "+$('tr.selected td:first-child').html(),"date":"CURDATE()"};
-                                jsonwarning=JSON.stringify(jsonwarning);
-                                $.ajax({
-                                    type: "POST",
-                                    url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/insert/OverruledWarning/",
-                                    async:"true",
-                                    data:jsonwarning,
-                                    success:function(data){
-                                        console.log(data);
+function loadTreatModalForMedRec(table_ptr,tablectr){
+    $('#add-tr-edit-btn').on('click', function (e) {
+        $('#modal-edit-title').text('Add treatment');
+        $('.form-edit-holder').load("components/add_treatment_form.php", function () {
+            var table6 = $('#treat_meds').DataTable({
+                "searching": true,
+                "bPaginate": true
+            });
+            console.log("asdasd");
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/Medicine",
+                async: "false",
+                cache: "true",
+                success: function (result) {
+                    requests = JSON.parse(result);
+                    $.each(requests.results_array, function (key, value) {
+                        table6.row.add([
+                            value.name,
+                            value.description,
+                            '<span>' + value.side_effect + '</span>',
+                        ]).draw();
+                    });
+                    $.ajax({
+                        type: "GET",
+                        url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/NonAllergicMedicines/" + $('#med_records tbody tr.selected td:first-child').html(),
+                        async: "false",
+                        cache: "true",
+                        success: function (result) {
+                            requests = JSON.parse(result);
+                            $.each(requests.results_array, function (key, value1) {
+                                $.each($('#treat_meds tbody tr'), function (key, value2) {
+                                    if (value1.name == $(this).children("td:first-child").html()) {
+                                        $(this).addClass("allergic");
+                                        $(this).children("td:last-child").append('<i style="color:#F26C68;margin-left:15px"' +
+                                        'class="fa fa-exclamation fa-lg" data-container="body" data-toggle="popover" ' +
+                                        'data-placement="top" data-content="The patient is allergic to this medicine!"></i>');
                                     }
                                 });
-                            }
-                        });
-                }else{
-                    table7.row.add([
-                        $('tr.selected td').eq(0).text(),
-                        $('tr.selected td').eq(1).text(),
-                        $('tr.selected td').eq(2).text(),
-                        '<input  value="0" type="text">'
+                            });
+                            $('#treat_meds i.fa-exclamation').mouseover(function () {
+                                $(this).css('cursor', 'pointer');
+                                $(this).popover('show');
+                            });
 
-                    ]).draw();
-                }
-
-            }else{
-                swal("You have to select a medicine to use.");
-            }
-            e.preventDefault();
-        });
-
-        $('#delete-meds-btn').on('click',function(e){
-            if($('#example7 tbody tr').hasClass('selected')){
-                table7.row('.selected').remove().draw(false);
-            }else{
-                swal("You have to select a medicine to delete.");
-            }
-            e.preventDefault();
-        });
-
-        $('#add-treatment-form #add_btn').on('click',function(e){
-            if(!$('#example7 tbody tr.odd td').hasClass('dataTables_empty')){
-                if($("#psbl_tr_input").val()=="") {
-                    swal("You have to write a condition for the added medicines");
-                }else {
-                    $.each($('#example7 tbody tr'), function (key, value) {
-                        table4.row.add([
-                            $('#psbl_tr_input').val(),
-                            $('td', value).eq(0).text(),
-                            '<input type="text" class="quantity" value="' + $('td input', value).val() + '">'
-                        ]).draw();
-
-                        table5.row.add([
-                            $('#psbl_tr_input').val(),
-                            $('td', value).eq(0).text(),
-                            '<input type="text" class="quantity" value="' + $('td input', value).val() + '">'
-                        ]).draw();
-
-                        $('#cur_treat_table tbody tr:last-child').addClass('just_updated');
-
+                            $('#treat_meds i.fa-exclamation').mouseout(function () {
+                                $(this).css('cursor', 'pointer');
+                                $(this).popover('hide');
+                            });
+                        }
                     });
-                    $('#my-modal').modal('toggle');
+
                 }
-            }else{
-                swal("You have to select medicines for treatment.");
-            }
-            e.preventDefault();
+            });
+
+            $('#treat_meds tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    table6.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+
+
+            var table7 = $('#example7').DataTable({
+                "searching": false,
+                "bPaginate": false
+            });
+
+            $('#example7 tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                }
+                else {
+                    table7.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+
+            $('#add-meds-btn').on('click', function (e) {
+                if ($('#treat_meds tbody tr').hasClass('selected')) {
+                    if ($('tr.selected').hasClass('allergic')) {
+                        swal({
+                                title: "Are you sure?",
+                                text: "You are trying to insert a medicine that the patient is allergic to.",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonClass: "btn-warning",
+                                confirmButtonText: "Yes",
+                                cancelButtonText: "No",
+                                closeOnConfirm: true,
+                                closeOnCancel: true
+                            },
+                            function (isConfirm) {
+                                if (isConfirm) {
+                                    table7.row.add([
+                                        $('#treat_meds tr.selected td').eq(0).text(),
+                                        $('#treat_meds tr.selected td').eq(1).text(),
+                                        $('#treat_meds tr.selected td').eq(2).text(),
+                                        '<input  value="0" type="text">'
+
+                                    ]).draw();
+                                    var jsonwarning = {
+                                        "clinician": "1",
+                                        "warning": "Patient is allergic to " + $('#treat_meds tr.selected td:first-child').html(),
+                                        "date": "CURDATE()"
+                                    };
+                                    jsonwarning = JSON.stringify(jsonwarning);
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/insert/OverruledWarning/",
+                                        async: "true",
+                                        data: jsonwarning,
+                                        success: function (data) {
+                                            console.log(data);
+                                        }
+                                    });
+                                }
+                            });
+                    } else {
+                        table7.row.add([
+                            $('#treat_meds tr.selected td').eq(0).text(),
+                            $('#treat_meds tr.selected td').eq(1).text(),
+                            $('#treat_meds tr.selected td').eq(2).text(),
+                            '<input  value="0" type="text">'
+
+                        ]).draw();
+                    }
+
+                } else {
+                    swal("You have to select a medicine to use.");
+                }
+                e.preventDefault();
+            });
+
+            $('#delete-meds-btn').on('click', function (e) {
+                if ($('#example7 tbody tr').hasClass('selected')) {
+                    table7.row('.selected').remove().draw(false);
+                } else {
+                    swal("You have to select a medicine to delete.");
+                }
+                e.preventDefault();
+            });
+
+            $('#add-treatment-form #add_btn').on('click', function (e) {
+                if (!$('#example7 tbody tr.odd td').hasClass('dataTables_empty')) {
+                    if ($("#psbl_tr_input").val() == "") {
+                        swal("You have to write a condition for the added medicines");
+                    } else {
+                        $.each($('#example7 tbody tr'), function (key, value) {
+                            table_ptr.row.add([
+                                $('#psbl_tr_input').val(),
+                                $('td', value).eq(0).text(),
+                                '<input type="text" class="quantity" value="' + $('td input', value).val() + '">'
+                            ]).draw();
+
+                            tablectr.row.add([
+                                $('#psbl_tr_input').val(),
+                                $('td', value).eq(0).text(),
+                                '<input type="text" class="quantity" value="' + $('td input', value).val() + '">'
+                            ]).draw();
+
+                            $('#cur_treat_edit_table tbody tr:last-child').addClass('just_updated');
+
+                        });
+                        $('#my-modal').unbind('hidden.bs.modal');
+                        $('#my-edit-modal').modal('hide');
+                        $('#my-edit-modal').on('hidden.bs.modal', function(e) {
+                            $('#my-modal').modal('show'); //DOM destroyer
+                        });
+                    }
+                } else {
+                    swal("You have to select medicines for treatment.");
+                }
+                e.preventDefault();
+            });
         });
+        $('#my-modal').modal('hide');
+        $('#my-modal').on('hidden.bs.modal', function(e) {
+            $('#my-edit-modal').modal('show'); //DOM destroyer
+        });
+        $('#my-edit-modal .modal-dialog').addClass('modal-lg');
+        e.preventDefault();
     });
-    $('#my-modal .modal-dialog').addClass('modal-lg');
-    $('#my-modal').modal('toggle');
-    e.preventDefault();
-});
+
+}
 
 function insertIncident(){
     var incident_details="No incident details entered";
@@ -766,7 +876,7 @@ function insertTreatment(){
        var prev_id=TREATMENT_ID;
        var patient_id=$('#diagnose_patient_id_input').val();
        var jsontreatment=JSON.stringify({ "id": "1",  "prev_id": prev_id, "patient":patient_id});
-       if($('#cur_treat_table tbody tr.just_updated')!=undefined) {
+       if($('#cur_treat_table tbody tr.just_updated').html()!=undefined) {
            $.post("http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/insert/Treatment/", jsontreatment, function (data) {
                var medname;
                var quantity;
@@ -924,6 +1034,11 @@ function getMedicalRecords() {
                                 return false;
                             }
                         });
+                    });
+                    $.each($('#med_records tbody tr'),function(key3,value3){
+                        if(!$(this).hasClass('deceased')&&!$(this).hasClass('not_updated')){
+                            $(this).addClass('updated');
+                        }
                     });
 
                 }

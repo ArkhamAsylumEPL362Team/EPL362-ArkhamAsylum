@@ -19,9 +19,6 @@
         <link href="_/libs/font-awesome/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.6/css/jquery.dataTables.css">
         <link href="_/css/reset.css" rel="stylesheet">
-        <style>
-            $('#log_out_btn').hide();
-        </style>
     </head>
 
     <body>
