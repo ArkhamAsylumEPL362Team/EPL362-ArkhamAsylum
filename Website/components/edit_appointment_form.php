@@ -148,11 +148,11 @@
 		
 		console.log(data);
 		
-		$.post( EDIT_APPOINTMENT,data,function(data){
-	
-			console.log(data);
-			data= JSON.parse(data);
-			$.each(data.results_array,function(i,data2){
+		$.post( EDIT_APPOINTMENT,data,function(data1){
+	        _logTransaction(EDIT_APPOINTMENT,data,data1);
+			console.log(data1);
+			data= JSON.parse(data1);
+			$.each(data1.results_array,function(i,data2){
 				var t = $('#example').DataTable();
 			 $('#example tr.selected td').eq(0).text(data2.appID);
 		     $('#example tr.selected td').eq(1).text(data2.patientID+ " " +data2.firstname + " "+data2.lastname );

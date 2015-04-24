@@ -50,9 +50,10 @@ $('#login-form').submit(function(e){
         "type":usertype
     };
     data=JSON.stringify(data);
-    $.post(LOG_IN,data,function(data){
-            data = JSON.parse(data);
-            if(data.status=="ok"){
+    $.post(LOG_IN,data,function(data1){
+         _logTransaction(LOG_IN,data,data1);
+            data1 = JSON.parse(data1);
+            if(data1.status=="ok"){
                 window.location.href = $("a.mode_selected").attr("href");
             }else{
                 swal("Error in username or password!","Please try again.");

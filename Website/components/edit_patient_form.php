@@ -107,26 +107,28 @@
 					};	
 		data = JSON.stringify(data); 
 		
-		$.post(EDIT_PATIENT,data,function(data){
-				data = JSON.parse(data);
-				console.log(data);
+		$.post(EDIT_PATIENT,data,function(data1){
+            
+	        _logTransaction(EDIT_PATIENT,data,data1);
+				data = JSON.parse(data1);
+				console.log(data1);
 
-                if(!data.id){
+                if(!data1.id){
                     swal("This record is read-only!");
                     return false;
                 }
-            $('#example1 tr.selected td').eq(0).text(data.id);
-            $('#example1 tr.selected td').eq(1).text(data.firstname);
-            $('#example1 tr.selected td').eq(2).text(data.lastname);
-            $('#example1 tr.selected td').eq(3).text(data.relative_email);
-            $('#example1 tr.selected td').eq(4).text(data.address);
-            $('#example1 tr.selected td').eq(5).text(data.phonenumber);
-            $('#example1 tr.selected td').eq(6).text(data.birthday);
-            $('#example1 tr.selected td').eq(7).text(data.gender);
+            $('#example1 tr.selected td').eq(0).text(data1.id);
+            $('#example1 tr.selected td').eq(1).text(data1.firstname);
+            $('#example1 tr.selected td').eq(2).text(data1.lastname);
+            $('#example1 tr.selected td').eq(3).text(data1.relative_email);
+            $('#example1 tr.selected td').eq(4).text(data1.address);
+            $('#example1 tr.selected td').eq(5).text(data1.phonenumber);
+            $('#example1 tr.selected td').eq(6).text(data1.birthday);
+            $('#example1 tr.selected td').eq(7).text(data1.gender);
             
-            $('#example8 tr.selected td').eq(1).text(data.firstname);
-            $('#example8 tr.selected td').eq(2).text(data.lastname);
-            $('#example8 tr.selected td').eq(3).text(data.id);
+            $('#example8 tr.selected td').eq(1).text(data1.firstname);
+            $('#example8 tr.selected td').eq(2).text(data1.lastname);
+            $('#example8 tr.selected td').eq(3).text(data1.id);
 			
 		});	
 	}

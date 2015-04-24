@@ -117,6 +117,7 @@ function addPersonelInfo(){
             cache: "true",
             data: data,
             success: function(personelInfo) {
+                _logTransaction("http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/insert_personel/",data,personelInfo);
                 personelInfo = JSON.parse(personelInfo);
                 console.log(personelInfo);
                 $('#example9 tbody').append('<tr><td>'+personelInfo.personelID

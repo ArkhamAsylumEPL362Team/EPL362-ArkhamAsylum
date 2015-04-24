@@ -10,6 +10,7 @@
         <script src="_/libs/bootstrap/sweetalert/lib/sweet-alert.min.js"></script>
         <script src="_/libs/bootstrap/datepicker/js/bootstrap-datepicker.js"></script>
         <script src="_/js/jquery.slimscroll.min.js"></script>
+        <script src="_/js/logger.js"></script>
         <script type="text/javascript" charset="utf8" src="_/libs/datatables/media/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" charset="utf8" src="_/libs/smooth-scroll/src/jquery.smooth-scroll.js"></script>
         <link rel="icon" type="image/ico" href="_/img/favicon.ico">

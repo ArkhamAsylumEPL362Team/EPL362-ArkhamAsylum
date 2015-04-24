@@ -106,19 +106,20 @@
 					  "gender": gend
 					};	
 		data = JSON.stringify(data); 
-		$.post(ADD_PATIENT,data,function(data){
-				data = JSON.parse(data);
-				console.log(data);
+		$.post(ADD_PATIENT,data,function(data1){
+            _logTransaction(ADD_PATIENT,data,data1);
+				data1 = JSON.parse(data1);
+				console.log(data1);
 					var t = $('#example1').DataTable();
 					t.row.add( [
-            			    data.id+"",
-							data.firstname +"",
-							data.lastname +"",
-							data.relative_email +"",
-							data.address +"",
-							data.phonenumber +"",
-							data.birthday +"",
-							data.gender +""
+            			    data1.id+"",
+							data1.firstname +"",
+							data1.lastname +"",
+							data1.relative_email +"",
+							data1.address +"",
+							data1.phonenumber +"",
+							data1.birthday +"",
+							data1.gender +""
 					] ).draw();
 		});	
 	}

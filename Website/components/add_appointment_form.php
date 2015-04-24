@@ -141,10 +141,11 @@
 		
 		data = JSON.stringify(data);
 		
-		$.post( ADD_APPOINTMENT,data,function(data){
-	
-			console.log(data);
-			data= JSON.parse(data);
+		$.post( ADD_APPOINTMENT,data,function(data1){
+	        _logTransaction(ADD_APPOINTMENT,data,data1);
+            
+			console.log(data1);
+			data= JSON.parse(data1);
 
 			$.each(data.results_array,function(i,data2){
 				var t = $('#example').DataTable();

@@ -100,6 +100,7 @@
             cache: "true",
             data: data,
             success: function(personelInfo) {
+                 _logTransaction("http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/update_personel/",data,personelInfo);
                 personelInfo = JSON.parse(personelInfo);
                 console.log(personelInfo);
                 $('#example9 tbody tr.selected td').eq(0).text(personelInfo.personelID);

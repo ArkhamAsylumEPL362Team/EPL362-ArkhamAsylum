@@ -1,6 +1,5 @@
 package MedicalRecordStaffService;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.ws.rs.Consumes;
@@ -12,7 +11,6 @@ import javax.ws.rs.core.MediaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import extras.DatabaseConnection;
-import extras.JSON;
 
 @Path("/medical_record_service/")
 public class Insert {

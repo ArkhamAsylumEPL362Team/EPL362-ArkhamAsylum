@@ -11,6 +11,7 @@
         <script src="_/libs/bootstrap/datepicker/js/bootstrap-datepicker.js"></script>
         <script type="text/javascript" charset="utf8" src="_/libs/smooth-scroll/src/jquery.smooth-scroll.js"></script>
         <script src="_/js/jquery.slimscroll.min.js"></script>
+        <script src="_/js/logger.js"></script>
         <script type="text/javascript" charset="utf8" src="_/libs/datatables/media/js/jquery.dataTables.min.js"></script>
         <link rel="icon" type="image/ico" href="_/img/favicon.ico">
         <link href="_/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
