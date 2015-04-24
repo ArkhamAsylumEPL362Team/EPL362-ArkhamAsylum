@@ -10,6 +10,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.junit.Test;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import extras.DatabaseConnection;
@@ -183,7 +185,7 @@ public class Receptionist {
 	public String getPatient() throws Exception{
 		DatabaseConnection database = new DatabaseConnection();
 		if (database.getStatement() == null){
-			return "Gamiseta";
+			return  " { \"status\": \"JSONException\" }";
 		}
 		ResultSet rs= database.getStatement().executeQuery("SELECT * FROM PATIENT");
 		String result = JSON.parseJSON(rs);
@@ -196,7 +198,7 @@ public class Receptionist {
 	public String getClinic() throws Exception{
 		DatabaseConnection database = new DatabaseConnection();
 		if (database.getStatement() == null){
-			return "Gamiseta";
+			return  " { \"status\": \"JSONException\" }";
 		}
 		ResultSet rs= database.getStatement().executeQuery("SELECT * FROM CLINIC");
 		String result = JSON.parseJSON(rs);
@@ -209,7 +211,7 @@ public class Receptionist {
 	public String getClinicalStaff() throws Exception{
 		DatabaseConnection database = new DatabaseConnection();
 		if (database.getStatement() == null){
-			return "Gamiseta";
+			return "";
 		}
 		ResultSet rs= database.getStatement().executeQuery("SELECT * FROM USER WHERE type = 'CLINICAL_STAFF'");
 		String result = JSON.parseJSON(rs);
@@ -222,7 +224,7 @@ public class Receptionist {
 	public String getAllAppointments() throws Exception{
 		DatabaseConnection database = new DatabaseConnection();
 		if (database.getStatement() == null){
-			return "Gamiseta";
+			return  " { \"status\": \"JSONException\" }";
 		}
 		String query =
 		"SELECT A.id appID, A.date, A.time, A.type, A.status, P.id patientID, P.firstname, P.lastname, U.firstname clinicianN,"
@@ -296,7 +298,5 @@ public class Receptionist {
 		}
 		return    data;
 	}
-	
-	
 	
 }
