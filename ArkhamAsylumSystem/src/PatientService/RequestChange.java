@@ -24,7 +24,7 @@ public class RequestChange {
 				ObjectMapper mapper = new ObjectMapper();
 				Request request = mapper.readValue(data, Request.class);
 				database = new DatabaseConnection();
-				String query = "INSERT INTO REQUEST(patient,date,content) values ( '"+ request.patient + "','"  + request.date + "','" + request.content + "')";  
+				String query = "INSERT INTO REQUEST(patient,date,content) values ( '"+ request.patient + "',"  + request.date + ",'" + request.content + "')";  
 				database.getStatement().executeUpdate(query);
 			}catch(SQLException r){
 				r.printStackTrace();
