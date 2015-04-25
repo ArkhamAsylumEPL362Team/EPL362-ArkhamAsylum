@@ -110,7 +110,7 @@
 		$.post(EDIT_PATIENT,data,function(data1){
             
 	        _logTransaction(EDIT_PATIENT,data,data1);
-				data = JSON.parse(data1);
+				data1 = JSON.parse(data1);
 				console.log(data1);
 
                 if(!data1.id){

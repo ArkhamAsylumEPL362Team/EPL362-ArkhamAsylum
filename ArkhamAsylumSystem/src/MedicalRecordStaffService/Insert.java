@@ -29,7 +29,7 @@ public class Insert {
 			Personel personel = mapper.readValue(data, Personel.class);
 			
 			String query = "INSERT INTO USER values ('"+personel.personelID + "','" +personel.firstname + "','"
-					 + personel.email + "','" +personel.lastname + "','" + personel.phonenumber 
+					 + personel.lastname + "','" +personel.email + "','" + personel.phonenumber 
 					 +"','"+personel.username+"','"+personel.password+"','"+personel.type+"')";  
 	
 			database.getStatement().executeUpdate(query);

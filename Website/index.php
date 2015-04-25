@@ -117,7 +117,26 @@
                 patient's information.
             */
             $('#request4change').submit(function(e){
-                alert('fd');
+                var data = {
+                    "patient":$('#request_patient_id_input').val(),
+                    "date":'CURDATE()',
+                    "content":$('#request_content_input').val()
+                   };
+
+                data=JSON.stringify(data);
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:8080/ArkhamAsylumSystem/rest/patient_service/request_change/",
+                    async:"true",
+                    cache: "true",
+                    data: data,
+                    success: function(personelInfo) {
+                        _logTransaction("http://localhost:8080/ArkhamAsylumSystem/rest/patient_service/request_change/",data,personelInfo);
+                        personelInfo = JSON.parse(personelInfo);
+                        console.log(personelInfo);
+                    }
+                });
+                e.preventDefault();
             });
         </script>
     </body>

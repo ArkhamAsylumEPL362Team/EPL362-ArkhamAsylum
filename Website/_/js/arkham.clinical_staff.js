@@ -285,7 +285,7 @@ $('#add-tr-btn').on('click',function(e){
                 });
                 $.ajax({
                     type: "GET",
-                    url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/NonAllergicMedicines/"+$('#diagnose_patient_id_input').val(),
+                    url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/AllergicMedicines/"+$('#diagnose_patient_id_input').val(),
                     async:"false",
                     cache: "true",
                     success: function(result) {
@@ -464,7 +464,7 @@ $('#select-tr-btn').on('click',function(e){
             $('#poss_treat_table tr.selected td').eq(1).text(),
             '<input type="text" class="quantity" value="'+$('#poss_treat_table tr.selected td:last-child input').val()+'">'
         ]).draw();
-        $('#cur_treat_edit_table tbody tr:last-child').addClass('just_updated');
+        $('#cur_treat_table tbody tr:last-child').addClass('just_updated');
     }else{
         swal("You have to select a treatment to use.");
     }
@@ -588,12 +588,13 @@ $(".diagnose-form #submit_btn").click(function(e){
                 if (requests.results_array.length != 0) {
                     TREATMENT_ID = requests.results_array[0].treatment_id;
                 }
+            
                 insertTreatment();
-                if (flag) {
+                
                     insertIncident();
                     insertComments();
                     updateMedicalRecord();
-                }
+                
             }
         });
     }else{
@@ -627,7 +628,7 @@ function loadTreatModalForMedRec(table_ptr,tablectr){
                     });
                     $.ajax({
                         type: "GET",
-                        url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/NonAllergicMedicines/" + $('#med_records tbody tr.selected td:first-child').html(),
+                        url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/AllergicMedicines/" + $('#med_records tbody tr.selected td:first-child').html(),
                         async: "false",
                         cache: "true",
                         success: function (result) {
@@ -874,9 +875,12 @@ function insertTreatment(){
    }else{
        flag=1;
        var prev_id=TREATMENT_ID;
+       
+           
        var patient_id=$('#diagnose_patient_id_input').val();
        var jsontreatment=JSON.stringify({ "id": "1",  "prev_id": prev_id, "patient":patient_id});
        if($('#cur_treat_table tbody tr.just_updated').html()!=undefined) {
+           console.log("hdfh");
            $.post("http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/insert/Treatment/", jsontreatment, function (data) {
                var medname;
                var quantity;
@@ -969,6 +973,7 @@ function getMedicine() {
     });
 }
 function getMedicalRecords() {
+    console.log("das");
     $.ajax({
         type: "GET",
         url: "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/NonUpdatedMedicalRecord",
