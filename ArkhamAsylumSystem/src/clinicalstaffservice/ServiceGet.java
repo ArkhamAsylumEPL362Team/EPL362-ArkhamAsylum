@@ -24,7 +24,7 @@ public class ServiceGet {
 			String result=null;
 			try {
 			database = new DatabaseConnection();
-			ResultSet rs= database.getStatement().executeQuery("SELECT * FROM epl362.treatment_medicine group by (medicine);");
+			ResultSet rs= database.getStatement().executeQuery("SELECT * FROM treatment_medicine group by (medicine);");
 			result = JSON.parseJSON(rs);
 			}catch(SQLException r){
 				r.printStackTrace();
@@ -51,7 +51,7 @@ public class ServiceGet {
 			String result=null;
 			try {
 			database = new DatabaseConnection();
-			ResultSet rs= database.getStatement().executeQuery("SELECT MAX(id) as treatment_id FROM epl362.treatment "
+			ResultSet rs= database.getStatement().executeQuery("SELECT MAX(id) as treatment_id FROM treatment "
 					+ "where patient="+patient);
 			result = JSON.parseJSON(rs);
 			}catch(SQLException r){

@@ -13,50 +13,20 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class testMedicalRecord {
-	
+public class testClinicalStaff {
+
 	private String URL;
 
 	@Before
 	public void setUp() throws Exception {
 		
-		this.URL= "http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/";
-	}
-
-
-	@Test
-	public void test() {
-		
-	
-		try{
-			URL url = new URL(URL+"view_patient_requests/");
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setDoOutput(false);
-			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Content-Type", "text/plain");
-
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					(conn.getInputStream())));
-			String output;
-			System.out.println("Output from Server:\n");
-			while ((output = br.readLine()) != null) {
-				System.out.println(output);
-			}
-			conn.disconnect();
-			
-		  } catch (Exception e) {
-			e.printStackTrace();
-			fail("No Access to server");
-		  }
-		
+		this.URL= "http://localhost:8080/ArkhamAsylumSystem/rest/clinicalstaff_service/get/";
 	}
 	@Test
-	public void testViewPatientRequest() {
-		
-		
-	
+	public void testTreatments() {
+
 		try{
-			URL url = new URL(URL+"view_patient_requests/");
+			URL url = new URL(URL+"Treatmentmeds/");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setDoOutput(false);
 			conn.setRequestMethod("GET");
@@ -79,12 +49,89 @@ public class testMedicalRecord {
 	}
 	
 	@Test
-	public void testViewPersonelInfo() {
+	public void testDeceased() {
 		
+		try{
+			URL url = new URL(URL+"Deceased/");
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setDoOutput(false);
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Content-Type", "text/plain");
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					(conn.getInputStream())));
+			String output;
+			System.out.println("Output from Server:\n");
+			while ((output = br.readLine()) != null) {
+				System.out.println(output);
+			}
+			conn.disconnect();
+			
+		  } catch (Exception e) {
+			e.printStackTrace();
+			fail("No Access to server");
+		  }
+		
+	}
+	
+	@Test
+	public void testMedicine() {
 		
 	
 		try{
-			URL url = new URL(URL+"view_personel_info/");
+			URL url = new URL(URL+"Medicine/");
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setDoOutput(false);
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Content-Type", "text/plain");
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					(conn.getInputStream())));
+			String output;
+			System.out.println("Output from Server:\n");
+			while ((output = br.readLine()) != null) {
+				System.out.println(output);
+			}
+			conn.disconnect();
+			
+		  } catch (Exception e) {
+			e.printStackTrace();
+			fail("No Access to server");
+		  }
+		
+	}
+	
+	@Test
+	public void testNonUpdated() {
+	
+		try{
+			URL url = new URL(URL+"NonUpdatedMedicalRecord/");
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setDoOutput(false);
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Content-Type", "text/plain");
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					(conn.getInputStream())));
+			String output;
+			System.out.println("Output from Server:\n");
+			while ((output = br.readLine()) != null) {
+				System.out.println(output);
+			}
+			conn.disconnect();
+			
+		  } catch (Exception e) {
+			e.printStackTrace();
+			fail("No Access to server");
+		  }
+		
+	}
+	
+	@Test
+	public void testUpdated() {
+	
+		try{
+			URL url = new URL(URL+"UpdatedMedicalRecord/");
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setDoOutput(false);
 			conn.setRequestMethod("GET");
@@ -106,4 +153,5 @@ public class testMedicalRecord {
 		
 	}
 
+	
 }

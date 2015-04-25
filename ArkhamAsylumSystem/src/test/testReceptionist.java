@@ -3,8 +3,11 @@ package test;
 import static org.junit.Assert.*;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -18,7 +21,6 @@ public class testReceptionist  {
 	public void initUri(){
 		
 		this.uri = "http://localhost:8080/ArkhamAsylumSystem/rest/";
-		
 	}
 
 	@Test
@@ -34,7 +36,7 @@ public class testReceptionist  {
 		BufferedReader br = new BufferedReader(new InputStreamReader(
 				(conn.getInputStream())));
 		String output;
-		System.out.println("Output from Server .... \n");
+		System.out.println("Output from Server:\n");
 		while ((output = br.readLine()) != null) {
 			System.out.println(output);
 		}
@@ -58,7 +60,7 @@ public class testReceptionist  {
 		BufferedReader br = new BufferedReader(new InputStreamReader(
 				(conn.getInputStream())));
 		String output;
-		System.out.println("Output from Server .... \n");
+		System.out.println("Output from Server:\n");
 		while ((output = br.readLine()) != null) {
 			System.out.println(output);
 		}
@@ -116,7 +118,7 @@ public class testReceptionist  {
 		e.printStackTrace();
 		fail("No Access to server");
 	  }
-	}
+	}	
 }
 
 
