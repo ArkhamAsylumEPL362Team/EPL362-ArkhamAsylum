@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<project name="ArkhamAsylumSystem" default="Main" basedir=".">
+	<!-- Sets variables which can later be used. -->
+	<!-- The value of a property is accessed via ${} -->
+	<property name="src.dir" location="" />
+	<property name="lib.dir" location="../WebContent/WEB-INF/lib" />
+	<property name="build.dir" location="../bin" />
+
+	<!-- Create a classpath container which can be later used in the ant task -->
+	<path id="build.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<!-- Deletes the existing build directory -->
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<!-- Creates the build directory -->
+	<target name="makedir">
+		<mkdir dir="${build.dir}" />
+	</target>
+
+	<!-- Compiles the java code -->
+	<target name="compile" depends="clean, makedir">
+		<javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="build.classpath" />
+		<jar destfile="${build.dir}/CrunchifyRESTJerseyExample.jar"
+			basedir="${build.dir}" />
+		<war destfile="${build.dir}/CrunchifyRESTJerseyExample.war" webxml="WebContent/WEB-INF/web.xml">
+			<classes dir="${build.dir}" />
+			<lib dir="${lib.dir}">
+				<!-- exclude name="jdbc1.jar" /-->  <!-- Exclude here jars you don't want -->
+			</lib>
+		</war>
+	</target>
+
+
+
+	<target name="Main" depends="compile">
+		<description>Main target</description>
+	</target>
+
+</project> 
