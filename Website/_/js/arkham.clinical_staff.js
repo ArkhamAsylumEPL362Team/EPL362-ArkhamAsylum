@@ -223,13 +223,14 @@ $('#download-rcrd-btn').on('click',function(e){
         data=JSON.stringify(data);
 
         $.ajax({
-            url:"http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/download/",
+            url:"http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/set_file/",
             type:"post",
             data:data,
             success:function(response){
-                console.log(response);
+                window.location = "http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/download/";
             }
         });
+        
     }else{
         swal("You have to select a record to download.");
     }

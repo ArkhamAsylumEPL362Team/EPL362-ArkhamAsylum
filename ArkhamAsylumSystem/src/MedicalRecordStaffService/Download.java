@@ -2,11 +2,15 @@ package MedicalRecordStaffService;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.sql.ResultSet;
 import java.util.Calendar;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -21,14 +25,13 @@ import extras.JSON;
 
 @Path("/medical_record_service/")
 public class Download {
-
-	@POST
+	private static RequestInfo download_request;
+	
+	@GET
 	@Path("/download")
-	@Produces(MediaType.APPLICATION_OCTET_STREAM)
-	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON}) 
-	public Response getFile(String data) throws Exception {
-		ObjectMapper mapper = new ObjectMapper();
-		RequestInfo requestInfo = mapper.readValue(data, RequestInfo.class);
+	@Produces("text/txt")
+	public static Response getFile() throws Exception {
+		RequestInfo requestInfo = download_request;
 		
 		DatabaseConnection database = new DatabaseConnection();
 		//if (database.getStatement() == null){
@@ -38,24 +41,26 @@ public class Download {
 		ResultSet rs= database.getStatement().executeQuery("SELECT * FROM PATIENT WHERE id='"+requestInfo.patientID+"';");
 		String result = JSON.parseJSON(rs);
 		
-		File dir = new File("C:\\Users\\dpasch01\\Desktop\\MEDICAL_RECORDS");
-		if(!dir.exists())
-			dir.mkdir();
-		
-		File report = new File("C:\\Users\\dpasch01\\Desktop\\MEDICAL_RECORDS\\medical_record"+requestInfo.patientID+".txt");
-		if(!report.exists())
-			report.createNewFile();
+		File report = new File("medical_record"+requestInfo.patientID+".txt");
 						
-		FileWriter fileWritter = new FileWriter(report.getAbsoluteFile(),true);
-        BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
-        bufferWritter.write(data);
-        bufferWritter.close();
+		FileOutputStream fout = new FileOutputStream(report.getAbsoluteFile());
+		Writer out = new OutputStreamWriter(fout,"UTF8");
 		
+		out.write(result);
+		
+		out.close();
 		ResponseBuilder response = Response.ok((Object) report);
 	    response.header("Content-Disposition",
-	        "attachment; filename=medical_record"+requestInfo.patientID+"zip");
+	        "attachment; filename=medical_record"+requestInfo.patientID+".txt");
 	    return response.build();
 
 	}
 	
+	@POST
+	@Path("/set_file")
+	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON}) 
+	public static void setFile(String data) throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+		download_request = mapper.readValue(data, RequestInfo.class);
+	}
 }
