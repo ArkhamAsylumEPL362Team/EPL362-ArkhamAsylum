@@ -219,7 +219,18 @@ $('#view-rcrd-btn').on('click',function(e){
 
 $('#download-rcrd-btn').on('click',function(e){
     if($('#med_records tbody tr').hasClass('selected')){
-        alert('Downloading...');
+        var data={"requestNumber":"0","firstname":"0","lastname":"0","patientID":"1","date":"0"};
+        data=JSON.stringify(data);
+
+        $.ajax({
+            url:"http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/set_file/",
+            type:"post",
+            data:data,
+            success:function(response){
+                window.location = "http://localhost:8080/ArkhamAsylumSystem/rest/medical_record_service/download/";
+            }
+        });
+        
     }else{
         swal("You have to select a record to download.");
     }

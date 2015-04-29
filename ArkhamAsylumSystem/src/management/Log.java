@@ -18,9 +18,25 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+/**
+* This is the Log class that handles the transaction 
+* log service. It creates a log file for each day and 
+* stores each of that day's transaction such as login
+* and appointment insertion. 
+*
+* @author  Demetris Paschalides, Philippos Aziz and Theodoros Charalambous
+* @version 3.1
+*/
 @Path("/management/")
 public class Log {
 	
+  /**
+   * This method is used to log the transaction passed as parameter
+   * and it called on the path 'log_transaction' after each transaction
+   * to store it in the generated log file of that day.
+   * @param data The previous transaction's data
+   * @return MediaType.TEXT_PLAIN The stored data in JSON format.
+   */
 	@POST
 	@Path("/log_transaction/")
 	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON}) 

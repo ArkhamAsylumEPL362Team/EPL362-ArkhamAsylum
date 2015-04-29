@@ -208,6 +208,7 @@
                     scrollTarget: link.hash
                 });
             });
+            
         </script>
     </body>
 </html>
