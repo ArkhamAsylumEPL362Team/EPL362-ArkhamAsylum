@@ -1,5 +1,18 @@
 package extras;
 
+/**
+ * Class that represent a database connection
+ * 
+ * 
+ * Provides a connection with a statement to execute 
+ * queries on database.
+ * 
+ * 
+ * @author Theodoros Charalambous 
+ * 
+ */
+
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -15,6 +28,14 @@ public class DatabaseConnection {
 	private static final String DATABASE="EPL362";
 	private static final String CONF = "useOldAliasMetadataBehavior=true";
 
+	
+	/**
+	 * Constructor that establishes a connection and initialize
+	 * a statement.
+	 * 
+	 * 
+	 */
+	
 	public DatabaseConnection(){	
 	
 		try {
@@ -32,9 +53,21 @@ public class DatabaseConnection {
 		
 	}
 	
+	/**
+	 * Getter for statement
+	 * 
+	 * @return
+	 */
+	
 	public Statement getStatement(){
 		return statement;
 	}
+	
+	/**
+	 * Method that close the connection with database.
+	 * 
+	 * 
+	 */
 	
 
 	public void CloseConnection(){

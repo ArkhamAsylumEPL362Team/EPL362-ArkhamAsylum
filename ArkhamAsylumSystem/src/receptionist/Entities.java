@@ -3,7 +3,13 @@ package receptionist;
 public class Entities {
 
 }
-
+/**
+ * Friendly class that represets a patient	
+ * 
+ * 
+ * 
+ * @author  Demetris Paschalides, Philippos Aziz and Theodoros Charalambous
+ */
 class Patient{
 	public String id;  				//int//
 	public String firstname;		//text//
@@ -14,7 +20,11 @@ class Patient{
 	public String birthday; 	 //Date YYYY-MM-DD//
 	public String gender;  		   //M or F//
 }
-
+/**
+ * Friendly class that represets a appointment	
+ * 
+ * @author  Demetris Paschalides, Philippos Aziz and Theodoros Charalambous
+ */
 class Appointment{
 	public String id; 				 //int//
 	public String date;				//date//

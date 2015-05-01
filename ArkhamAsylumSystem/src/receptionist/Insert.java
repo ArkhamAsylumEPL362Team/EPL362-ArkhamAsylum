@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import extras.DatabaseConnection;
 
 
-@Path("/insert/")
+
 public class Insert {
 	
 	

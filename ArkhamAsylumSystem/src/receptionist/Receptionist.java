@@ -1,5 +1,21 @@
 package receptionist;
 
+/**
+ * Web Service thats implements and the 
+ * receptionist work as the Requirments specifies.
+ * 
+ * It is a rest full base implementation and it uses
+ * jersey libraries.
+ * 
+ * All methods produces and consumes strings in JSON
+ * format.
+ * 
+ * 
+ * 
+ * @author  Demetris Paschalides, Philippos Aziz and Theodoros Charalambous
+ * @version 3.1
+ */
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -15,286 +31,437 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import extras.DatabaseConnection;
 import extras.JSON;
 
-
 @Path("/receptionist/")
 public class Receptionist {
 
+	/**
+	 * Method that responses to POST request. Consumes JSON format string
+	 * (Patient entity) parse it into a java object with object mapper.
+	 *
+	 * After that establishes a database connection and execute a insert query
+	 * to save new patient.
+	 * 
+	 * It returns the JSON format that took as argument or JSON format exception
+	 * on error.
+	 * 
+	 * @param data
+	 * @return JSON format in string
+	 */
+
 	@POST
 	@Path("/insert/patient/")
-	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON}) 
+	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED,
+			MediaType.APPLICATION_JSON })
 	@Produces(MediaType.TEXT_PLAIN)
-	public String insertPatient (String data){
-		DatabaseConnection database =null;
+	public String insertPatient(String data) {
+		DatabaseConnection database = null;
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			Patient patient = mapper.readValue(data, Patient.class);
-			
+
 			database = new DatabaseConnection();
-		
-			String query = "INSERT INTO PATIENT values ( '"+ patient.id + "','" + patient.firstname + "','"+ 
-						patient.relative_email + "','" +patient.lastname + "','"+patient.address + 
-						"','" + patient.phonenumber + "','"  + patient.birthday + "','" + patient.gender + "')";  
-		
+
+			String query = "INSERT INTO PATIENT values ( '" + patient.id
+					+ "','" + patient.firstname + "','"
+					+ patient.relative_email + "','" + patient.lastname + "','"
+					+ patient.address + "','" + patient.phonenumber + "','"
+					+ patient.birthday + "','" + patient.gender + "')";
+
 			database.getStatement().executeUpdate(query);
-			
-		}catch(SQLException r){
+
+		} catch (SQLException r) {
 			r.printStackTrace();
-			return " { \"status\": \""+r.getMessage()+"\" }";
-		}catch(Exception e){
+			return " { \"status\": \"" + r.getMessage() + "\" }";
+		} catch (Exception e) {
 			e.printStackTrace();
-			return " { \"status\": \"JSONException\" }";	
-		}finally{
+			return " { \"status\": \"JSONException\" }";
+		} finally {
 			database.CloseConnection();
 		}
-		return    data;
+		return data;
 	}
-	
+
+	/**
+	 * Method that responses to POST request. Consumes JSON format string
+	 * (Patient entity) parse it into a java object with object mapper.
+	 *
+	 * After that establishes a database connection and execute a update query
+	 * to update an existing patient.
+	 * 
+	 * It returns the JSON format that took as argument or JSON format exception
+	 * on error.
+	 * 
+	 * @param data
+	 * @return JSON format in string
+	 */
 	@POST
 	@Path("/update/patient/")
-	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON}) 
+	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED,
+			MediaType.APPLICATION_JSON })
 	@Produces(MediaType.TEXT_PLAIN)
-	public String updatePatient (String data){
-		DatabaseConnection database =null;
+	public String updatePatient(String data) {
+		DatabaseConnection database = null;
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			Patient patient = mapper.readValue(data, Patient.class);
-			
+
 			database = new DatabaseConnection();
-		
-			String query = "UPDATE PATIENT "
-						 + "SET id = '" +patient.id + "', firstname = '" +patient.firstname + "', relative_email = '"
-						 + patient.relative_email + "', lastname = '" +patient.lastname + "', address = '"+patient.address
-						 + "', phonenumber ='" + patient.phonenumber + "', birthday ='"  + patient.birthday + "', gender = '"
-						 + patient.gender +"' "
-						 + "WHERE id = '" + patient.id + "'";  
-		
+
+			String query = "UPDATE PATIENT " + "SET id = '" + patient.id
+					+ "', firstname = '" + patient.firstname
+					+ "', relative_email = '" + patient.relative_email
+					+ "', lastname = '" + patient.lastname + "', address = '"
+					+ patient.address + "', phonenumber ='"
+					+ patient.phonenumber + "', birthday ='" + patient.birthday
+					+ "', gender = '" + patient.gender + "' " + "WHERE id = '"
+					+ patient.id + "'";
+
 			database.getStatement().executeUpdate(query);
-			
-		}catch(SQLException r){
+
+		} catch (SQLException r) {
 			r.printStackTrace();
-			return " { \"status\": \""+r.getMessage()+"\" }";
-		}catch(Exception e){
+			return " { \"status\": \"" + r.getMessage() + "\" }";
+		} catch (Exception e) {
 			e.printStackTrace();
-			return " { \"status\": \"JSONException\" }";	
-		}finally{
+			return " { \"status\": \"JSONException\" }";
+		} finally {
 			database.CloseConnection();
 		}
-		return    data;
+		return data;
 	}
-	
+
+	/**
+	 * Method that responses to POST request. Consumes JSON format string
+	 * (Appointment entity) parse it into a java object with object mapper.
+	 *
+	 * After that establishes a database connection and execute a insert query
+	 * to save new appointment.
+	 * 
+	 * It returns the JSON format that took as argument or JSON format exception
+	 * on error.
+	 * 
+	 * @param data
+	 * @return JSON format in string
+	 */
+
 	@POST
 	@Path("/insert/appointment/")
-	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON}) 
+	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED,
+			MediaType.APPLICATION_JSON })
 	@Produces(MediaType.TEXT_PLAIN)
-	public String insertAppointment(String data){
-		
-		DatabaseConnection database =null;
-		
+	public String insertAppointment(String data) {
+
+		DatabaseConnection database = null;
+
 		try {
 			database = new DatabaseConnection();
 			ObjectMapper mapper = new ObjectMapper();
 			Appointment app = mapper.readValue(data, Appointment.class);
-			
-			ResultSet rs = database.getStatement().executeQuery("SELECT MAX(id) FROM APPOINTMENT");
-			int id=0;
-			if (rs.next()){
-				id=rs.getInt(1);
+
+			ResultSet rs = database.getStatement().executeQuery(
+					"SELECT MAX(id) FROM APPOINTMENT");
+			int id = 0;
+			if (rs.next()) {
+				id = rs.getInt(1);
 			}
-			
-			String query = "INSERT INTO APPOINTMENT values ( '"+ (id + 1)+"','"+app.date + "','"+ 
-						app.patient + "','" +app.clinician + "','"+app.clinic + 
-						"','" + app.time + "','"  + app.type + "','" + app.status + "')";  
-	
+
+			String query = "INSERT INTO APPOINTMENT values ( '" + (id + 1)
+					+ "','" + app.date + "','" + app.patient + "','"
+					+ app.clinician + "','" + app.clinic + "','" + app.time
+					+ "','" + app.type + "','" + app.status + "')";
+
 			database.getStatement().executeUpdate(query);
-			
+
 			query = "SELECT A.id appID, A.date, A.time, A.type, A.status, P.id patientID, P.firstname, P.lastname, U.firstname clinicianN,"
-					+ " U.lastname clinicianL, C.name clinicName " 
+					+ " U.lastname clinicianL, C.name clinicName "
 					+ " FROM APPOINTMENT A, PATIENT P, USER U , CLINIC C"
-					+ " WHERE A.id = '" + (id+1) + "' and  P.id = '" + app.patient  +"' and U.id = '" + app.clinician
-					+ "' and C.name = '" + app.clinic +"'"
+					+ " WHERE A.id = '"
+					+ (id + 1)
+					+ "' and  P.id = '"
+					+ app.patient
+					+ "' and U.id = '"
+					+ app.clinician
+					+ "' and C.name = '"
+					+ app.clinic
+					+ "'"
 					+ "ORDER BY A.date DESC , A.time DESC";
-					
-			
-			 rs = database.getStatement().executeQuery(query);
-			
+
+			rs = database.getStatement().executeQuery(query);
+
 			data = JSON.parseJSON(rs);
-			
-		}catch(SQLException r){
+
+		} catch (SQLException r) {
 			r.printStackTrace();
 			return " { \"status\": \"SQLException\" }";
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
-			return " { \"status\": \"JSONException\" }";	
-		}finally{
+			return " { \"status\": \"JSONException\" }";
+		} finally {
 			database.CloseConnection();
 		}
-		return    data;
+		return data;
 	}
-	
+
+	/**
+	 * Method that responses to POST request. Consumes JSON format string
+	 * (Patient entity) parse it into a java object with object mapper.
+	 *
+	 * After that establishes a database connection and execute a update query
+	 * to update existing appointment.
+	 * 
+	 * It returns the JSON format that took as argument or JSON format exception
+	 * on error.
+	 * 
+	 * @param data
+	 * @return JSON format in string
+	 */
+
 	@POST
 	@Path("/update/appointment/")
-	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON}) 
+	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED,
+			MediaType.APPLICATION_JSON })
 	@Produces(MediaType.TEXT_PLAIN)
-	public String updateAppintment (String data){
-		DatabaseConnection database =null;
+	public String updateAppintment(String data) {
+		DatabaseConnection database = null;
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			Appointment app = mapper.readValue(data, Appointment.class);
-			
+
 			database = new DatabaseConnection();
-			
-			String query = "UPDATE APPOINTMENT SET "+
-							" id = '"+app.id+"' , date = '" +app.date + "' , patient = '" + app.patient + "', clinician = '" +
-							app.clinician + "', clinic =  '" + app.clinic + "' , time = '" +app.time + "', type= '" + app.type+
-							"', status ='" + app.status +"'"
-							+" WHERE id = '" + app.id +"'";
-			
+
+			String query = "UPDATE APPOINTMENT SET " + " id = '" + app.id
+					+ "' , date = '" + app.date + "' , patient = '"
+					+ app.patient + "', clinician = '" + app.clinician
+					+ "', clinic =  '" + app.clinic + "' , time = '" + app.time
+					+ "', type= '" + app.type + "', status ='" + app.status
+					+ "'" + " WHERE id = '" + app.id + "'";
+
 			database.getStatement().executeUpdate(query);
-			
+
 			query = "SELECT A.id appID, A.date, A.time, A.type, A.status, P.id patientID, P.firstname, P.lastname, U.firstname clinicianN,"
-					+ " U.lastname clinicianL, C.name clinicName " 
+					+ " U.lastname clinicianL, C.name clinicName "
 					+ " FROM APPOINTMENT A, PATIENT P, USER U , CLINIC C"
-					+ " WHERE A.patient = '" + app.patient + "' and  P.id = '" + app.patient  +"' and U.id = '" + app.clinician
-					+ "' and C.name = '" + app.clinic +"' and A.id = '"+app.id + "'"
-					+ "ORDER BY A.date ASC";
-			
-			
+					+ " WHERE A.patient = '"
+					+ app.patient
+					+ "' and  P.id = '"
+					+ app.patient
+					+ "' and U.id = '"
+					+ app.clinician
+					+ "' and C.name = '"
+					+ app.clinic
+					+ "' and A.id = '"
+					+ app.id + "'" + "ORDER BY A.date ASC";
+
 			ResultSet rs = database.getStatement().executeQuery(query);
-			
+
 			data = JSON.parseJSON(rs);
-			
-			
-		}catch(SQLException r){
+
+		} catch (SQLException r) {
 			r.printStackTrace();
 			return " { \"status\": \"SQLException\" }";
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
-			return " { \"status\": \"JSONException\" }";	
-		}finally{
+			return " { \"status\": \"JSONException\" }";
+		} finally {
 			database.CloseConnection();
 		}
-		return    data;
+		return data;
 	}
-	
-	
+
+	/**
+	 * Method that response to a get request to give all patient entities from
+	 * database.
+	 * 
+	 * Connects to database and execute a select query to retrieve data. Data
+	 * goes into a result set. a JSON parser called to parse the result set to a
+	 * JSON format string and then return that string.
+	 * 
+	 * @return JSON format in string
+	 * @throws Exception
+	 */
+
 	@GET
 	@Path("/report/all_patients/")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String getPatient() throws Exception{
+	public String getPatient() throws Exception {
 		DatabaseConnection database = new DatabaseConnection();
-		if (database.getStatement() == null){
-			return  " { \"status\": \"JSONException\" }";
+		if (database.getStatement() == null) {
+			return " { \"status\": \"JSONException\" }";
 		}
-		ResultSet rs= database.getStatement().executeQuery("SELECT * FROM PATIENT");
+		ResultSet rs = database.getStatement().executeQuery(
+				"SELECT * FROM PATIENT");
 		String result = JSON.parseJSON(rs);
-		return  result;
+		return result;
 	}
-	
+
+	/**
+	 * Method that response to a get request to give all clinic entities from
+	 * database.
+	 * 
+	 * Connects to database and execute a select query to retrieve data. Data
+	 * goes into a result set. a JSON parser called to parse the result set to a
+	 * JSON format string and then return that string.
+	 * 
+	 * @return JSON format in string
+	 * @throws Exception
+	 */
+
 	@GET
 	@Path("/report/clinic/")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String getClinic() throws Exception{
+	public String getClinic() throws Exception {
 		DatabaseConnection database = new DatabaseConnection();
-		if (database.getStatement() == null){
-			return  " { \"status\": \"JSONException\" }";
+		if (database.getStatement() == null) {
+			return " { \"status\": \"JSONException\" }";
 		}
-		ResultSet rs= database.getStatement().executeQuery("SELECT * FROM CLINIC");
+		ResultSet rs = database.getStatement().executeQuery(
+				"SELECT * FROM CLINIC");
 		String result = JSON.parseJSON(rs);
-		return  result;
+		return result;
 	}
-	
+
+	/**
+	 * Method that response to a get request to give all clinical staff entities
+	 * from database.
+	 * 
+	 * Connects to database and execute a select query to retrieve data. Data
+	 * goes into a result set. a JSON parser called to parse the result set to a
+	 * JSON format string and then return that string.
+	 * 
+	 * @return JSON format in string
+	 * @throws Exception
+	 */
+
 	@GET
 	@Path("/report/clinical_staff/")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String getClinicalStaff() throws Exception{
+	public String getClinicalStaff() throws Exception {
 		DatabaseConnection database = new DatabaseConnection();
-		if (database.getStatement() == null){
+		if (database.getStatement() == null) {
 			return "";
 		}
-		ResultSet rs= database.getStatement().executeQuery("SELECT * FROM USER WHERE type = 'CLINICAL_STAFF'");
+		ResultSet rs = database.getStatement().executeQuery(
+				"SELECT * FROM USER WHERE type = 'CLINICAL_STAFF'");
 		String result = JSON.parseJSON(rs);
-		return  result;
+		return result;
 	}
-	
+
+	/**
+	 * Method that response to a get request to give all appointments entities
+	 * from database.
+	 * 
+	 * Connects to database and execute a select query to retrieve data. Data
+	 * goes into a result set. a JSON parser called to parse the result set to a
+	 * JSON format string and then return that string.
+	 * 
+	 * @return JSON format in string
+	 * @throws Exception
+	 */
+
 	@GET
 	@Path("/report/appointments/")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String getAllAppointments() throws Exception{
+	public String getAllAppointments() throws Exception {
 		DatabaseConnection database = new DatabaseConnection();
-		if (database.getStatement() == null){
-			return  " { \"status\": \"JSONException\" }";
+		if (database.getStatement() == null) {
+			return " { \"status\": \"JSONException\" }";
 		}
-		String query =
-		"SELECT A.id appID, A.date, A.time, A.type, A.status, P.id patientID, P.firstname, P.lastname, U.firstname clinicianN,"
-		+ " U.lastname clinicianL, A.clinic clinicName " 
-		+ " FROM APPOINTMENT A, PATIENT P, USER U "
-		+ " WHERE A.patient = P.id  and  A.clinician = U.id "
-		+ "ORDER BY A.date ASC";
-		
-		
-		ResultSet rs= database.getStatement().executeQuery(query);
+		String query = "SELECT A.id appID, A.date, A.time, A.type, A.status, P.id patientID, P.firstname, P.lastname, U.firstname clinicianN,"
+				+ " U.lastname clinicianL, A.clinic clinicName "
+				+ " FROM APPOINTMENT A, PATIENT P, USER U "
+				+ " WHERE A.patient = P.id  and  A.clinician = U.id "
+				+ "ORDER BY A.date ASC";
+
+		ResultSet rs = database.getStatement().executeQuery(query);
 		String result = JSON.parseJSON(rs);
-		return  result;
+		return result;
 	}
+
+	/**
+	 * Method that responses to POST request. Consumes JSON format string
+	 * (Patient entity) parse it into a java object with object mapper.
+	 *
+	 * After that establishes a database connection and execute a delete query
+	 * to delete a patient.
+	 * 
+	 * It returns the JSON format that took as argument or JSON format exception
+	 * on error.
+	 * 
+	 * @param data
+	 * @return JSON format in string
+	 */
 
 	@POST
 	@Path("/delete/patient/")
-	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON}) 
+	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED,
+			MediaType.APPLICATION_JSON })
 	@Produces(MediaType.TEXT_PLAIN)
-	public String deletePatient (String data){
-		DatabaseConnection database =null;
+	public String deletePatient(String data) {
+		DatabaseConnection database = null;
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			Patient patient = mapper.readValue(data, Patient.class);
-			
+
 			database = new DatabaseConnection();
-		
-			String query = "DELETE FROM PATIENT WHERE id ='" +patient.id + "'";
-		
+
+			String query = "DELETE FROM PATIENT WHERE id ='" + patient.id + "'";
+
 			database.getStatement().executeUpdate(query);
-			
-		}catch(SQLException r){
+
+		} catch (SQLException r) {
 			r.printStackTrace();
 			return " { \"status\": \"SQLException\" }";
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
-			return " { \"status\": \"JSONException\" }";	
-		}finally{
+			return " { \"status\": \"JSONException\" }";
+		} finally {
 			database.CloseConnection();
 		}
-		return    data;
+		return data;
 	}
-	
-	
-	
 
-	
+	/**
+	 * Method that responses to POST request. Consumes JSON format string
+	 * (Patient entity) parse it into a java object with object mapper.
+	 *
+	 * After that establishes a database connection and execute a delete query
+	 * to delete an apointment.
+	 * 
+	 * It returns the JSON format that took as argument or JSON format exception
+	 * on error.
+	 * 
+	 * @param data
+	 * @return JSON format in string
+	 */
+
 	@POST
 	@Path("/delete/appointment/")
-	@Consumes({MediaType.APPLICATION_FORM_URLENCODED, MediaType.APPLICATION_JSON}) 
+	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED,
+			MediaType.APPLICATION_JSON })
 	@Produces(MediaType.TEXT_PLAIN)
-	public String deleteAppointment (String data){
-		DatabaseConnection database =null;
+	public String deleteAppointment(String data) {
+		DatabaseConnection database = null;
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			Appointment appointment = mapper.readValue(data, Appointment.class);
-			
+
 			database = new DatabaseConnection();
-		
-			String query = "DELETE FROM APPOINTMENT WHERE id ='" +appointment.id + "'";
-		
+
+			String query = "DELETE FROM APPOINTMENT WHERE id ='"
+					+ appointment.id + "'";
+
 			database.getStatement().executeUpdate(query);
-			
-		}catch(SQLException r){
+
+		} catch (SQLException r) {
 			r.printStackTrace();
 			return " { \"status\": \"SQLException\" }";
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
-			return " { \"status\": \"JSONException\" }";	
-		}finally{
+			return " { \"status\": \"JSONException\" }";
+		} finally {
 			database.CloseConnection();
 		}
-		return    data;
+		return data;
 	}
-	
+
 }
